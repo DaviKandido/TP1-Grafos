@@ -13,6 +13,7 @@ private:
     int numArestas;
     bool direcionado;
 
+
     // Validar se um vértice está dentro dos limites
     bool verticeValido(int v) const {
         return (0 <= v && v < numVertices);
@@ -36,7 +37,12 @@ public:
     }
 
     // Destrutor: padrão (implementar no futuro)
-    ~GrafoMatriz() override = default;
+    ~GrafoMatriz() override {
+        matrizAdjacencias.clear();
+        this->numVertices = 0;
+        this->numArestas = 0;
+        this->direcionado = false;
+    };
 
     // --- Implementar as funções da interface ---
 
@@ -72,6 +78,11 @@ public:
         return true;
     }
 
+
+/**
+ * @bug Erro na variável 'iNovo' (Declaração Ausente)
+ */
+/*
     bool removerVertice(int v) override {
         if (!verticeValido(v)) {
             return false;
@@ -94,6 +105,7 @@ public:
         numVertices = novoNum;
         return true;
     }
+*/
 
     bool removerAresta(int origem, int destino) override {
         // Testar se os vértices são válidos e se há aresta para remover
@@ -141,15 +153,79 @@ public:
         return vizinhos;
     }
 
+    // Fecho transitivo positivo (Todos os alcançados pelo vértice 'v', incluindo ele) - DFS (Busca em Profundidade)
     vector<int> getSucessores(int v) const override {
         vector<int> sucessores;
+        vector<bool> visitados(numVertices, false);
         // Implementar no futuro
+        return getSucessores(v, visitados);
+    }
+
+    vector<int> getSucessores(int v, vector<bool> &visitados) const {
+        vector<int> sucessores;
+        // Implementar no futuro
+
+        // Marca o vértice como visitado
+        visitados[v] = true;
+
+        if(!verticeValido(v)) {
+            throw invalid_argument("Vértice inválido.");
+        }
+
+        sucessores.push_back(v);
+
+        for(int i = 0; i < numVertices; i++) {
+            if(matrizAdjacencias[v][i] != 0 && !visitados[i]) {
+
+                // Chama recursivamente para explorar os sucessores do sucessor - DFS
+                vector<int> subSucessores = getSucessores(i, visitados);
+
+                /* Junta os resultado
+                    for (int x : subSucessores) 
+                       sucessores.push_back(x);
+                */
+                sucessores.insert(sucessores.end(), subSucessores.begin(), subSucessores.end());
+
+            }
+        }
         return sucessores;
     }   
     
+    // Fecho transitivo negativo (Todos que poderiam alcançar o vértice 'v', exceto ele) - DFS (Busca em Profundidade)
     vector<int> getPredecessores(int v) const override {
         vector<int> predecessores;
+        vector<bool> visitados(numVertices, false);
         // Implementar no futuro
+        return getPredecessores(v, visitados);
+    }
+    vector<int> getPredecessores(int v, vector<bool> &visitados) const {
+         vector<int> predecessores;
+        // Implementar no futuro
+
+        // Marca o vértice como visitado
+        visitados[v] = true;
+
+        if(!verticeValido(v)) {
+            throw invalid_argument("Vértice inválido.");
+        }
+
+        
+        for(int i = 0; i < numVertices; i++) {
+            if(matrizAdjacencias[i][v] != 0 && !visitados[i]) {
+                
+                predecessores.push_back(v);
+
+                // Chama recursivamente para explorar os sucessores do sucessor - DFS
+                vector<int> subPredecessores = getPredecessores(i, visitados);
+
+                /* Junta os resultado
+                    for (int x : subSucessores) 
+                       sucessores.push_back(x);
+                */
+                predecessores.insert(predecessores.end(), subPredecessores.begin(), subPredecessores.end());
+
+            }
+        }
         return predecessores;
     }
 
