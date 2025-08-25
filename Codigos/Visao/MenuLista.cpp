@@ -7,15 +7,16 @@ using namespace std;
             int opcao = 0;
             int continuar = 1;
             cout << "> Menu > Lista" << endl << endl;
-            cout << "1) Adicionar Vértice" << endl;
-            cout << "2) Adicionar Aresta" << endl;
-            cout << "3) Remover Vértice" << endl;
-            cout << "4) Remover Aresta" << endl;
-            cout << "5) Consultar Vasinhos de um Vértice" << endl;
-            cout << "6) Consultar Sucessores de um Vértice - DFS" << endl;
-            cout << "7) Consultar Predecessores de um Vértice - DFS" << endl;
-            cout << "8) Remover Grafo" << endl;
-            cout << "9) Imprimir Grafo" << endl;
+            cout << "1) Instanciar Grafo" << endl;
+            cout << "2) Adicionar Vértice" << endl;
+            cout << "3) Adicionar Aresta" << endl;
+            cout << "4) Remover Vértice" << endl;
+            cout << "5) Remover Aresta" << endl;
+            cout << "6) Consultar Vasinhos de um Vértice" << endl;
+            cout << "7) Consultar Sucessores de um Vértice - DFS" << endl;
+            cout << "8) Consultar Predecessores de um Vértice - DFS" << endl;
+            cout << "9) Remover Grafo" << endl;
+            cout << "10) Imprimir Grafo" << endl;
             cout << "0) - Sair" << endl << endl;
 
             cout << "Opção: ";
@@ -60,7 +61,11 @@ using namespace std;
                 case 9:
                     /* code */
                     break;          
-                    
+                        
+                case 10:
+                    /* code */
+                    break;
+                        
                 default: // Vai funcionar para parar a função
                     break;
                 }
