@@ -1,5 +1,5 @@
 #include <iostream>
-#include "GrafoLista.cpp"
+#include "../EstruturaDeDados/Lista/GrafoLista.cpp"
 using namespace std;
 
 
