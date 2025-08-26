@@ -31,46 +31,47 @@ class MenuMatriz {
 
             switch (opcao) {
                 case 1:
-                    /* code */
+                    intanciaGrafo();
                     break;
 
                 case 2:
-                    /* code */
+                    adicionaVertice();
                     break;
 
                 case 3:
-                    /* code */
+                    adicionaAresta();
                     break;
 
                 case 4:
-                    /* code */
+                    removeVertice();
                     break;
 
                 case 5:
-                    /* code */
+                    removeAresta();
                     break;
 
                 case 6:
-                    /* code */
+                    consultaVazinhosVertice();
                     break;
 
                 case 7:
-                    /* code */
+                    consultarSucessoresVertice();
                     break;
 
                 case 8:
-                    /* code */
+                    consultarPredecessoresVertice();
                     break;
 
                 case 9:
-                    /* code */
+                    removeGrafo();
                     break;
 
                 case 10:
-                    /* code */
+                    imprimeGrafo();
                     break;
 
                 default:  // Vai funcionar para parar a função
+                    cout << "Opção inválida!" << endl;
                     break;
             }
 

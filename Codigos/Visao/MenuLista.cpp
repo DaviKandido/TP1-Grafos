@@ -23,6 +23,11 @@ void menu() {
     cout << "Opção: ";
     cin >> opcao;
 
+
+    /**
+     * @attention Acredito que um do while seja uma forma melhor de trabalhar a repetição, veja menuMatriz
+     * 
+     */
     while (continuar == 1) {
         switch (opcao) {
             case 1:
@@ -66,6 +71,7 @@ void menu() {
                 break;
 
             default:  // Vai funcionar para parar a função
+                cout << "Opção inválida!" << endl;
                 break;
         }
 
