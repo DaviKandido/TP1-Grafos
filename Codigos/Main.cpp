@@ -1,21 +1,25 @@
-#include "./libs/io.hpp"
-#include "./Visao/MenuMatriz.cpp"
 #include <iostream>
-#include <string> 
+#include <string>
+
+#include "./Visao/MenuMatriz.cpp"
+#include "./libs/io.hpp"
 
 using namespace std;
 
-int main(int argc, char* argv[] ) {
-
-    try{
+int main(int argc, char* argv[]) {
+    try {
         int opcao = 0;
 
-        do{
+        do {
             cout << "--------------------------------------------" << endl;
             cout << "--- Bem vindo ao TP1 de Teoria dos Grafos ---" << endl;
             cout << "--------------------------------------------" << endl;
-            cout << "Integrantes: " << endl << " - Augusto Stambassi Duarte" << endl << " - Davi Cândido de Almeida" << endl;
-            cout << " - Gabriela de Assis dos Reis" << endl << " - Lucas Carneiro Nassau Malta" << endl << " - João Pedro Torres" << endl;
+            cout << "Integrantes: " << endl
+                 << " - Augusto Stambassi Duarte" << endl
+                 << " - Davi Cândido de Almeida" << endl;
+            cout << " - Gabriela de Assis dos Reis" << endl
+                 << " - Lucas Carneiro Nassau Malta" << endl
+                 << " - João Pedro Torres" << endl;
             cout << "--------------------------------------------" << endl;
 
             cout << "> Menu " << endl << endl;
@@ -29,7 +33,7 @@ int main(int argc, char* argv[] ) {
             getline(cin, linha);
             opcao = stoi(linha);
 
-            switch(opcao){
+            switch (opcao) {
                 case 1:
                     (new MenuMatriz())->menu();
                     break;
@@ -44,13 +48,12 @@ int main(int argc, char* argv[] ) {
                     break;
             }
 
-            cout << endl <<"Pressione Enter para continuar...";
+            cout << endl << "Pressione Enter para continuar...";
             // cin.ignore();   // limpa o Enter do buffer
-            cin.get();      // espera o Enter
+            cin.get();  // espera o Enter
 
-        } while(opcao != 0);
-
-    } catch(exception& e) {
+        } while (opcao != 0);
+    } catch (exception& e) {
         cout << e.what() << endl;
     }
 

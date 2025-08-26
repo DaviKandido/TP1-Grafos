@@ -1,0 +1,34 @@
+# .clang-format
+BasedOnStyle: Google # Base no estilo Google (limpo e legível)
+IndentWidth: 4 # Espaços por indentação
+TabWidth: 4
+UseTab: Never # Usa espaços em vez de tabs
+ColumnLimit: 100 # Limite de largura de linha
+BreakBeforeBraces: Attach # Abre chaves na mesma linha (K&R)
+AllowShortFunctionsOnASingleLine: false
+PointerAlignment: Left # Alinhamento de ponteiros
+SortIncludes: true # Ordena #include automaticamente
+
+
+# -- Configurando o clang-format -
+
+# 0 - Instale o clang-format: sudo apt install clang-format
+# 1- Como configurar
+# 2- Abra as configurações do VS Code (Ctrl+,).
+# 3- Procure por C_Cpp: Formatting.
+# 4- Na opção Formatter, selecione: clang-format
+# 5- Ative Format On Save para aplicar a formatação automaticamente ao salvar arquivos .cpp ou .h.
+# 6- Coloque o .clang-format na raiz do projeto
+
+
+# -- Testando a formatação--
+
+# Abra qualquer arquivo .cpp ou .h.
+# Salve (Ctrl+S) → ele será formatado automaticamente.
+# Ou pressione Shift+Alt+F → formata manualmente.
+
+
+# -- Testando a formatação (Alternativa) --
+
+# Execute: npm run format-all 
+
