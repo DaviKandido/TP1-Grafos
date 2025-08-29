@@ -11,16 +11,16 @@ int main(int argc, char* argv[]) {
         int opcao = 0;
 
         do {
-            cout << "--------------------------------------------" << endl;
+            cout << "---------------------------------------------" << endl;
             cout << "--- Bem vindo ao TP1 de Teoria dos Grafos ---" << endl;
-            cout << "--------------------------------------------" << endl;
-            cout << "Integrantes: " << endl
-                 << " - Augusto Stambassi Duarte" << endl
-                 << " - Davi Cândido de Almeida" << endl;
-            cout << " - Gabriela de Assis dos Reis" << endl
-                 << " - Lucas Carneiro Nassau Malta" << endl
-                 << " - João Pedro Torres" << endl;
-            cout << "--------------------------------------------" << endl;
+            cout << "---------------------------------------------" << endl;
+            cout << "--------------- Integrantes: ----------------" << endl
+                 << "-------- Augusto Stambassi Duarte -----------" << endl
+                 << "--------- Davi Cândido de Almeida -----------" << endl;
+            cout << "-------  Gabriela de Assis dos Reis ---------" << endl
+                 << "------ Lucas Carneiro Nassau Malta ----------" << endl
+                 << "------------ João Pedro Torres --------------" << endl;
+            cout << "---------------------------------------------" << endl;
 
             cout << "> Menu " << endl << endl;
             cout << "Escolha uma opção de Instancia:" << endl;
@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) {
             cout << "2 - Grafo - Lista de Adjacência" << endl;
             cout << "0 - Sair" << endl << endl;
 
-            cout << "Opação: ";
+            cout << "Opção: ";
             string linha;
             getline(cin, linha);
             opcao = stoi(linha);

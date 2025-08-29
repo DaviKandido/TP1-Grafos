@@ -23,10 +23,10 @@ void menu() {
     cout << "Opção: ";
     cin >> opcao;
 
-
     /**
-     * @attention Acredito que um do while seja uma forma melhor de trabalhar a repetição, veja menuMatriz
-     * 
+     * @attention Acredito que um do while seja uma forma melhor de trabalhar a repetição, veja
+     * menuMatriz
+     *
      */
     while (continuar == 1) {
         switch (opcao) {
