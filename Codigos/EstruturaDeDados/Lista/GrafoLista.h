@@ -22,5 +22,5 @@ class GrafoLista : public IGrafo<int> {
       bool direcionado;
       vector<Vertice> arr;
 
-
+      //a
 };
