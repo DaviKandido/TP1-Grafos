@@ -82,30 +82,28 @@ class GrafoMatriz : public IGrafo<int> {
     /**
      * @bug Erro na variável 'iNovo' (Declaração Ausente)
      */
-    /*
-        bool removerVertice(int v) override {
-            if (!verticeValido(v)) {
-                return false;
-            }
-            int novoNum = numVertices - 1;
-            vector<vector<int>> novaMatriz(
-            novoNum, vector<int>(novoNum, 0));
-
-            for (int i = 0; i < numVertices; ++i) {
-                 if (i == v) continue; // pula a linha do vértice removido
-                 int jNovo = 0;
-                for (int j = 0; j < numVertices; j++) {
-                    if (j == v) continue; // pula a coluna do vértice removido
-                    novaMatriz[iNovo][jNovo] = matrizAdjacencias[i][j];
-                    jNovo++;
-                }
-               iNovo++;
-            }
-            matrizAdjacencias = novaMatriz;
-            numVertices = novoNum;
-            return true;
+    bool removerVertice(int v) override {
+        if (!verticeValido(v)) {
+            return false;
         }
-    */
+        int novoNum = numVertices - 1;
+        vector<vector<int>> novaMatriz(
+        novoNum, vector<int>(novoNum, 0));
+
+        for (int i = 0; i < numVertices; ++i) {
+                if (i == v) continue; // pula a linha do vértice removido
+                int jNovo = 0;
+            for (int j = 0; j < numVertices; j++) {
+                if (j == v) continue; // pula a coluna do vértice removido
+                //novaMatriz[iNovo][jNovo] = matrizAdjacencias[i][j];
+                jNovo++;
+            }
+            //iNovo++;
+        }
+        matrizAdjacencias = novaMatriz;
+        numVertices = novoNum;
+        return true;
+    }
 
     bool removerAresta(int origem, int destino) override {
         // Testar se os vértices são válidos e se há aresta para remover
