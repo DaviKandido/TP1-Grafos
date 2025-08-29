@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <vector>
+#include <string>
 
 #include "../IGrafo.h"
 
