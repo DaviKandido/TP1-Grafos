@@ -7,6 +7,19 @@
 using namespace std;
 
 class GrafoLista : public IGrafo<int> {
-   private:
+
    public:
+
+      struct Vertice
+      {
+         int peso;
+         string rotulo;
+         Vertice* next;
+      };
+      int numVertices;
+      int numArestas;
+      bool direcionado;
+      vector<Vertice> arr;
+
+
 };
