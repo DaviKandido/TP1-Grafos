@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 
-#include "../IGrafo.h"
+#include "../IGrafo.cpp"
 
 using namespace std;
 

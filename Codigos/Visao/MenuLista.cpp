@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../EstruturaDeDados/Lista/GrafoLista.h"
+#include "../EstruturaDeDados/Lista/GrafoLista.cpp"
 
 using namespace std;
 
