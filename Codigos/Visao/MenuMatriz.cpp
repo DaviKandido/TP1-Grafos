@@ -1,8 +1,10 @@
 #include <iostream>
 #include <err.h>
 #include <string>
+#include <limits>
 
-#include "../EstruturaDeDados/Matriz/GrafoMatriz.h"
+#include "../EstruturaDeDados/Matriz/GrafoMatriz.cpp"
+#include "MyIO.cpp"
 #include "../libs/io.hpp"
 
 using namespace std;
@@ -10,8 +12,12 @@ using namespace std;
 class MenuMatriz {
    private:
     GrafoMatriz* grafo;
+    private:
+        const int limiteMaximo = 100;
+        GrafoMatriz* grafo;
 
-   public:
+    public:
+       public:
     /**
      * Menu de op es para manipular o grafo.
      *
@@ -30,365 +36,111 @@ class MenuMatriz {
      * @see imprimeGrafo()
      */
     void menu() {
-        int opcao = 0;
-        do {
-            cout << "> Menu > Matriz" << endl << endl;
-            cout << "1) Instanciar Grafo (Matriz) " << endl;
-            cout << "2) Adicionar Vértice" << endl;
-            cout << "3) Adicionar Aresta" << endl;
-            cout << "4) Remover Vértice" << endl;
-            cout << "5) Remover Aresta" << endl;
-            cout << "6) Consultar Vazinhos de um Vértice" << endl;
-            cout << "7) Consultar Sucessores de um Vértice - DFS" << endl;
-            cout << "8) Consultar Predecessores de um Vértice - DFS" << endl;
-            cout << "9) Remover Grafo" << endl;
-            cout << "10) Imprimir Grafo" << endl;
-            cout << "0) - Sair" << endl << endl;
-
-            cout << "Opção: ";
-            cin >> opcao;
-
-            switch (opcao) {
-                case 1:
-                    intanciaGrafo();
-                    break;
-
-                case 2:
-                    adicionaVertice();
-                    break;
-
-                case 3:
-                    adicionaAresta();
-                    break;
-
-                case 4:
-                    removeVertice();
-                    break;
-
-                case 5:
-                    removeAresta();
-                    break;
-
-                case 6:
-                    consultaVazinhosVertice();
-                    break;
-
-                case 7:
-                    consultarSucessoresVertice();
-                    break;
-
-                case 8:
-                    consultarPredecessoresVertice();
-                    break;
-
-                case 9:
-                    removeGrafo();
-                    break;
-
-                case 10:
-                    imprimeGrafo();
-                    break;
-
-                default:  // Vai funcionar para parar a função
-                    cout << "Opção inválida!" << endl;
-                    break;
-            }
-
-        } while (opcao != 0);
-    }
-
-    /**
-     * Cria um grafo e o armazena em 'grafo'. O grafo pode ser direcionado (1) ou nao direcionado
-     * (2). Solicita ao usuario o numero de vertices e, se solicitado, as arestas do grafo.
-     *
-     * @throws invalid_argument Excecao lancada se o numero de vertices for invalido.
-     */
-    void intanciaGrafo() {
-        try {
-            int numVertices;
             int opcao = 0;
-
             do {
-                cout << "Deseja contruir um grafo direcionado (1) ou nao direcionado (2)?" << endl;
-                cin >> opcao;
-                if (opcao != 1 && opcao != 2) {
-                    cout << "Opcao invalida!" << endl;
-                }
-            } while (opcao != 1 || opcao != 2);
+                cout << "\n> Menu > Matriz" << endl << endl;
+                cout << "1) Instanciar Grafo" << endl;
+                cout << "2) Adicionar Vértice" << endl;
+                cout << "3) Adicionar Aresta" << endl;
+                cout << "4) Remover Vértice" << endl;
+                cout << "5) Remover Aresta" << endl;
+                cout << "6) Consultar Vizinhos de um Vértice" << endl;
+                cout << "7) Consultar Sucessores de um Vértice - DFS" << endl;
+                cout << "8) Consultar Predecessores de um Vértice - DFS" << endl;
+                cout << "9) Imprimir Grafo" << endl;
+                cout << "10) Remover Grafo" << endl;
+                cout << "0) Sair" << endl << endl;
 
-            do {
-                cout << "Insira o numero de vertices: ";
-                cin >> numVertices;
-                if (numVertices <= 0) {
-                    cout << "Opcao invalida!" << endl;
-                    continue;
-                }
-                grafo = new GrafoMatriz(numVertices, opcao == 1);
-            } while (numVertices <= 0);
+                opcao = lerInteiroPositivo("Opção: ", 0, 10);
 
-            opcao = 0;
-            do {
-                cout << "Grafo criado com sucesso!" << endl;
-                cout << "Deseja Adicionar Arestas (1) SIM ou (2) NAO?" << endl;
-                cin >> opcao;
-                if (opcao == 1) {
-                    adicionaAresta();
-                } else if (opcao != 2) {
-                    cout << "Opcao invalida!" << endl;
+                switch (opcao) {
+                    case 1:
+                        intanciaGrafo(); break;
+                    case 2:
+                        adicionaVertice(); break;
+                    case 3:
+                        adicionaAresta(); break;
+                    case 4:
+                        removeVertice(); break;
+                    case 5:
+                        removeAresta(); break;
+                    case 6:
+                        consultaVazinhosVertice(); break;
+                    case 7:
+                        consultarSucessoresVertice(); break;
+                    case 8:
+                        consultarPredecessoresVertice(); break;
+                    case 9:
+                        imprimeGrafo(); break;
+                    case 10:
+                        removeGrafo(); break;
+                    case 0:                
+                        cout << "Saindo..." << endl; cin.get(); break;
+                    default:
+                        cout << "Opção inválida!" << endl; break;
                 }
-            } while (opcao != 2);
-
-        } catch (exception& e) {
-            cout << e.what() << endl;
+                cin.get();
+            } while (opcao != 0);
         }
-    }
 
-    /**
-     * Adiciona um novo vértice no grafo, caso o vértice seja válido.
-     *
-     * @note O vértice é considerado válido se estiver no intervalo [0, numVertices).
-     */
-    void adicionaVertice() {
-        int opcao = 0;
-        do {
-            cout << "Deseja adicionar um vertice (1) SIM ou (2) NAO ?" << endl;
-            cin >> opcao;
-            if (opcao == 1) {
-                grafo->adicionarVertice(grafo->getQuantidadeVertices());
-            } else if (opcao != 2) {
-                cout << "Opcao invalida!" << endl;
-            }
-        } while (opcao != 2);
-    }
+        void intanciaGrafo() {
+            cout << "\n> Menu > Matriz > Instanciar Grafo" << endl << endl;
 
-    /**
-     * Adiciona uma nova aresta no grafo, caso os vértices sejam válidos.
-     *
-     * @note Os vértices são considerados válidos se estiverem no intervalo [0, numVertices).
-     */
-    void adicionaAresta() {
-        int opcao = 0;
-        do {
-            cout << "Seu grafo possui as arestas: " << endl;
-            grafo->imprimir();
-            cout << "Deseja adicionar uma aresta entre quais vertices ?" << endl;
-            int vertice1 = 0, vertice2 = 0;
-            do {
-                cout << "Do Vertice: ";
-                cin >> vertice1;
-                cout << "Para o Vertice: ";
-                cin >> vertice1;
-                if (vertice1 < 0 || vertice2 < 0 || vertice1 >= grafo->getQuantidadeVertices() ||
-                    vertice2 >= grafo->getQuantidadeVertices()) {
-                    cout << "Opcao invalida!" << endl;
-                } else {
-                    grafo->adicionarAresta(vertice1, vertice2);
-                }
-            } while (vertice1 < 0 || vertice2 < 0 || vertice1 >= grafo->getQuantidadeVertices() ||
-                     vertice2 >= grafo->getQuantidadeVertices());
+            // Atributo do grafo
+            int numVertices;
 
-            cout << "De deseja adicionar outra aresta (1) SIM ou (2) NAO ?" << endl;
-            cin >> opcao;
-            if (opcao != 1 && opcao != 2) {
-                cout << "Opcao invalida!" << endl;
-            }
-        } while (opcao != 2);
-    }
+            // Variáveis de controle
+            bool direcionado;
+            bool verticePonderado;
+            bool arestaPonderada;
+            bool verticeRotulado;
+            bool arestaRotulada;
 
-    /**
-     * Remove um vértice do grafo.
-     *
-     * @note O vértice é considerado válido se estiver no intervalo [0, numVertices).
-     */
-    void removeVertice() {
-        int opcao = 0;
-        cout << "Seu grafo possui os vertices: " << endl;
-        grafo->imprimir();
-        do {
-            cout << "Deseja remover qual vertice?" << endl;
-            int vertice1 = 0, vertice2 = 0;
-            do {
-                cout << "Do Vertice: ";
-                cin >> vertice1;
-                cout << "Para o Vertice: ";
-                cin >> vertice1;
-                if (vertice1 < 0 || vertice2 < 0 || vertice1 >= grafo->getQuantidadeVertices() ||
-                    vertice2 >= grafo->getQuantidadeVertices()) {
-                    cout << "Opcao invalida!" << endl;
-                } else {
-                    grafo->removerAresta(vertice1, vertice2);
-                }
-            } while (vertice1 < 0 || vertice2 < 0 || vertice1 >= grafo->getQuantidadeVertices() ||
-                     vertice2 >= grafo->getQuantidadeVertices());
-                     
-            cout << "Deseja remover outra aresta (1) SIM ou (2) NAO ?" << endl;
-            cin >> opcao;
-            if (opcao != 1 && opcao != 2) {
-                cout << "Opcao invalida!" << endl;
-            }
-        } while (opcao != 2);
-    }
+            // Ler as informações do usuário
+            numVertices = lerInteiroPositivo("Número de vértices: ", 1, limiteMaximo);
+            direcionado =      lerBoolean("O grafo é direcionado?      (S/N): ");
+            verticePonderado = lerBoolean("Os vértices são ponderados? (S/N): ");
+            arestaPonderada =  lerBoolean("As arestas são ponderadas?  (S/N): ");
+            verticeRotulado =  lerBoolean("Os vértices são rotulados?  (S/N): ");
+            arestaRotulada =   lerBoolean("As arestas são rotuladas?   (S/N): ");
+            
+            // Criar a instância do grafo
+            this->grafo = new GrafoMatriz(numVertices, direcionado, verticePonderado, arestaPonderada, verticeRotulado, arestaRotulada);
+        }
 
-    /**
-     * Remove uma aresta do grafo.
-     *
-     * @note O vértice é considerado válido se estiver no intervalo [0, numVertices).
-     */
-    void removeAresta() {
-        int opcao = 0;
-        cout << "Seu grafo possui as arestas: " << endl;
-        grafo->imprimir();
-        do {
-            cout << "Deseja remover qual aresta?" << endl;
-            cin >> opcao;
-            if (opcao >= 0 && opcao < grafo->getQuantidadeVertices()) {
-                grafo->removerVertice(opcao);
-            } else {
-                cout << "Opcao invalida!" << endl;
-            }
-            cout << "Deseja remover outro vertice (1) SIM ou (2) NAO ?" << endl;
-            cin >> opcao;
-            if (opcao != 1 && opcao != 2) {
-                cout << "Opcao invalida!" << endl;
-            }
-        } while (opcao != 2);
-    }
+        void adicionaVertice() {
+            cout << "\n> Menu > Matriz > Adicionar Vértice" << endl << endl;
+        }
 
-    /**
-     * Consulta os vértices adjacentes a um dado vértice.
-     *
-     * O usuário é questionado sobre qual vértice ele deseja consultar.
-     *
-     * @note O vértice é considerado válido se estiver no intervalo [0, numVertices).
-     */
-    void consultaVazinhosVertice() {
-        cout << "Seu grafo possui os vertices: " << endl;
-        grafo->imprimir();
-        int opcao = 0;
-        do {
-            cout << "Deseja ver os vertices adjacentes a qual vertice?" << endl;
-            cin >> opcao;
-            if (opcao >= 0 && opcao < grafo->getQuantidadeVertices()) {
-                vector<int> vizinhos = grafo->getVizinhos(opcao);
+        void adicionaAresta() {
+            cout << "\n> Menu > Matriz > Adicionar Aresta" << endl << endl;
+        }
 
-                cout << "Os visinhos do vertice " << opcao << " sao: " << endl;
-                cout << "Vizinhos: { ";
-                for (int vizinho: vizinhos) {
-                    cout << vizinho << ", ";
-                }
-                cout << "}" <<endl;
-            } else {
-                cout << "Opcao invalida!" << endl;
-            }
-            cout << "Deseja ver os vertices adjacentes a outro vertice (1) SIM ou (2) NAO ?" << endl;
-            cin >> opcao;
-            if (opcao != 1 && opcao != 2) {
-                cout << "Opcao invalida!" << endl;
-            }
-        } while (opcao != 2);
-    }
+        void removeVertice() {
+            cout << "\n> Menu > Matriz > Remover Vértice" << endl << endl;
+        }
 
+        void removeAresta() {
+            cout << "\n> Menu > Matriz > Remover Aresta" << endl << endl;
+        }
 
-    /**
-     * Consulta os vértices sucessores a um dado vértice.
-     *
-     * O usuário é questionado sobre qual vértice ele deseja consultar.
-     *
-     * @note O vértice é considerado válido se estiver no intervalo [0, numVertices).
-     */
-    void consultarSucessoresVertice() {
-        cout << "Seu grafo possui os vertices: " << endl;
-        grafo->imprimir();
-        int opcao = 0;
-        do {
-            cout << "Deseja ver o fecho transitivo positivo de qual vertice?" << endl;
-            cin >> opcao;
-            if (opcao >= 0 && opcao < grafo->getQuantidadeVertices()) {
-                vector<int> vizinhos = grafo->getSucessores(opcao);
+        void consultaVazinhosVertice() {
+            cout << "\n> Menu > Matriz > Consultar Vizinhos de Vértice" << endl << endl;
+        }
 
-                cout << "Os sucessores do vertice " << opcao << " sao: " << endl;
-                cout << "sucessores: { ";
-                for (int vizinho: vizinhos) {
-                    cout << vizinho << ", ";
-                }
-                cout << "}" <<endl;
-            } else {
-                cout << "Opcao invalida!" << endl;
-            }
-            cout << "Deseja ver os vertices sucessores a outro vertice (1) SIM ou (2) NAO ?" << endl;
-            cin >> opcao;
-            if (opcao != 1 && opcao != 2) {
-                cout << "Opcao invalida!" << endl;
-            }
-        } while (opcao != 2);
-    }
+        void consultarSucessoresVertice() {
+            cout << "\n> Menu > Matriz > Consultar Sucessores de Vértice" << endl << endl;
+        }
 
-    /**
-     * Consulta os vértices predecessores a um dado vértice.
-     *
-     * O usuário é questionado sobre qual vértice ele deseja consultar.
-     *
-     * @note O vértice é considerado válido se estiver no intervalo [0, numVertices).
-     */
-    void consultarPredecessoresVertice() {
-        cout << "Seu grafo possui os vertices: " << endl;
-        grafo->imprimir();
-        int opcao = 0;
-        do {
-            cout << "Deseja ver o fecho transitivo negativo de qual vertice?" << endl;
-            cin >> opcao;
-            if (opcao >= 0 && opcao < grafo->getQuantidadeVertices()) {
-                vector<int> vizinhos = grafo->getPredecessores(opcao);
+        void consultarPredecessoresVertice() {
+            cout << "\n> Menu > Matriz > Consultar Predecessores de Vértice" << endl << endl;
+        }
+        
+        void imprimeGrafo() {
+            cout << "\n> Menu > Matriz > Imprimir Grafo" << endl << endl;
+        }
 
-                cout << "Os predecessores do vertice " << opcao << " sao: " << endl;
-                cout << "Predecessores: { ";
-                for (int vizinho: vizinhos) {
-                    cout << vizinho << ", ";
-                }
-                cout << "}" <<endl;
-            } else {
-                cout << "Opcao invalida!" << endl;
-            }
-            cout << "Deseja ver os vertices predecessores a outro vertice (1) SIM ou (2) NAO ?" << endl;
-            cin >> opcao;
-            if (opcao != 1 && opcao != 2) {
-                cout << "Opcao invalida!" << endl;
-            }
-        } while (opcao != 2);
-    }
-
-
-
-
-    /**
-     * Remove o grafo.
-     *
-     * O usuário é questionado sobre se ele realmente deseja remover o grafo.
-     *
-     * @note Se o grafo for removido, o objeto que o contém (este) também
-     *       será removido.
-     */
-    void removeGrafo() {
-        int opcao = 0;
-        do {
-            cout << "Deseja realmente remiver o grafo (1) SIM ou (2) NAO ?" << endl;
-            cin >> opcao;
-            if (opcao == 1) {
-                delete grafo;
-            } else if (opcao != 2) {
-                cout << "Opcao invalida!" << endl;
-            }
-        } while (opcao != 2);
-    }
-
-    
-    /**
-     * Imprime o grafo.
-     *
-     *@note  Chama a função imprimir do objeto do tipo GrafoMatriz que é
-     * armazenado no atributo grafo.
-     */
-    void imprimeGrafo() {
-        grafo->imprimir();
-    }
+        void removeGrafo() {
+            cout << "\n> Menu > Matriz > Remover Grafo" << endl << endl;
+        }
 };

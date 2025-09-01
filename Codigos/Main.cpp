@@ -22,36 +22,25 @@ int main(int argc, char* argv[]) {
                  << "------------ João Pedro Torres --------------" << endl;
             cout << "---------------------------------------------" << endl;
 
-            cout << "> Menu " << endl << endl;
-            cout << "Escolha uma opção de Instancia:" << endl;
-            cout << "1 - Grafo - Matriz de Adjacência" << endl;
-            cout << "2 - Grafo - Lista de Adjacência" << endl;
-            cout << "0 - Sair" << endl << endl;
+            cout <<   "> Menu " << endl << endl;
+            cout <<   "Escolha uma implementação:" << endl << endl;
+            cout <<   "1) Matriz de Adjacências" << endl;
+            cout <<   "2) Lista de Adjacências" << endl;
+            cout <<   "0) Sair" << endl << endl;
 
-            cout << "Opção: ";
-            string linha;
-            getline(cin, linha);
-            opcao = stoi(linha);
+            opcao = lerInteiroPositivo("Opção: ", 0, 2);
 
             switch (opcao) {
                 case 1:
-                    (new MenuMatriz())->menu();
-                    break;
+                    (new MenuMatriz())->menu(); break;
                 case 2:
-                    cout << "Instancia Lista de Adjacência" << endl;
-                    break;
+                    cout << "Instancia Lista de Adjacência" << endl; break;
                 case 0:
-                    cout << "Saindo..." << endl;
-                    break;
+                    cout << "Saindo..." << endl; cin.get(); break;
                 default:
-                    cout << "Opção inválida. Tente novamente." << endl;
-                    break;
+                    cout << "Opção inválida. Tente novamente." << endl; break;
             }
-
-            cout << endl << "Pressione Enter para continuar...";
-            // cin.ignore();   // limpa o Enter do buffer
-            cin.get();  // espera o Enter
-
+            cin.get();
         } while (opcao != 0);
     } catch (exception& e) {
         cout << e.what() << endl;
