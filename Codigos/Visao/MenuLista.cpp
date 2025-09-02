@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 
 #include "../EstruturaDeDados/Lista/GrafoLista.cpp"
 
@@ -44,49 +45,50 @@ void menu() {
 
         switch (opcao) {
             case 1:
-                /* code */
+                intanciaGrafo();
                 break;
 
             case 2:
-                /* code */
+                adicionaVertice();
                 break;
 
             case 3:
-                /* code */
+                adicionaAresta();
                 break;
 
             case 4:
-                /* code */
+                removeVertice();
                 break;
 
             case 5:
-                /* code */
+                removeAresta();
                 break;
 
             case 6:
-                /* code */
+                consultaVizinhosVertice();
                 break;
 
             case 7:
-                /* code */
+                consultarSucessoresVertice();
                 break;
 
             case 8:
-                /* code */
+                consultarPredecessoresVertice();
                 break;
 
             case 9:
-                /* code */
+                removeGrafo();
                 break;
 
             case 10:
-                /* code */
+                imprimeGrafo();
                 break;
             case 0:
                 cout << "Obrigado pela preferencia!";
                 break;
-            default:  // Vai funcionar para parar a função
+            default: 
                 cout << "Opção inválida!" << endl;
+                cout << "Porfavor escolha uma das opções a baixo" << endl;
                 break;
         }
 
@@ -95,15 +97,64 @@ void menu() {
 }
 
 void intanciaGrafo(){
-
+    int direcional = 0;
+    int quantidadeV = 0;
+    while(direcional == 1 || direcional == 2){
+        cout << "Você vai contruir um grafo direcional ou não direcional" << endl;
+        cout << "digite o numero referente a sua resposta" << endl;
+        cout << "1 - direcional" << endl;
+        cout << "2 - nao direcional" << endl;
+        cout << "Digitou :";
+        cin >> direcional;
+        if(direcional != 1 || direcional != 2){
+            cout << "Opcao invalida pofavor selecione uma das opções" << endl;
+        }
+    }
+    cout << "Insira quantos vertices possui seu grafo:";
+    cin >> quantidadeV;
+    //Agora tem que chamar uma função de GrafoLista que ainda não foi feito
 }
 
 void adicionaVertice(){
-
+    string rotulo;
+    int peso = 1;
+    bool respostas = false;
+    cout << "Deseja colocar rotulo no seu vertice?" << endl;
+    cout << "0 - não" << endl << "1 - sim" << endl;
+    cin >> respostas;
+    if (respostas){
+       cout << "Digite o rotulo que queira adicionar ao vertice" << endl;
+       cin >> rotulo;
+    }
+    cout << "Deseja alterar o peso do seu vertice?" << endl;
+    cout << "0 - não" << endl << "1 - sim" << endl;
+    cin >> respostas;
+    if (respostas){
+       cout << "Digite o peso que queira atribuir ao vertice" << endl;
+       cin >> peso;
+    }
+    //Agora tem que chamar uma função de GrafoLista que ainda não foi feito
 }
 
 void adicionaAresta(){
-
+    string rotulo;
+    int peso = 1;
+    bool respostas = false;
+    cout << "Deseja colocar rotulo na seu aresta" << endl;
+    cout << "0 - não" << endl << "1 - sim" << endl;
+    cin >> respostas;
+    if (respostas){
+       cout << "Digite o rotulo que queira adicionar á aresta" << endl;
+       cin >> rotulo;
+    }
+    cout << "Deseja alterar o peso da sua aresta?" << endl;
+    cout << "0 - não" << endl << "1 - sim" << endl;
+    cin >> respostas;
+    if (respostas){
+       cout << "Digite o peso que queira atribuir á aresta" << endl;
+       cin >> peso;
+    }
+    //Agora tem que chamar uma função de GrafoLista que ainda não foi feito
 }
 
 void removeVertice(){
@@ -115,6 +166,14 @@ void removeAresta(){
 }
 
 void consultaVizinhosVertice(){
+
+}
+
+void consultarSucessoresVertice(){
+
+}
+
+void consultarPredecessoresVertice(){
 
 }
 
