@@ -1,5 +1,4 @@
 #include <iostream>
-#include <err.h>
 #include <string>
 #include <limits>
 
@@ -46,12 +45,13 @@ class MenuMatriz {
                 cout << "6) Consultar Vizinhos de um Vértice" << endl;
                 cout << "7) Consultar Sucessores de um Vértice - DFS" << endl;
                 cout << "8) Consultar Predecessores de um Vértice - DFS" << endl;
-                cout << "9) Imprimir Grafo" << endl;
-                cout << "10) Remover Grafo" << endl;
-                cout << "11) Criar grafo de teste" << endl;
+                cout << "9) Busca em Profundidade - DFS" << endl;
+                cout << "10) Imprimir Grafo" << endl;
+                cout << "11) Remover Grafo" << endl;
+                cout << "12) Criar grafo de teste" << endl;
                 cout << "0) Sair" << endl << endl;
 
-                opcao = lerInteiro("Opção: ", 0, 11);
+                opcao = lerInteiro("Opção: ", 0, 12);
 
                 switch (opcao) {
                     case 1:
@@ -87,13 +87,17 @@ class MenuMatriz {
                         break;
                     case 9:
                         if (grafoInstanciado())
-                            imprimeGrafo(); 
+                            buscaProfundidade(); 
                         break;
                     case 10:
                         if (grafoInstanciado())
-                            removeGrafo(); 
+                            imprimeGrafo(); 
                         break;
                     case 11:
+                        if (grafoInstanciado())
+                            removeGrafo(); 
+                        break;
+                    case 12:
                         criarGrafoPadrao();
                         break;
                     case 0:                
@@ -327,6 +331,23 @@ class MenuMatriz {
             cout << "}" << endl;
         }
         
+
+        void buscaProfundidade() {
+            cout << "\n> Menu > Matriz > Busca em Profundidade" << endl << endl;
+
+            grafo->imprimir();
+
+            // int opcao = lerInteiro("Deseja Fazer uma busca em profundidade a partir de qual vértice? ", 0, (grafo->getQuantidadeVertices() - 1));
+
+            vector<vector<int>> tempos = grafo->buscaEmProfundidade();
+
+            cout << "Tempos: { ";
+            for(int i = 0; i < grafo->getQuantidadeVertices(); i++) {
+                cout << "\n Vertice[" << i << "] = " << tempos[i][0] << " - " << tempos[i][1] << " ";
+            }
+
+            cout << "\n}" << endl;
+        }
         /**
          * Imprime o grafo.
          *

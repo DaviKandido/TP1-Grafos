@@ -32,15 +32,18 @@
     "flags": "-Wall -std=c++17"
   },
   "scripts": {
-    "dev": "mkdir -p bin && g++ Main.cpp -o bin/Main -Wall -std=c++17 -g -fsanitize=address && ./bin/Main",
-    "build": "mkdir -p bin && g++ Main.cpp -o bin/Main -Wall -std=c++17",
+    "dev": "shx mkdir -p bin && g++ Main.cpp -o bin/Main -Wall -std=c++17 -g && ./bin/Main",
+    "build": "shx mkdir -p bin && g++ Main.cpp -o bin/Main -Wall -std=c++17",
     "run": "./bin/Main",
-    "clean": "rm -rf bin/*",
-    "build-and-run": "mkdir -p bin && g++ Main.cpp -o bin/Main -Wall -std=c++17 && ./bin/Main",
+    "clean": "shx rm -rf bin/*",
+    "build-and-run": "shx mkdir -p bin && g++ Main.cpp -o bin/Main -Wall -std=c++17 && ./bin/Main",
     "format-all": "clang-format -i *.cpp && npm run formatVisao && npm run formatEstruturas && npm run formatMatriz && npm run formatListas",
     "formatVisao": "clang-format -i Visao/*.cpp",
     "formatEstruturas": "clang-format -i EstruturaDeDados/*.h",
     "formatListas": "clang-format -i EstruturaDeDados/Lista/*.h",
     "formatMatriz": "clang-format -i EstruturaDeDados/Matriz/*.h"
+  },
+  "devDependencies": {
+    "shx": "^0.4.0"
   }
 }

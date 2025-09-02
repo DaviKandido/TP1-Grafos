@@ -42,7 +42,8 @@ int lerInteiro(const string& mensagem, const int limiteInferior, const int limit
 
 bool lerBoolean(const string& mensagem) {
     string entrada;
-    bool controle = true;
+
+    // bool controle = true;
 
     while (true) {
         // Ler a entrada padrão
@@ -59,12 +60,12 @@ bool lerBoolean(const string& mensagem) {
                 case 's':
                 case 'Y':
                 case 'y':
-                    controle = false;
+                    // controle = false;
                     return true; // Retorna verdadeiro para as opções afirmativas
 
                 case 'N':
                 case 'n':
-                    controle = false;
+                    // controle = false;
                     return false; // Retorna falso para as opções negativas
             }
         }

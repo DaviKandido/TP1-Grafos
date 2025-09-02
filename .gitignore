@@ -1,0 +1,88 @@
+# =======================
+# Node.js
+# =======================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+
+# Ambiente
+.env
+.env.local
+.env.*.local
+
+# Diretórios temporários do npm/yarn
+.npm
+.cache
+.pnpm-store
+
+# =======================
+# C++ / Build
+# =======================
+# Diretórios de build
+bin/
+build/
+out/
+dist/
+
+# Objetos compilados
+*.o
+*.obj
+*.lo
+*.slo
+
+# Executáveis
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# Arquivos de biblioteca
+*.lib
+*.a
+*.la
+*.lo
+*.dll
+*.so
+*.dylib
+
+# Arquivos de debug
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Outros intermediários
+*.mod
+*.cmd
+*.mod.c
+*.ko
+*.def
+*.exp
+
+# =======================
+# IDEs / Editores
+# =======================
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+*.bak
+
+# =======================
+# Sistema Operacional
+# =======================
+# Windows
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride

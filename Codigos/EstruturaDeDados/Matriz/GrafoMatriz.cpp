@@ -7,6 +7,14 @@
 
 using namespace std;
 
+enum cores {
+    BRANCO,
+    VERMELHO,
+    PRETO
+};
+int tempo = 0;
+
+
 class GrafoMatriz : public IGrafo<int> {
     private:
         // Estruturas de dados
@@ -17,6 +25,7 @@ class GrafoMatriz : public IGrafo<int> {
         // Atributos do grafo
         int numVertices;
         int numArestas;
+        
 
         // Validar se um vértice está dentro dos limites
         bool verticeValido(int v) const {
@@ -314,6 +323,47 @@ class GrafoMatriz : public IGrafo<int> {
             }
             return predecessores;
         }
+
+        /**
+         * Busca em profundidade (DFS) do grafo.
+         *
+         * O vetor de cores é utilizado para marcar os vértices como branco (não visitado),
+         * vermelho (visitado) ou preto (visitado e finalizado).O vetor de tempos é utilizado para armazenar 
+         * os tempos de início e fim de cada vértice.
+         *
+         * @return Vetor com os tempos de início e fim de cada vértice.
+         */
+
+        vector<vector<int>> buscaEmProfundidade() const {
+
+            // Definir vector com todos os vizinhos do grafo como branco
+            vector<cores> coresVertices(numVertices, cores::BRANCO);
+            vector<vector<int>> temposVertices(numVertices, vector<int>(2, 0));
+
+            for(int i = 0; i < numVertices; i++){
+                if(coresVertices[i] == cores::BRANCO){
+                    buscaEmProfundidade(i, coresVertices, temposVertices);
+                }
+            }
+
+            return temposVertices;
+        }
+
+        vector<vector<int>> buscaEmProfundidade(int i, vector<cores> &coresVertices, vector<vector<int>> &temposVertices) const {
+            coresVertices[i] = cores::VERMELHO;
+            temposVertices[i][0] = ++tempo;
+            for(int j = 0; j < numVertices; j++){
+                if(matrizAdjacencias[i][j] != 0 && coresVertices[j] == cores::BRANCO){
+                    buscaEmProfundidade(j, coresVertices, temposVertices);
+                }
+            }
+
+            coresVertices[i] = cores::PRETO;
+            temposVertices[i][1] = ++tempo;
+            return temposVertices;
+        }
+
+        
 
         void imprimir() const override {
             cout << "------- Matriz de Adjacências -------" << endl;
