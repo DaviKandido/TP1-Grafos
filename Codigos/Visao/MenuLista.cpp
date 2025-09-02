@@ -4,6 +4,25 @@
 
 using namespace std;
 
+
+ /**
+     * Menu de operações para manipular o grafo.
+     *
+     * Pergunta ao usuario qual opção ele deseja fazer, dependendo da escolha,
+     * chama a respectiva função para realizar a operação que desejada.
+     *
+     * @see intanciaGrafo()
+     * @see adicionaVertice()
+     * @see adicionaAresta()
+     * @see removeVertice()
+     * @see removeAresta()
+     * @see consultaVizinhosVertice()
+     * @see consultarSucessoresVertice()
+     * @see consultarPredecessoresVertice()
+     * @see removeGrafo()
+     * @see imprimeGrafo()
+     */
+
 void menu() {
     int opcao = -1;
     while (opcao != 0) {
@@ -23,11 +42,6 @@ void menu() {
         cout << "Opção: ";
         cin >> opcao;
 
-    /**
-     * @attention Acredito que um do while seja uma forma melhor de trabalhar a repetição, veja
-     * menuMatriz
-     *
-     */
         switch (opcao) {
             case 1:
                 /* code */
@@ -78,4 +92,36 @@ void menu() {
 
        
     }
+}
+
+void intanciaGrafo(){
+
+}
+
+void adicionaVertice(){
+
+}
+
+void adicionaAresta(){
+
+}
+
+void removeVertice(){
+
+}
+
+void removeAresta(){
+
+}
+
+void consultaVizinhosVertice(){
+
+}
+
+void removeGrafo(){
+
+}
+
+void imprimeGrafo(){
+
 }
