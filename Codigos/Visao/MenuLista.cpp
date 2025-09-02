@@ -1,9 +1,11 @@
 #include <iostream>
 #include <string>
+#include "MyIO.cpp"
 
 #include "../EstruturaDeDados/Lista/GrafoLista.cpp"
 
 using namespace std;
+#define maxVertice 2147483647
 
 
  /**
@@ -96,64 +98,66 @@ void menu() {
     }
 }
 
-void intanciaGrafo(){
-    int direcional = 0;
-    int quantidadeV = 0;
-    while(direcional == 1 || direcional == 2){
-        cout << "Você vai contruir um grafo direcional ou não direcional" << endl;
-        cout << "digite o numero referente a sua resposta" << endl;
-        cout << "1 - direcional" << endl;
-        cout << "2 - nao direcional" << endl;
-        cout << "Digitou :";
-        cin >> direcional;
-        if(direcional != 1 || direcional != 2){
-            cout << "Opcao invalida pofavor selecione uma das opções" << endl;
-        }
-    }
-    cout << "Insira quantos vertices possui seu grafo:";
-    cin >> quantidadeV;
-    //Agora tem que chamar uma função de GrafoLista que ainda não foi feito
+    /**
+     * Cria um grafo e o armazena em 'grafo'. O grafo pode ser direcionado ou não-direcionado, ponderado ou não ponderado e rotulado ou não rotulado.
+     */
+    void intanciaGrafo() {
+        cout << "\n> Menu > Lista > Instanciar Grafo" << endl << endl;
+
+        // Atributo do grafo
+        int numVertices;
+
+        // Variáveis de controle
+        bool direcionado;
+        bool verticePonderado;
+        bool arestaPonderada;
+        bool verticeRotulado;
+        bool arestaRotulada;
+
+        // Ler as informações do usuário
+        numVertices = lerInteiro("Número de vértices: ", 1, maxVertice);
+
+        direcionado      = lerBoolean("O grafo é direcionado?      (S/N): ");
+        verticePonderado = lerBoolean("Os vértices são ponderados? (S/N): ");
+        arestaPonderada  = lerBoolean("As arestas são ponderadas?  (S/N): ");
+        verticeRotulado  = lerBoolean("Os vértices são rotulados?  (S/N): ");
+        arestaRotulada   = lerBoolean("As arestas são rotuladas?   (S/N): ");
+        // Aqui ainda ta faltando implementar o GrafoLista
 }
 
 void adicionaVertice(){
-    string rotulo;
+    cout << "\n> Menu > Lista > Adicionar Vértice" << endl << endl;
+
+    //Variaveis nas suas formas padrão caso seja não rotulado e não ponderado
+    string rotulo = "";
     int peso = 1;
-    bool respostas = false;
-    cout << "Deseja colocar rotulo no seu vertice?" << endl;
-    cout << "0 - não" << endl << "1 - sim" << endl;
-    cin >> respostas;
-    if (respostas){
-       cout << "Digite o rotulo que queira adicionar ao vertice" << endl;
-       cin >> rotulo;
+    //teste de ponderado e de rotulo
+    if(grafo->verticeRotulado == 1){
+        rotulo = lerRotulo("Rótulo do vértice: ");
     }
-    cout << "Deseja alterar o peso do seu vertice?" << endl;
-    cout << "0 - não" << endl << "1 - sim" << endl;
-    cin >> respostas;
-    if (respostas){
-       cout << "Digite o peso que queira atribuir ao vertice" << endl;
-       cin >> peso;
+
+    if(grafo->verticePonderado == 1){
+        rotulo = lerInteiro("Rótulo do vértice: ");
     }
+
     //Agora tem que chamar uma função de GrafoLista que ainda não foi feito
 }
 
 void adicionaAresta(){
-    string rotulo;
+    cout << "\n> Menu > Lista > Adicionar Aresta" << endl << endl;
+
+    //Variaveis nas suas formas padrão caso seja não rotulado e não ponderado
+    string rotulo = "";
     int peso = 1;
-    bool respostas = false;
-    cout << "Deseja colocar rotulo na seu aresta" << endl;
-    cout << "0 - não" << endl << "1 - sim" << endl;
-    cin >> respostas;
-    if (respostas){
-       cout << "Digite o rotulo que queira adicionar á aresta" << endl;
-       cin >> rotulo;
+    //teste de ponderado e de rotulo
+    if(grafo->arestaRotulado == 1){
+        rotulo = lerRotulo("Rótulo da aresta: ");
     }
-    cout << "Deseja alterar o peso da sua aresta?" << endl;
-    cout << "0 - não" << endl << "1 - sim" << endl;
-    cin >> respostas;
-    if (respostas){
-       cout << "Digite o peso que queira atribuir á aresta" << endl;
-       cin >> peso;
+
+    if(grafo->arestaPonderado == 1){
+        rotulo = lerInteiro("Rótulo da aresta: ");
     }
+
     //Agora tem que chamar uma função de GrafoLista que ainda não foi feito
 }
 
