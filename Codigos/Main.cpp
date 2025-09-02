@@ -10,48 +10,36 @@ int main(int argc, char* argv[]) {
     try {
         int opcao = 0;
 
-        do {
-            cout << "---------------------------------------------" << endl;
-            cout << "--- Bem vindo ao TP1 de Teoria dos Grafos ---" << endl;
-            cout << "---------------------------------------------" << endl;
-            cout << "--------------- Integrantes: ----------------" << endl
-                 << "-------- Augusto Stambassi Duarte -----------" << endl
-                 << "--------- Davi Cândido de Almeida -----------" << endl;
-            cout << "-------  Gabriela de Assis dos Reis ---------" << endl
-                 << "------ Lucas Carneiro Nassau Malta ----------" << endl
-                 << "------------ João Pedro Torres --------------" << endl;
-            cout << "---------------------------------------------" << endl;
+        cout << "---------------------------------------------" << endl;
+        cout << "--- Bem vindo ao TP1 de Teoria dos Grafos ---" << endl;
+        cout << "---------------------------------------------" << endl;
+        cout << "--------------- Integrantes: ----------------" << endl
+             << "---------- Augusto Stambassi Duarte ---------" << endl
+             << "---------- Davi Cândido de Almeida ----------" << endl;
+        cout << "-------  Gabriela de Assis dos Reis ---------" << endl
+             << "-------- Lucas Carneiro Nassau Malta --------" << endl
+             << "------------- João Pedro Torres -------------" << endl;
+        cout << "---------------------------------------------" << endl;
 
-            cout << "> Menu " << endl << endl;
-            cout << "Escolha uma opção de Instancia:" << endl;
-            cout << "1 - Grafo - Matriz de Adjacência" << endl;
-            cout << "2 - Grafo - Lista de Adjacência" << endl;
-            cout << "0 - Sair" << endl << endl;
+        cout <<   "\n> Menu " << endl << endl;
+        cout <<   "Escolha uma implementação:" << endl << endl;
+        cout <<   "1) Matriz de Adjacências" << endl;
+        cout <<   "2) Lista de Adjacências" << endl;
+        cout <<   "0) Sair" << endl << endl;
 
-            cout << "Opção: ";
-            string linha;
-            getline(cin, linha);
-            opcao = stoi(linha);
+        do {       
+            opcao = lerInteiro("Opção: ", 0, 2);
 
             switch (opcao) {
                 case 1:
-                    (new MenuMatriz())->menu();
-                    break;
+                    (new MenuMatriz())->menu(); break;
                 case 2:
-                    cout << "Instancia Lista de Adjacência" << endl;
-                    break;
+                    cout << "\nInstancia Lista de Adjacências" << endl; break;
                 case 0:
-                    cout << "Saindo..." << endl;
-                    break;
+                    cout << "\nSaindo..." << endl; break;
                 default:
-                    cout << "Opção inválida. Tente novamente." << endl;
-                    break;
+                    cout << "\nOpção inválida. Tente novamente." << endl; break;
             }
-
-            cout << endl << "Pressione Enter para continuar...";
-            // cin.ignore();   // limpa o Enter do buffer
-            cin.get();  // espera o Enter
-
         } while (opcao != 0);
     } catch (exception& e) {
         cout << e.what() << endl;

@@ -26,8 +26,8 @@ class IGrafo {
 
     // Métodos para obter adjacências
     virtual vector<TVertice> getVizinhos(TVertice v) const = 0;
-    virtual vector<TVertice> getSucessores(TVertice v) const = 0;
-    virtual vector<TVertice> getPredecessores(TVertice v) const = 0;
+    virtual vector<TVertice> getDescendentes(TVertice v) const = 0;
+    virtual vector<TVertice> getAncestrais(TVertice v) const = 0;
 
     // Método para visualização
     virtual void imprimir() const = 0;
