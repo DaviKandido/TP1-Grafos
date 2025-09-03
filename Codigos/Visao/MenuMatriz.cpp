@@ -28,8 +28,8 @@ class MenuMatriz {
          * @see removeVertice()
          * @see removeAresta()
          * @see consultaVizinhosVertice()
-         * @see consultarDescendentesVertice()
-         * @see consultarAncestraisVertice()
+         * @see consultarFechoTransitivoDireto()
+         * @see consultarFechoTransitivoInverso()
          * @see removeGrafo()
          * @see imprimeGrafo()
          */
@@ -43,8 +43,8 @@ class MenuMatriz {
                 cout << "4) Remover Vértice" << endl;
                 cout << "5) Remover Aresta" << endl;
                 cout << "6) Consultar Vizinhos de um Vértice" << endl;
-                cout << "7) Consultar Sucessores de um Vértice - DFS" << endl;
-                cout << "8) Consultar Predecessores de um Vértice - DFS" << endl;
+                cout << "7) Fecho Transitivo Direto de um Vértice" << endl;
+                cout << "8) Fecho Transitivo Inverso de um Vértice" << endl;
                 cout << "9) Busca em Profundidade - DFS" << endl;
                 cout << "10) Imprimir Grafo" << endl;
                 cout << "11) Remover Grafo" << endl;
@@ -79,11 +79,11 @@ class MenuMatriz {
                         break;
                     case 7:
                         if (grafoInstanciado())
-                            consultarDescendentesVertice(); 
+                            consultarFechoTransitivoDireto(); 
                         break;
                     case 8:
                         if (grafoInstanciado())
-                            consultarAncestraisVertice(); 
+                            consultarFechoTransitivoInverso(); 
                         break;
                     case 9:
                         if (grafoInstanciado())
@@ -292,16 +292,16 @@ class MenuMatriz {
          *
          * @note O vértice é considerado válido se estiver no intervalo [0, numVertices).
          */
-        void consultarDescendentesVertice() {
-            cout << "\n> Menu > Matriz > Consultar Descendentes de Vértice" << endl << endl;
+        void consultarFechoTransitivoDireto() {
+            cout << "\n> Menu > Matriz > Consultar Fecho Transitivo Direto de Vértice" << endl << endl;
 
             grafo->imprimir();
 
-            int opcao = lerInteiro("Deseja ver os descendentes de qual vértice? ", 0, (grafo->getQuantidadeVertices() - 1));
+            int opcao = lerInteiro("Deseja ver o Fecho Transitivo Direto de qual vértice? ", 0, (grafo->getQuantidadeVertices() - 1));
 
-            vector<int> descendentes = grafo->getDescendentes(opcao);
+            vector<int> descendentes = grafo->fechoTransitivoDireto(opcao);
 
-            cout << "\nDescendentes: { ";
+            cout << "\n{ ";
             for (int descendente: descendentes) {
                 cout << descendente << " ";
             }
@@ -315,16 +315,16 @@ class MenuMatriz {
          *
          * @note O vértice é considerado válido se estiver no intervalo [0, numVertices).
          */
-        void consultarAncestraisVertice() {
-            cout << "\n> Menu > Matriz > Consultar Ancestrais de Vértice" << endl << endl;
+        void consultarFechoTransitivoInverso() {
+            cout << "\n> Menu > Matriz > Consultar Fecho Transitivo Inverso de Vértice" << endl << endl;
 
             grafo->imprimir();
 
-            int opcao = lerInteiro("Deseja ver os ancestrais de qual vértice? ", 0, (grafo->getQuantidadeVertices() - 1));
+            int opcao = lerInteiro("Deseja ver o Fecho Transitivo Inverso de qual vértice? ", 0, (grafo->getQuantidadeVertices() - 1));
 
-            vector<int> ancestrais = grafo->getAncestrais(opcao);
+            vector<int> ancestrais = grafo->fechoTransitivoInverso(opcao);
 
-            cout << "\nancestrais: { ";
+            cout << "\n{ ";
             for (int ancestral: ancestrais) {
                 cout << ancestral << " ";
             }
@@ -389,25 +389,30 @@ class MenuMatriz {
             }
             
             // Atributos do grafo
-            int numVertices = 5;
-            int numArestas = numVertices * (numVertices - 1);
+            int numVertices = 4;
 
             // Variáveis de controle
-            bool direcionado = false;
+            bool direcionado      = true;
             bool verticePonderado = false;
-            bool arestaPonderada = false;
-            bool verticeRotulado = false;
-            bool arestaRotulada = false;
+            bool arestaPonderada  = false;
+            bool verticeRotulado  = true;
+            bool arestaRotulada   = true;
 
             // Criar o grafo
             this->grafo = new GrafoMatriz(numVertices, direcionado, verticePonderado, arestaPonderada, verticeRotulado, arestaRotulada);
 
-            // Inserir arestas
-            for (int i = 1; i < numArestas; i++) {
-                grafo->adicionarAresta(i, i - 1);
-            }
-            for (int i = 2; i < numArestas; i++) {
-                grafo->adicionarAresta(i, i - 2);
-            }
+            // Adiciona rótulos aos vértices
+            this->grafo->adicionarVertice(0, "A");
+            this->grafo->adicionarVertice(1, "B");
+            this->grafo->adicionarVertice(2, "C");
+            this->grafo->adicionarVertice(3, "D");
+
+            // Adiciona arestas com rótulos
+            this->grafo->adicionarAresta(0, 1, 1, "Rua 1");
+            this->grafo->adicionarAresta(0, 2, 1, "Rua 2");
+            this->grafo->adicionarAresta(1, 2, 1, "Avenida Principal");
+            this->grafo->adicionarAresta(2, 3, 1, "Ponte");
+
+            cout << "\nGrafo padrão criado com sucesso!" << endl;
         }
 };
