@@ -153,6 +153,14 @@ class MenuLista{
         //Variaveis nas suas formas padrão caso seja não rotulado e não ponderado
         string rotulo = "";
         int peso = 1;
+        //Variaveis para indicar qual vertice o usario deseja
+        int inicio;
+        int fim;
+        grafo->imprimir();
+
+        inicio =  lerInteiro("Digite o número do vértice de saida: ", 0, grafo->getQuantidadeVertices());
+        fim = lerInteiro("Digite o número do vértice de chegada: ", 0, grafo->getQuantidadeVertices());
+
         //teste de ponderado e de rotulo
         if(grafo->arestaRotulada == 1){
             rotulo = lerRotulo("Rótulo da aresta: ");
@@ -166,30 +174,48 @@ class MenuLista{
     }
 
     void removeVertice(){
+        cout << "\n> Menu > Lista > Remover Vértice" << endl << endl;
+        //Variavel para indicar a posição do vertice no array
+        int vertice;
+
+        grafo->imprimir();
+
+        vertice = lerInteiro("Digite o número do vértice que deseja remover", 0 ,grafo->getQuantidadeVertices());
+
+
 
     }
 
     void removeAresta(){
+        cout << "\n> Menu > Lista > Remover Aresta" << endl << endl;
 
     }
 
     void consultaVizinhosVertice(){
-
+        cout << "\n> Menu > Lista > Consultar Vizinhos de Vértice" << endl << endl;
     }
 
     void consultarSucessoresVertice(){
-
+        cout << "\n> Menu > Lista > Consultar Fecho Transitivo Direto de Vértice" << endl << endl;
     }
 
     void consultarPredecessoresVertice(){
-
+        cout << "\n> Menu > Lista > Consultar Fecho Transitivo Inverso de Vértice" << endl << endl;
     }
 
     void removeGrafo(){
+        cout << "\n> Menu > Lista > Remover Grafo" << endl << endl;
 
+        bool controle = lerBoolean("Você confirma a exclusão do grafo? (S/N): ");
+
+        if (controle) {
+            delete grafo;
+            grafo = NULL;
+            cout << "\nGrafo removido com sucesso." << endl;
+        }
     }
 
     void imprimeGrafo(){
-
+        grafo->imprimir();
     }
 };
