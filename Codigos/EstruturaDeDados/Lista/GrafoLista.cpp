@@ -706,14 +706,14 @@ class GrafoLista : public IGrafo<Vertice> {
         for (int i = 0; i < listaPrincipal.size(); i++) {
             const NoVertice &v = listaPrincipal.at(i);
             if (verticePonderado && verticeRotulado) {
-                oss << " [" << v.vertice.getId() << ", " << v.vertice.getPeso() << ", "
+                oss << i << " [" << v.vertice.getId() << ", " << v.vertice.getPeso() << ", "
                     << v.vertice.getRotulo() << "]";
             } else if (verticePonderado) {
-                oss << " [" << v.vertice.getId() << ", " << v.vertice.getPeso() << "]";
+                oss << i << " [" << v.vertice.getId() << ", " << v.vertice.getPeso() << "]";
             } else if (verticeRotulado) {
-                oss << " [" << v.vertice.getId() << ", " << v.vertice.getRotulo() << "]";
+                oss << i << " [" << v.vertice.getId() << ", " << v.vertice.getRotulo() << "]";
             } else {
-                oss << " [" << v.vertice.getId() << "]";
+                oss << i << " [" << v.vertice.getId() << "]";
             }
 
             str = oss.str();

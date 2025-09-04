@@ -110,6 +110,7 @@ class MenuLista {
         int numVertices;
 
         // Variáveis de controle
+        bool simples;
         bool direcionado;
         bool verticePonderado;
         bool arestaPonderada;
@@ -119,14 +120,15 @@ class MenuLista {
         // Ler as informações do usuário
         numVertices = lerInteiro("Número de vértices: ", 1, maxVertice);
 
+        simples = lerBoolean("O grafo é simples?      (S/N): ");
         direcionado = lerBoolean("O grafo é direcionado?      (S/N): ");
         verticePonderado = lerBoolean("Os vértices são ponderados? (S/N): ");
         arestaPonderada = lerBoolean("As arestas são ponderadas?  (S/N): ");
         verticeRotulado = lerBoolean("Os vértices são rotulados?  (S/N): ");
         arestaRotulada = lerBoolean("As arestas são rotuladas?   (S/N): ");
         // Aqui ainda ta faltando implementar o GrafoLista
-        this->grafo = new GrafoLista(numVertices, direcionado, verticePonderado, arestaPonderada,
-                                     verticeRotulado, arestaRotulada);
+        this->grafo = new GrafoLista(simples, direcionado, verticePonderado, arestaPonderada,
+                                     verticeRotulado, arestaRotulada,numVertices);
     }
 
     void adicionaVertice() {
@@ -144,7 +146,7 @@ class MenuLista {
             rotulo = lerInteiro("Peso do vértice: ", (0 - maxVertice), maxVertice);
         }
 
-        // Agora tem que chamar uma função de GrafoLista que ainda não foi feito
+        Vertice* novo = new Vertice(grafo->numVertices,peso,rotulo);
     }
 
     void adicionaAresta() {
@@ -157,11 +159,9 @@ class MenuLista {
         int inicio;
         int fim;
         grafo->imprimir();
-
-        inicio =
-            lerInteiro("Digite o número do vértice de saida: ", 0, grafo->getQuantidadeVertices());
-        fim = lerInteiro("Digite o número do vértice de chegada: ", 0,
-                         grafo->getQuantidadeVertices());
+        cout << "Digite o numero que aparece na frente da linha";
+        inicio = lerInteiro("Digite o número do vértice de saida: ", 0, grafo->getQuantidadeVertices());
+        fim = lerInteiro("Digite o número do vértice de chegada: ", 0,grafo->getQuantidadeVertices());
 
         // teste de ponderado e de rotulo
         if (grafo->arestaRotulada == 1) {
