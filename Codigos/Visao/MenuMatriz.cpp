@@ -23,6 +23,7 @@ class MenuMatriz {
          * chama a respectiva função para realizar a operação que desejada.
          *
          * @see intanciaGrafo()
+         * @see criaGrafoTeste()
          * @see adicionaVertice()
          * @see adicionaAresta()
          * @see removeVertice()
@@ -30,6 +31,7 @@ class MenuMatriz {
          * @see consultaVizinhosVertice()
          * @see consultarFechoTransitivoDireto()
          * @see consultarFechoTransitivoInverso()
+         * @see buscaProfundidade()
          * @see removeGrafo()
          * @see imprimeGrafo()
          */
@@ -38,17 +40,17 @@ class MenuMatriz {
             do {
                 cout << "\n> Menu > Matriz" << endl << endl;
                 cout << "1) Instanciar Grafo" << endl;
-                cout << "2) Adicionar Vértice" << endl;
-                cout << "3) Adicionar Aresta" << endl;
-                cout << "4) Remover Vértice" << endl;
-                cout << "5) Remover Aresta" << endl;
-                cout << "6) Consultar Vizinhos de um Vértice" << endl;
-                cout << "7) Fecho Transitivo Direto de um Vértice" << endl;
-                cout << "8) Fecho Transitivo Inverso de um Vértice" << endl;
-                cout << "9) Busca em Profundidade - DFS" << endl;
-                cout << "10) Imprimir Grafo" << endl;
-                cout << "11) Remover Grafo" << endl;
-                cout << "12) Criar grafo de teste" << endl;
+                cout << "2) Criar grafo de teste" << endl;
+                cout << "3) Adicionar Vértice" << endl;
+                cout << "4) Adicionar Aresta" << endl;
+                cout << "5) Remover Vértice" << endl;
+                cout << "6) Remover Aresta" << endl;
+                cout << "7) Consultar Vizinhos de um Vértice" << endl;
+                cout << "8) Fecho Transitivo Direto de um Vértice" << endl;
+                cout << "9) Fecho Transitivo Inverso de um Vértice" << endl;
+                cout << "10) Busca em Profundidade - DFS" << endl;
+                cout << "11) Imprimir Grafo" << endl;
+                cout << "12) Remover Grafo" << endl;
                 cout << "0) Sair" << endl << endl;
 
                 opcao = lerInteiro("Opção: ", 0, 12);
@@ -58,47 +60,47 @@ class MenuMatriz {
                         intanciaGrafo(); 
                         break;
                     case 2:
-                        if (grafoInstanciado())
-                            adicionaVertice(); 
+                        criarGrafoPadrao();
                         break;
                     case 3:
                         if (grafoInstanciado())
-                            adicionaAresta(); 
+                            adicionaVertice(); 
                         break;
                     case 4:
                         if (grafoInstanciado())
-                            removeVertice(); 
+                            adicionaAresta(); 
                         break;
                     case 5:
                         if (grafoInstanciado())
-                            removeAresta(); 
+                            removeVertice(); 
                         break;
                     case 6:
                         if (grafoInstanciado())
-                            consultaVizinhosVertice(); 
+                            removeAresta(); 
                         break;
                     case 7:
                         if (grafoInstanciado())
-                            consultarFechoTransitivoDireto(); 
+                            consultaVizinhosVertice(); 
                         break;
                     case 8:
                         if (grafoInstanciado())
-                            consultarFechoTransitivoInverso(); 
+                            consultarFechoTransitivoDireto(); 
                         break;
                     case 9:
                         if (grafoInstanciado())
-                            buscaProfundidade(); 
+                            consultarFechoTransitivoInverso(); 
                         break;
                     case 10:
                         if (grafoInstanciado())
-                            imprimeGrafo(); 
+                            buscaProfundidade(); 
                         break;
                     case 11:
                         if (grafoInstanciado())
-                            removeGrafo(); 
+                            imprimeGrafo(); 
                         break;
                     case 12:
-                        criarGrafoPadrao();
+                        if (grafoInstanciado())
+                            removeGrafo(); 
                         break;
                     case 0:                
                         cout << "\nSaindo..." << endl << endl; 
@@ -337,9 +339,9 @@ class MenuMatriz {
 
             grafo->imprimir();
 
-            // int opcao = lerInteiro("Deseja Fazer uma busca em profundidade a partir de qual vértice? ", 0, (grafo->getQuantidadeVertices() - 1));
+            int opcao = lerInteiro("Deseja Fazer uma busca em profundidade a partir de qual vértice? ", 0, (grafo->getQuantidadeVertices() - 1));
 
-            vector<vector<int>> tempos = grafo->buscaEmProfundidade();
+            vector<vector<int>> tempos = grafo->buscaEmProfundidade(opcao);
 
             cout << "Tempos: { ";
             for(int i = 0; i < grafo->getQuantidadeVertices(); i++) {
@@ -414,5 +416,6 @@ class MenuMatriz {
             this->grafo->adicionarAresta(2, 3, 1, "Ponte");
 
             cout << "\nGrafo padrão criado com sucesso!" << endl;
+            this->imprimeGrafo();
         }
 };

@@ -5,16 +5,9 @@
 #include <unordered_map>
 
 #include "../IGrafo.cpp"
+#include "../utils/utils.cpp"
 
 using namespace std;
-
-enum cores {
-    BRANCO,
-    VERMELHO,
-    PRETO
-};
-int tempo = 0;
-
 
 
 // Função auxiliar para imprimir uma string centralizada dentro de uma largura específica
@@ -353,7 +346,7 @@ class GrafoMatriz : public IGrafo<int> {
          * @return Vetor com os tempos de início e fim de cada vértice.
          */
 
-        vector<vector<int>> buscaEmProfundidade() const {
+        vector<vector<int>> buscaEmProfundidade(int v) const {
 
             // Definir vector com todos os vizinhos do grafo como branco
             vector<cores> coresVertices(numVertices, cores::BRANCO);
@@ -364,6 +357,8 @@ class GrafoMatriz : public IGrafo<int> {
                     buscaEmProfundidade(i, coresVertices, temposVertices);
                 }
             }
+
+            tempo = 0;
 
             return temposVertices;
         }
@@ -567,5 +562,4 @@ class GrafoMatriz : public IGrafo<int> {
             // Borda inferior
             cout << "+-" << string(largura_col_aresta, '-') << "-+-" << string(largura_col_rotulo, '-') << "-+" << endl;
         }
-
 };
