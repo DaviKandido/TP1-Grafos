@@ -171,4 +171,4 @@ npm run format-all   # format C++ com clang-format (se instalado)
 
 ## 📄 Licença
 
-Este projeto está licenciado sob a **MIT License** — ver arquivo `LICENSE`.
+Este projeto está licenciado sob a **GNU General Public License v3.0** — [ver arquivo `LICENSE`](./LICENSE).
