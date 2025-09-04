@@ -110,6 +110,7 @@ class MenuLista {
         int numVertices;
 
         // Variáveis de controle
+        bool simples;
         bool direcionado;
         bool verticePonderado;
         bool arestaPonderada;
@@ -119,14 +120,15 @@ class MenuLista {
         // Ler as informações do usuário
         numVertices = lerInteiro("Número de vértices: ", 1, maxVertice);
 
+        simples = lerBoolean("O grafo é simples?      (S/N): ");
         direcionado = lerBoolean("O grafo é direcionado?      (S/N): ");
         verticePonderado = lerBoolean("Os vértices são ponderados? (S/N): ");
         arestaPonderada = lerBoolean("As arestas são ponderadas?  (S/N): ");
         verticeRotulado = lerBoolean("Os vértices são rotulados?  (S/N): ");
         arestaRotulada = lerBoolean("As arestas são rotuladas?   (S/N): ");
         // Aqui ainda ta faltando implementar o GrafoLista
-        this->grafo = new GrafoLista(numVertices, direcionado, verticePonderado, arestaPonderada,
-                                     verticeRotulado, arestaRotulada);
+        this->grafo = new GrafoLista(simples, direcionado, verticePonderado, arestaPonderada,
+                                     verticeRotulado, arestaRotulada,numVertices);
     }
 
     void adicionaVertice() {
@@ -144,7 +146,12 @@ class MenuLista {
             rotulo = lerInteiro("Peso do vértice: ", (0 - maxVertice), maxVertice);
         }
 
-        // Agora tem que chamar uma função de GrafoLista que ainda não foi feito
+        Vertice novo(grafo->numVertices,peso,rotulo);
+        if(grafo->adicionarVertice(novo)){
+            cout << "vertice removido com sucesso"<< endl;
+        }else
+            cout << "Houve um erro"<< endl;
+
     }
 
     void adicionaAresta() {
@@ -157,11 +164,10 @@ class MenuLista {
         int inicio;
         int fim;
         grafo->imprimir();
-
-        inicio =
-            lerInteiro("Digite o número do vértice de saida: ", 0, grafo->getQuantidadeVertices());
-        fim = lerInteiro("Digite o número do vértice de chegada: ", 0,
-                         grafo->getQuantidadeVertices());
+        //pegando a posição dos vertices na Lista
+        cout << "Digite o numero que aparece na frente da linha";
+        inicio = lerInteiro("Digite o número do vértice de saida: ", 0, grafo->getQuantidadeVertices());
+        fim = lerInteiro("Digite o número do vértice de chegada: ", 0,grafo->getQuantidadeVertices());
 
         // teste de ponderado e de rotulo
         if (grafo->arestaRotulada == 1) {
@@ -169,10 +175,16 @@ class MenuLista {
         }
 
         if (grafo->arestaPonderada == 1) {
-            rotulo = lerInteiro("Peso da aresta: ", (0 - maxVertice), maxVertice);
+            peso = lerInteiro("Peso da aresta: ", (0 - maxVertice), maxVertice);
         }
-
-        // Agora tem que chamar uma função de GrafoLista que ainda não foi feito
+        //O vertice esta dentro da listaPrincipal que é feita de NoVertice e dentro do Novertice que esta o vertice
+        Vertice inicioV = grafo->listaPrincipal[inicio].vertice;
+        Vertice fimV = grafo->listaPrincipal[fim].vertice;
+        if(grafo->adicionarAresta(inicioV, fimV,peso, rotulo)){
+            cout << "aresta adicionada com sucesso"<< endl;
+        }else
+            cout << "Houve um erro"<< endl;
+        
     }
 
     void removeVertice() {
@@ -181,13 +193,35 @@ class MenuLista {
         int vertice;
 
         grafo->imprimir();
+        //pegando a posição dos vertices na Lista
+        vertice = lerInteiro("Digite o número do vértice que deseja remover", 0,grafo->getQuantidadeVertices());
+        //O vertice esta dentro da listaPrincipal que é feita de NoVertice e dentro do Novertice que esta o vertice
+        Vertice inicioV = grafo->listaPrincipal[vertice].vertice;
+        if(grafo->removerVertice(inicioV)){
+            cout << "vertice removido com sucesso"<< endl;
+        }else
+            cout << "Houve um erro"<< endl;
 
-        vertice = lerInteiro("Digite o número do vértice que deseja remover", 0,
-                             grafo->getQuantidadeVertices());
     }
 
     void removeAresta() {
         cout << "\n> Menu > Lista > Remover Aresta" << endl << endl;
+        // Variaveis para indicar qual vertice o usario deseja
+        int inicio;
+        int fim;
+        grafo->imprimir();
+        //pegando a posição dos vertices na Lista
+        cout << "Digite o numero que aparece na frente da linha";
+        inicio = lerInteiro("Digite o número do vértice de saida: ", 0, grafo->getQuantidadeVertices());
+        fim = lerInteiro("Digite o número do vértice de chegada: ", 0,grafo->getQuantidadeVertices());
+
+        //O vertice esta dentro da listaPrincipal que é feita de NoVertice e dentro do Novertice que esta o vertice
+        Vertice inicioV = grafo->listaPrincipal[inicio].vertice;
+        Vertice fimV = grafo->listaPrincipal[fim].vertice;
+        if(grafo->removerAresta(inicioV,fimV)){
+            cout << "aresta removida com sucesso"<< endl;
+        }else
+            cout << "Houve um erro"<< endl;
     }
 
     void consultaVizinhosVertice() {
