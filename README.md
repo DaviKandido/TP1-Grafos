@@ -35,8 +35,10 @@ Codigos/
  │     └─ GrafoMatriz.cpp         # implementação via matriz
  │   └─ util
  │     └─ utils.cpp               # Estruturas e definições utilitárias para o manejo dos algoritmos de busca em grafos
+ │
+ ├─ .clang-format                 # Formatador de codigo c++ via clang-format
  └─ libs
-    └─ /io.hpp                   # utilitários de I/O
+    └─ /io.hpp                    # utilitários de I/O
 ```
 
 ## 🚀 Como Executar
