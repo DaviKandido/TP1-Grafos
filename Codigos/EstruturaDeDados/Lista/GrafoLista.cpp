@@ -322,9 +322,9 @@ Representação gráfica:
 
 class GrafoLista : public IGrafo<Vertice> {
    private:
-    vector<NoVertice> listaPrincipal;
 
    public:
+    vector<NoVertice> listaPrincipal;
     int numVertices;
     int numArestas;
     int ultimoId;

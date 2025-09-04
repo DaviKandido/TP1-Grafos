@@ -172,7 +172,8 @@ class MenuLista {
             rotulo = lerInteiro("Peso da aresta: ", (0 - maxVertice), maxVertice);
         }
 
-        // Agora tem que chamar uma função de GrafoLista que ainda não foi feito
+        Vertice inicio = grafo->listaPrincipal[inicio].vertice;
+        Vertice fim = grafo->listaPrincipal[fim].vertice;
     }
 
     void removeVertice() {
