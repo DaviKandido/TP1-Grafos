@@ -44,7 +44,7 @@ Codigos/
  │     └─ GrafoLista.cpp          # implementação via lista 
  │   └─ Matriz
  │     └─ GrafoMatriz.cpp         # implementação via matriz
- │   └─ util
+ │   └─ utils
  │     └─ utils.cpp               # Estruturas e definições utilitárias para o manejo dos algoritmos de busca em grafos
  │
  ├─ .clang-format                 # Formatador de codigo c++ via clang-format
