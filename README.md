@@ -1,5 +1,9 @@
 # TP1 — Grafos 🧮
 
+<div align="center" style="">
+  <img src="assets/GarfoImg.png">
+</div>
+
 ## 🎯 Objetivo
 
 Implementação de **estruturas e algoritmos de Grafos** para o Trabalho Prático 1 de **Teoria dos Grafos e Computabilidade**. O sistema permite criar grafos e operar sobre eles em **duas representações** — **Matriz de Adjacências** e **Lista de Adjacências** — oferecendo operações essenciais de construção, consulta e busca.
@@ -8,11 +12,12 @@ Implementação de **estruturas e algoritmos de Grafos** para o Trabalho Prátic
 
 ## 👨‍🎓 Integrantes da equipe
 
-* **Augusto Stambassi Duarte**
-* **Davi Cândido de Almeida**
-* **Gabriela de Assis dos Reis**
-* **Lucas Carneiro Nassau Malta**
-* **João Pedro Torres**
+* [**Augusto Stambassi Duarte**](https://github.com/Stambassi)
+* [**Davi Cândido de Almeida**](https://github.com/DaviKandido)
+* [**Gabriela de Assis dos Reis**](https://github.com/GabrielaReiss)
+* [**Lucas Carneiro Nassau Malta**](https://github.com/lucascarneiro1202)
+* [**João Pedro Torres**](https://github.com/Towers444)
+* [**Vitor Leite Setragni**](https://github.com/VitorSetragni)
 
 ## 👩‍🏫 Professores responsáveis
 

@@ -57,7 +57,7 @@ class MenuMatriz {
 
                 switch (opcao) {
                     case 1:
-                        intanciaGrafo(); 
+                        intanciaGrafo(); j
                         break;
                     case 2:
                         criarGrafoPadrao();

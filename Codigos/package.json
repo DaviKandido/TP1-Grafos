@@ -1,52 +1,52 @@
-{
-  "name": "tp1_grafos",
-  "version": "1.0.0",
-  "description": "Implementação de Grafos em C/C++ para o Trabalho Prático 1 de Grafos",
-  "keywords": [
-    "tp1",
-    "Grafos",
-    "Matriz",
-    "Lista"
-  ],
-  "homepage": "https://github.com/DaviKandido/TP1-Grafos#readme",
-  "bugs": {
-    "url": "https://github.com/DaviKandido/TP1-Grafos/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/DaviKandido/TP1-Grafos.git"
-  },
-  "license": "MIT",
-  "authors": [
-    "Augusto Stambassi Duarte",
-    "Davi Cândido de Almeida",
-    "Gabriela de Assis dos Reis",
-    "Lucas Carneiro Nassau Malta",
-    "João Pedro Torres"
-  ],
-  "main": "Main.cpp",
-  "build": {
-    "compiler": "g++",
-    "source": "src/",
-    "output": "bin/",
-    "flags": "-Wall -std=c++17"
-  },
-  "scripts": {
-    "dev:win": "shx mkdir -p bin && g++ Main.cpp -o bin/Main.exe -Wall -std=c++17 -g && .\\bin\\Main.exe",
-    "dev:linux": "shx mkdir -p bin && g++ Main.cpp -o bin/Main -Wall -std=c++17 -g -fsanitize=address && ./bin/Main",
-    "build:linux": "shx mkdir -p bin && g++ Main.cpp -o bin/Main -Wall -std=c++17",
+  {
+    "name": "tp1_grafos",
+    "version": "1.0.0",
+    "description": "Implementação de Grafos em C/C++ para o Trabalho Prático 1 de Grafos",
+    "keywords": [
+      "tp1",
+      "Grafos",
+      "Matriz",
+      "Lista"
+    ],
+    "homepage": "https://github.com/DaviKandido/TP1-Grafos#readme",
+    "bugs": {
+      "url": "https://github.com/DaviKandido/TP1-Grafos/issues"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/DaviKandido/TP1-Grafos.git"
+    },
+    "license": "MIT",
+    "authors": [
+      "Augusto Stambassi Duarte",
+      "Davi Cândido de Almeida",
+      "Gabriela de Assis dos Reis",
+      "Lucas Carneiro Nassau Malta",
+      "João Pedro Torres"
+    ],
+    "main": "Main.cpp",
+    "build": {
+      "compiler": "g++",
+      "source": "src/",
+      "output": "bin/",
+      "flags": "-Wall -std=c++17"
+    },
+    "scripts": {
+      "dev:win": "shx mkdir -p bin && g++ Main.cpp -o bin/Main.exe -Wall -std=c++17 -g && .\\bin\\Main.exe",
+      "dev:linux": "shx mkdir -p bin && g++ Main.cpp -o bin/Main -Wall -std=c++17 -g -fsanitize=address && ./bin/Main",
+      "build:linux": "shx mkdir -p bin && g++ Main.cpp -o bin/Main -Wall -std=c++17",
 
-    "run:linux": "./bin/Main",
-    "run:win": ".\\bin\\Main.exe",
+      "run:linux": "./bin/Main",
+      "run:win": ".\\bin\\Main.exe",
 
-    "clean": "shx rm -rf bin/*",
-    "format-all": "clang-format -i *.cpp && npm run formatVisao && npm run formatEstruturas && npm run formatMatriz && npm run formatListas",
-    "formatVisao": "clang-format -i Visao/*.cpp",
-    "formatEstruturas": "clang-format -i EstruturaDeDados/*.h",
-    "formatListas": "clang-format -i EstruturaDeDados/Lista/*.h",
-    "formatMatriz": "clang-format -i EstruturaDeDados/Matriz/*.h"
-  },
-  "devDependencies": {
-    "shx": "^0.4.0"
+      "clean": "shx rm -rf bin/*",
+      "format-all": "clang-format -i *.cpp && npm run formatVisao && npm run formatEstruturas && npm run formatMatriz && npm run formatListas",
+      "formatVisao": "clang-format -i Visao/*.cpp",
+      "formatEstruturas": "clang-format -i EstruturaDeDados/*.h",
+      "formatListas": "clang-format -i EstruturaDeDados/Lista/*.h",
+      "formatMatriz": "clang-format -i EstruturaDeDados/Matriz/*.h"
+    },
+    "devDependencies": {
+      "shx": "^0.4.0"
+    }
   }
-}
