@@ -31,7 +31,7 @@ Implementação de **estruturas e algoritmos de Grafos** para o Trabalho Prátic
 
 ## 🗂 Estrutura do Projeto
 
-```
+```sh
 Codigos/
  ├─ Main.cpp                      # menu principal (seleção Matriz/Lista)
  ├─ Visao/
