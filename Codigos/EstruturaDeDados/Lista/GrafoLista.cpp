@@ -531,8 +531,8 @@ class GrafoLista : public IGrafo<Vertice> {
     */
     vector<Vertice> getVizinhos(Vertice v) const override {
         if (!direcionado) {
-            vector<Vertice> v1 = getAncestrais(v);
-            vector<Vertice> v2 = getDescendentes(v);
+            vector<Vertice> v1 = fechoTransitivoInverso(v);
+            vector<Vertice> v2 = fechoTransitivoDireto(v);
             vector<Vertice> resultado;
 
             sort(v1.begin(), v1.end());
@@ -542,7 +542,7 @@ class GrafoLista : public IGrafo<Vertice> {
 
             return resultado;
         } else {
-            return getDescendentes(v);
+            return fechoTransitivoDireto(v);
         }
     }
 
@@ -552,7 +552,7 @@ class GrafoLista : public IGrafo<Vertice> {
     *   @param v Vertice a ter seus descendentes coletados
     *   @return Vector<Vertice> dos descendentes
     */
-    vector<Vertice> getDescendentes(Vertice v) const override {
+    vector<Vertice> fechoTransitivoDireto(Vertice v) const override {
         NoVertice procura = listaPrincipal.at(v.getId());
         list<Vertice> descendentes_list = procura.getArestas();
 
@@ -567,7 +567,7 @@ class GrafoLista : public IGrafo<Vertice> {
     *   @param v Vertice a ter seus ancestrais coletados
     *   @return Vector<Vertice> dos ancestrais
     */
-    vector<Vertice> getAncestrais(Vertice v) const override {
+    vector<Vertice> fechoTransitivoInverso(Vertice v) const override {
         vector<Vertice> ancestrais;
         NoVertice procura;
         for (int i = 0; i < listaPrincipal.size(); i++) {
