@@ -22,7 +22,6 @@ Implementação de **estruturas e algoritmos de Grafos** para o Trabalho Prátic
 * [**João Pedro Torres**](https://github.com/Towers444)
 * [**Vitor Leite Setragni**](https://github.com/VitorSetragni)
 
----
 
 ## 👩‍🏫 Professor responsáveis
 
