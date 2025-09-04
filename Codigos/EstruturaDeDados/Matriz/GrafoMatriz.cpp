@@ -3,6 +3,7 @@
 #include <stdexcept>
 #include <unordered_map>
 #include <vector>
+#include <queue>
 
 #include "../IGrafo.cpp"
 #include "../utils/utils.cpp"
@@ -378,6 +379,88 @@ class GrafoMatriz : public IGrafo<int> {
         temposVertices[i][1] = ++tempo;
         return temposVertices;
     }
+
+    
+           
+
+/**
+ * Busca em Largura não ponderada e ponderada
+ * Caso a matriz seja ponderada ele vai entrar no algoritmo de Dijkistra, caso não ele entra na busca em largura
+ * @param v_inicial O vértice de onde a busca começará.
+ * @return Um vetor de inteiros onde o valor na posição 'i' é a menor
+ * distância (soma dos pesos ou número de arestas) de 'v_inicial' até 'i'.
+ */
+vector<int> buscas(int v_inicial) const { 
+    if (!verticeValido(v_inicial)) {
+        return {}; //Retorna um vetor vazio se o vértice não existir.
+    }
+
+    const int INFINITO = numeric_limits<int>::max();
+
+    if (arestaPonderada == true) {
+
+        // --- Início do Algoritmo de Dijkstra ---
+        vector<int> distancias(numVertices, INFINITO);
+        distancias[v_inicial] = 0;
+
+        // Fila de Prioridade para armazenar {distância, vértice}
+        using Par = pair<int, int>;
+        priority_queue<Par, vector<Par>, greater<Par>> fila_prioridade;
+        fila_prioridade.push({0, v_inicial});
+
+        while (!fila_prioridade.empty()) {
+            int u = fila_prioridade.top().second;
+            int dist_u = fila_prioridade.top().first;
+            fila_prioridade.pop();
+
+            if (dist_u > distancias[u]) {
+                continue;
+            }
+
+            // Itera sobre todos os vizinhos
+            for (int v = 0; v < numVertices; ++v) {
+                // Se existe aresta de u para v
+                if (matrizAdjacencias[u][v] != 0) {
+                    int peso_aresta = matrizAdjacencias[u][v];
+                    // "Relaxamento": Tenta encurtar o caminho para o vizinho 'v'
+                    if (distancias[u] != INFINITO && distancias[u] + peso_aresta < distancias[v]) {
+                        distancias[v] = distancias[u] + peso_aresta;
+                        fila_prioridade.push({distancias[v], v});
+                    }
+                }
+            }
+        }
+        return distancias;
+
+    }
+    
+    else {
+
+        // --- Início da Busca em Largura (BFS) para distâncias ---
+        vector<int> distancias(numVertices, INFINITO);
+        queue<int> fila;
+
+        distancias[v_inicial] = 0;
+        fila.push(v_inicial);
+
+        while (!fila.empty()) {
+            int u = fila.front();
+            fila.pop();
+
+            // Usa a função getVizinhos para encontrar os adjacentes
+            vector<int> vizinhos = getVizinhos(u);
+            for (int v : vizinhos) {
+                // Se o vizinho ainda não foi alcançado (distância infinita)
+                if (distancias[v] == INFINITO) {
+                    // A distância é a do pai + 1 (pois cada aresta vale 1)
+                    distancias[v] = distancias[u] + 1;
+                    fila.push(v);
+                }
+            }
+        }
+        return distancias;
+    }
+}
 
     void imprimir() const override {
         imprimirMatriz();
