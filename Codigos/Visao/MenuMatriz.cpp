@@ -33,6 +33,7 @@ class MenuMatriz {
      * @see consultarFechoTransitivoDireto()
      * @see consultarFechoTransitivoInverso()
      * @see buscaProfundidade()
+     * @see buscaLargura()
      * @see removeGrafo()
      * @see imprimeGrafo()
      */
@@ -50,8 +51,9 @@ class MenuMatriz {
             cout << "8) Fecho Transitivo Direto de um Vértice" << endl;
             cout << "9) Fecho Transitivo Inverso de um Vértice" << endl;
             cout << "10) Busca em Profundidade - DFS" << endl;
-            cout << "11) Imprimir Grafo" << endl;
-            cout << "12) Remover Grafo" << endl;
+            cout << "11) Busca em Largura - BFS" << endl;
+            cout << "12) Imprimir Grafo" << endl;
+            cout << "13) Remover Grafo" << endl;
             cout << "0) Sair" << endl << endl;
 
             opcao = lerInteiro("Opção: ", 0, 12);
@@ -87,10 +89,14 @@ class MenuMatriz {
                 case 10:
                     if (grafoInstanciado()) buscaProfundidade();
                     break;
+                    /// fazer a busca em largura
                 case 11:
-                    if (grafoInstanciado()) imprimeGrafo();
+                    if (grafoInstanciado()) buscaLargura();
                     break;
                 case 12:
+                    if (grafoInstanciado()) imprimeGrafo();
+                    break;
+                case 13:
                     if (grafoInstanciado()) removeGrafo();
                     break;
                 case 0:
@@ -352,6 +358,29 @@ class MenuMatriz {
         }
 
         cout << "\n}" << endl;
+    }
+
+    void buscaLargura() {
+        cout << "\n> Menu > Matriz > Busca em Largura" << endl << endl;
+
+        int vertice_inicial = lerInteiro("Você deseja a busca a partir de qual vertice? ",
+                                     0, (grafo->getQuantidadeVertices() - 1));
+
+        // Chama a nova função "inteligente" que implementamos na classe GrafoMatriz
+        // O nome da função no grafo era "buscas", conforme sua última implementação.
+        vector<int> distancias = grafo->buscas(vertice_inicial);
+
+
+        // Imprime o resultado como uma lista de distâncias
+        for (int i = 0; i < distancias.size(); ++i) {
+            cout << "  - Distância para o vértice " << i << ": ";
+            // Verifica se o vértice é inalcançável
+            if (distancias[i] == numeric_limits<int>::max()) {
+                cout << "Inalcançável" << endl;
+            } else {
+                cout << distancias[i] << endl;
+            }
+        }
     }
     /**
      * Imprime o grafo.
