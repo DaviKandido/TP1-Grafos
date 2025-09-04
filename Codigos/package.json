@@ -43,9 +43,9 @@
       "clean": "shx rm -rf bin/*",
       "format-all": "clang-format -i *.cpp && npm run formatVisao && npm run formatEstruturas && npm run formatMatriz && npm run formatListas",
       "formatVisao": "clang-format -i Visao/*.cpp",
-      "formatEstruturas": "clang-format -i EstruturaDeDados/*.h",
-      "formatListas": "clang-format -i EstruturaDeDados/Lista/*.h",
-      "formatMatriz": "clang-format -i EstruturaDeDados/Matriz/*.h"
+      "formatEstruturas": "clang-format -i EstruturaDeDados/*.cpp",
+      "formatListas": "clang-format -i EstruturaDeDados/Lista/*.cpp",
+      "formatMatriz": "clang-format -i EstruturaDeDados/Matriz/*.cpp"
     },
     "devDependencies": {
       "shx": "^0.4.0"

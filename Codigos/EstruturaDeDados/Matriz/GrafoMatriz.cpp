@@ -1,17 +1,16 @@
-#include <iostream>
 #include <iomanip>
+#include <iostream>
 #include <stdexcept>
-#include <vector>
 #include <unordered_map>
+#include <vector>
 
 #include "../IGrafo.cpp"
 #include "../utils/utils.cpp"
 
 using namespace std;
 
-
 // Função auxiliar para imprimir uma string centralizada dentro de uma largura específica
-void imprimirCentralizado(const string& texto, int largura) {
+void imprimirCentralizado(const string &texto, int largura) {
     int espacos = largura - texto.length();
     if (espacos < 0) espacos = 0;
     int pad_esquerdo = espacos / 2;
@@ -25,541 +24,552 @@ void imprimirCentralizado(int numero, int largura) {
     imprimirCentralizado(to_string(numero), largura);
 }
 
-
 class GrafoMatriz : public IGrafo<int> {
-    private:
-        // Estruturas de dados
-        vector<vector<int>> matrizAdjacencias;
-        vector<int> verticesPesos;
-        unordered_map<int, string> verticesRotulos;
-        vector<vector<string>> arestasRotulos;
+   private:
+    // Estruturas de dados
+    vector<vector<int>> matrizAdjacencias;
+    vector<int> verticesPesos;
+    unordered_map<int, string> verticesRotulos;
+    vector<vector<string>> arestasRotulos;
 
-        // Atributos do grafo
-        int numVertices;
-        int numArestas;
-        
+    // Atributos do grafo
+    int numVertices;
+    int numArestas;
 
-        // Validar se um vértice está dentro dos limites
-        bool verticeValido(int v) const {
-            return (0 <= v && v < numVertices);
-        }
+    // Validar se um vértice está dentro dos limites
+    bool verticeValido(int v) const {
+        return (0 <= v && v < numVertices);
+    }
 
    public:
-        // Variáveis de controle
-        bool direcionado;
-        bool verticePonderado;
-        bool arestaPonderada;
-        bool verticeRotulado;
-        bool arestaRotulada;
-        
-        // Construtor: cria um grafo com um número fixo de vértices
-        GrafoMatriz(int totalVertices, bool direcionado, bool verticePonderado, bool arestaPonderada, bool verticeRotulado, bool arestaRotulada) {
-            // Testar se o número de vértices é válido
-            if (totalVertices <= 0) {
-                throw invalid_argument("O número de vértices deve ser positivo.");
-            }
+    // Variáveis de controle
+    bool direcionado;
+    bool verticePonderado;
+    bool arestaPonderada;
+    bool verticeRotulado;
+    bool arestaRotulada;
 
-            // Atribuir valores iniciais
-            this->numVertices = totalVertices;
-            this->numArestas = 0;
+    // Construtor: cria um grafo com um número fixo de vértices
+    GrafoMatriz(int totalVertices, bool direcionado, bool verticePonderado, bool arestaPonderada,
+                bool verticeRotulado, bool arestaRotulada) {
+        // Testar se o número de vértices é válido
+        if (totalVertices <= 0) {
+            throw invalid_argument("O número de vértices deve ser positivo.");
+        }
 
-            // Atribuir variáveis de controle
-            this->direcionado = direcionado;
-            this->verticePonderado = verticePonderado;
-            this->arestaPonderada = arestaPonderada;
-            this->verticeRotulado = verticeRotulado;
-            this->arestaRotulada = arestaRotulada;
+        // Atribuir valores iniciais
+        this->numVertices = totalVertices;
+        this->numArestas = 0;
 
-            // Inicializa a matriz com tamanho N x N preenchida com 0 (ou seja, sem arestas)
-            matrizAdjacencias.resize(numVertices, vector<int>(numVertices, 0));
+        // Atribuir variáveis de controle
+        this->direcionado = direcionado;
+        this->verticePonderado = verticePonderado;
+        this->arestaPonderada = arestaPonderada;
+        this->verticeRotulado = verticeRotulado;
+        this->arestaRotulada = arestaRotulada;
 
-            // Se os vértices do grafo forem ponderados, criar o vector com peso padrão 1
-            if (this->verticePonderado) {
-                verticesPesos.resize(numVertices, 1);
-            }
+        // Inicializa a matriz com tamanho N x N preenchida com 0 (ou seja, sem arestas)
+        matrizAdjacencias.resize(numVertices, vector<int>(numVertices, 0));
 
-            // Se os vértices do grafo forem rotulados, criar o Hash Map com strings vazias
-            if (this->verticeRotulado) {
-                for (int i = 0; i < numVertices; i++) {
-                    verticesRotulos[i] = "";
-                }
-            }
+        // Se os vértices do grafo forem ponderados, criar o vector com peso padrão 1
+        if (this->verticePonderado) {
+            verticesPesos.resize(numVertices, 1);
+        }
 
-            // Se as arestas do grafo forem rotuladas, criar a matriz dos rótulos preenchida com strings vazias
-            if (this->arestaRotulada) {
-                arestasRotulos.resize(numVertices, vector<string>(numVertices, ""));
+        // Se os vértices do grafo forem rotulados, criar o Hash Map com strings vazias
+        if (this->verticeRotulado) {
+            for (int i = 0; i < numVertices; i++) {
+                verticesRotulos[i] = "";
             }
         }
 
-        // Destrutor: padrão
-        ~GrafoMatriz() override {
-            matrizAdjacencias.clear();
-            verticesPesos.clear();
-            verticesRotulos.clear();
-            arestasRotulos.clear();
-            this->numVertices = 0;
-            this->numArestas = 0;
-            this->direcionado = false;
-            this->verticePonderado = false;
-            this->arestaPonderada = false;
-            this->verticeRotulado = false;
-            this->arestaRotulada = false;
-        };
+        // Se as arestas do grafo forem rotuladas, criar a matriz dos rótulos preenchida com strings
+        // vazias
+        if (this->arestaRotulada) {
+            arestasRotulos.resize(numVertices, vector<string>(numVertices, ""));
+        }
+    }
 
-        // --- Implementar as funções da interface ---
+    // Destrutor: padrão
+    ~GrafoMatriz() override {
+        matrizAdjacencias.clear();
+        verticesPesos.clear();
+        verticesRotulos.clear();
+        arestasRotulos.clear();
+        this->numVertices = 0;
+        this->numArestas = 0;
+        this->direcionado = false;
+        this->verticePonderado = false;
+        this->arestaPonderada = false;
+        this->verticeRotulado = false;
+        this->arestaRotulada = false;
+    };
 
-        int getQuantidadeVertices() const override {
-            return numVertices;
+    // --- Implementar as funções da interface ---
+
+    int getQuantidadeVertices() const override {
+        return numVertices;
+    }
+
+    int getQuantidadeArestas() const override {
+        return numArestas;
+    }
+
+    bool adicionarVertice(int v) override {
+        return adicionarVertice(v, 1, "");  // Peso padrão é 1 e rótulo padrão é string vazia
+    }
+
+    bool adicionarVertice(int v, int peso) {
+        return adicionarVertice(v, peso, "");  // Rótulo padrão é string vazia
+    }
+
+    bool adicionarVertice(int v, string label) {
+        return adicionarVertice(v, 1, label);  // Peso padrão é 1
+    }
+
+    bool adicionarVertice(int v, int peso, string label) {
+        // Aqui é preciso refazer toda a matriz
+        // Obs: alterar o peso e o rótulo apenas se o grafo for ponderado e rotulado
+
+        // Alterar o peso do vértice
+        if (this->verticePonderado) {
+            verticesPesos[v] = peso;
         }
 
-        int getQuantidadeArestas() const override {
-            return numArestas;
+        // Alterar o rótulo do vértice
+        if (this->verticeRotulado) {
+            verticesRotulos[v] = label;
         }
 
-        bool adicionarVertice(int v) override {
-            return adicionarVertice(v, 1, ""); // Peso padrão é 1 e rótulo padrão é string vazia
+        return verticeValido(v);
+    }
+
+    bool adicionarAresta(int origem, int destino) override {
+        return adicionarAresta(origem, destino, 1);  // Peso padrão é 1
+    }
+
+    bool adicionarAresta(int origem, int destino, int peso) {
+        return adicionarAresta(origem, destino, peso, "");  // Rótulo padrão é string vazia
+    }
+
+    bool adicionarAresta(int origem, int destino, string label) {
+        return adicionarAresta(origem, destino, 1, label);  // Peso padrão é 1
+    }
+
+    bool adicionarAresta(int origem, int destino, int peso, string label) {
+        // Testar se os vértices existem, se o peso não é nulo e se a aresta JÁ NÃO EXISTE
+        if (!verticeValido(origem) || !verticeValido(destino) || peso == 0 ||
+            matrizAdjacencias[origem][destino] != 0) {
+            return false;
         }
 
-        bool adicionarVertice(int v, int peso) {
-            return adicionarVertice(v, peso, ""); // Rótulo padrão é string vazia        
+        // Adicionar a aresta com o seu peso (caso o grafo não seja ponderado, o seu peso será 1 por
+        // padrão)
+        matrizAdjacencias[origem][destino] = peso;
+
+        // Se o grafo for não-direcionado, inserir a aresta e o seu rótulo no sentido inverso também
+        if (!this->direcionado) {
+            matrizAdjacencias[destino][origem] = peso;
         }
 
-        bool adicionarVertice(int v, string label) {
-            return adicionarVertice(v, 1, label); // Peso padrão é 1
-        }
-
-        bool adicionarVertice(int v, int peso, string label) {
-            // Aqui é preciso refazer toda a matriz
-            // Obs: alterar o peso e o rótulo apenas se o grafo for ponderado e rotulado
-
-            // Alterar o peso do vértice
-            if (this->verticePonderado) {
-                verticesPesos[v] = peso;
-            }
-
-            // Alterar o rótulo do vértice
-            if (this->verticeRotulado) {
-                verticesRotulos[v] = label;
-            }
-
-            return verticeValido(v);        
-        }
-
-        bool adicionarAresta(int origem, int destino) override {
-            return adicionarAresta(origem, destino, 1);  // Peso padrão é 1
-        }
-
-        bool adicionarAresta(int origem, int destino, int peso) {
-            return adicionarAresta(origem, destino, peso, ""); // Rótulo padrão é string vazia
-        }
-
-        bool adicionarAresta(int origem, int destino, string label) {
-            return adicionarAresta(origem, destino, 1, label); // Peso padrão é 1
-        }
-
-        bool adicionarAresta(int origem, int destino, int peso, string label) {
-            // Testar se os vértices existem, se o peso não é nulo e se a aresta JÁ NÃO EXISTE
-            if (!verticeValido(origem) || !verticeValido(destino) || peso == 0 || matrizAdjacencias[origem][destino] != 0) {
-                return false;
-            }
-
-            // Adicionar a aresta com o seu peso (caso o grafo não seja ponderado, o seu peso será 1 por padrão)
-            matrizAdjacencias[origem][destino] = peso;
-
-            // Se o grafo for não-direcionado, inserir a aresta e o seu rótulo no sentido inverso também
+        // Se o grafo for rotulado, alterar o nome da aresta na matriz já construída anteriormente
+        if (this->arestaRotulada) {
+            arestasRotulos[origem][destino] = label;
             if (!this->direcionado) {
-                matrizAdjacencias[destino][origem] = peso;
+                arestasRotulos[destino][origem] = label;
             }
-
-            // Se o grafo for rotulado, alterar o nome da aresta na matriz já construída anteriormente
-            if (this->arestaRotulada) {
-                arestasRotulos[origem][destino] = label;
-                if (!this->direcionado) {
-                    arestasRotulos[destino][origem] = label;
-                }
-            }
-
-            // Incrementar o número de arestas
-            numArestas++;
-
-            // Retornar status de sucesso
-            return true;
         }
 
-        //bool removerVertice(int v) override {
-        //    return verticeValido(v);
-        //}
-        
-        /**
-         * @bug Erro na variável 'iNovo' (Declaração Ausente)
-         */
-        
-        bool removerVertice(int v) override {
-            if (!verticeValido(v)) {
-                return false;
-            }
-            int novoNum = numVertices - 1;
-            vector<vector<int>> novaMatriz(
-            novoNum, vector<int>(novoNum, 0));
+        // Incrementar o número de arestas
+        numArestas++;
 
-            for (int i = 0; i < numVertices; ++i) {
-                if (i == v) continue; // pula a linha do vértice removido
-                int jNovo = 0;
-                for (int j = 0; j < numVertices; j++) {
-                    if (j == v) continue; // pula a coluna do vértice removido
-                    novaMatriz[novoNum][jNovo] = matrizAdjacencias[i][j];
-                    jNovo++;
-                }
+        // Retornar status de sucesso
+        return true;
+    }
+
+    // bool removerVertice(int v) override {
+    //     return verticeValido(v);
+    // }
+
+    /**
+     * @bug Erro na variável 'iNovo' (Declaração Ausente)
+     */
+
+    bool removerVertice(int v) override {
+        if (!verticeValido(v)) {
+            return false;
+        }
+        int novoNum = numVertices - 1;
+        vector<vector<int>> novaMatriz(novoNum, vector<int>(novoNum, 0));
+
+        for (int i = 0; i < numVertices; ++i) {
+            if (i == v) continue;  // pula a linha do vértice removido
+            int jNovo = 0;
+            for (int j = 0; j < numVertices; j++) {
+                if (j == v) continue;  // pula a coluna do vértice removido
+                novaMatriz[novoNum][jNovo] = matrizAdjacencias[i][j];
+                jNovo++;
+            }
             novoNum++;
-            }
-            matrizAdjacencias = novaMatriz;
-            numVertices = novoNum;
-            return true;
         }
-        
+        matrizAdjacencias = novaMatriz;
+        numVertices = novoNum;
+        return true;
+    }
 
-        bool removerAresta(int origem, int destino) override {
-            // Testar se os vértices são válidos e se há aresta para remover
-            if (!verticeValido(origem) || !verticeValido(destino) ||
-                matrizAdjacencias[origem][destino] == 0) {
-                return false;
-            }
-
-            // Remover a aresta da matriz
-            matrizAdjacencias[origem][destino] = 0;
-
-            if (this->direcionado == false) {
-                matrizAdjacencias[destino][origem] = 0;
-            }
-
-            if (this->arestaRotulada) {
-                arestasRotulos[origem][destino] = "";
-                if (!this->direcionado) {
-                    arestasRotulos[destino][origem] = "";
-                }
-            }
-
-            numArestas--;
-            return true;
+    bool removerAresta(int origem, int destino) override {
+        // Testar se os vértices são válidos e se há aresta para remover
+        if (!verticeValido(origem) || !verticeValido(destino) ||
+            matrizAdjacencias[origem][destino] == 0) {
+            return false;
         }
 
-        bool existeVertice(int v) const override {
-            return verticeValido(v);
+        // Remover a aresta da matriz
+        matrizAdjacencias[origem][destino] = 0;
+
+        if (this->direcionado == false) {
+            matrizAdjacencias[destino][origem] = 0;
         }
 
-        bool existeAresta(int origem, int destino) const override {
-            if (!verticeValido(origem) || !verticeValido(destino)) {
-                return false;
+        if (this->arestaRotulada) {
+            arestasRotulos[origem][destino] = "";
+            if (!this->direcionado) {
+                arestasRotulos[destino][origem] = "";
             }
-            return matrizAdjacencias[origem][destino] != 0;
         }
 
-        vector<int> getVizinhos(int v) const override {
-            // Definir vector com todos os vizinhos do vértice
-            vector<int> vizinhos;
+        numArestas--;
+        return true;
+    }
 
-            // Se o vértice não existe, retorna um vector vazio
-            if (!verticeValido(v)) {
-                return vizinhos;
-            }
+    bool existeVertice(int v) const override {
+        return verticeValido(v);
+    }
 
-            // Percorrer a linha da matriz correspondente ao vértice 'v'
-            for (int j = 0; j < numVertices; ++j) {
-                if (matrizAdjacencias[v][j] != 0) {
-                    vizinhos.push_back(j);
-                }
-            }
+    bool existeAresta(int origem, int destino) const override {
+        if (!verticeValido(origem) || !verticeValido(destino)) {
+            return false;
+        }
+        return matrizAdjacencias[origem][destino] != 0;
+    }
 
+    vector<int> getVizinhos(int v) const override {
+        // Definir vector com todos os vizinhos do vértice
+        vector<int> vizinhos;
+
+        // Se o vértice não existe, retorna um vector vazio
+        if (!verticeValido(v)) {
             return vizinhos;
         }
 
-        // Fecho transitivo direto (Todos os alcançados pelo vértice 'v', incluindo ele) - DFS (Busca em Profundidade)
-        vector<int> fechoTransitivoDireto(int v) const override {
-            vector<int> sucessores;
-            vector<bool> visitados(numVertices, false);
-            return fechoTransitivoDireto(v, visitados);
+        // Percorrer a linha da matriz correspondente ao vértice 'v'
+        for (int j = 0; j < numVertices; ++j) {
+            if (matrizAdjacencias[v][j] != 0) {
+                vizinhos.push_back(j);
+            }
         }
 
-        vector<int> fechoTransitivoDireto(int v, vector<bool> &visitados) const {
-            vector<int> sucessores;
+        return vizinhos;
+    }
 
-            // Marca o vértice como visitado
-            visitados[v] = true;
+    // Fecho transitivo direto (Todos os alcançados pelo vértice 'v', incluindo ele) - DFS (Busca em
+    // Profundidade)
+    vector<int> fechoTransitivoDireto(int v) const override {
+        vector<int> sucessores;
+        vector<bool> visitados(numVertices, false);
+        return fechoTransitivoDireto(v, visitados);
+    }
 
-            sucessores.push_back(v);
+    vector<int> fechoTransitivoDireto(int v, vector<bool> &visitados) const {
+        vector<int> sucessores;
 
-            for (int i = 0; i < numVertices; i++) {
-                if (matrizAdjacencias[v][i] != 0 && !visitados[i]) {
-                    // Chama recursivamente para explorar os sucessores do sucessor - DFS
-                    vector<int> subSucessores = fechoTransitivoDireto(i, visitados);
+        // Marca o vértice como visitado
+        visitados[v] = true;
 
-                    /* Junta os resultado
-                        for (int x : subSucessores)
-                        sucessores.push_back(x);
-                    */
-                    sucessores.insert(sucessores.end(), subSucessores.begin(), subSucessores.end());
+        sucessores.push_back(v);
+
+        for (int i = 0; i < numVertices; i++) {
+            if (matrizAdjacencias[v][i] != 0 && !visitados[i]) {
+                // Chama recursivamente para explorar os sucessores do sucessor - DFS
+                vector<int> subSucessores = fechoTransitivoDireto(i, visitados);
+
+                /* Junta os resultado
+                    for (int x : subSucessores)
+                    sucessores.push_back(x);
+                */
+                sucessores.insert(sucessores.end(), subSucessores.begin(), subSucessores.end());
+            }
+        }
+        return sucessores;
+    }
+
+    // Fecho transitivo inverso (Todos que poderiam alcançar o vértice 'v', incluindo ele) - DFS
+    // (Busca em Profundidade)
+    vector<int> fechoTransitivoInverso(int v) const override {
+        vector<int> predecessores;
+        vector<bool> visitados(numVertices, false);
+
+        return fechoTransitivoInverso(v, visitados);
+    }
+
+    vector<int> fechoTransitivoInverso(int v, vector<bool> &visitados) const {
+        vector<int> predecessores;
+
+        // Marca o vértice como visitado
+        visitados[v] = true;
+
+        predecessores.push_back(v);
+
+        for (int i = 0; i < numVertices; i++) {
+            if (matrizAdjacencias[i][v] != 0 && !visitados[i]) {
+                predecessores.push_back(v);
+
+                // Chama recursivamente para explorar os sucessores do sucessor - DFS
+                vector<int> subPredecessores = fechoTransitivoInverso(i, visitados);
+
+                /* Junta os resultado
+                    for (int x : subSucessores)
+                    sucessores.push_back(x);
+                */
+                predecessores.insert(predecessores.end(), subPredecessores.begin(),
+                                     subPredecessores.end());
+            }
+        }
+        return predecessores;
+    }
+
+    /**
+     * Busca em profundidade (DFS) do grafo.
+     *
+     * O vetor de cores é utilizado para marcar os vértices como branco (não visitado),
+     * vermelho (visitado) ou preto (visitado e finalizado).O vetor de tempos é utilizado para
+     * armazenar os tempos de início e fim de cada vértice.
+     *
+     * @return Vetor com os tempos de início e fim de cada vértice.
+     */
+
+    vector<vector<int>> buscaEmProfundidade(int v) const {
+        // Definir vector com todos os vizinhos do grafo como branco
+        vector<cores> coresVertices(numVertices, cores::BRANCO);
+        vector<vector<int>> temposVertices(numVertices, vector<int>(2, 0));
+
+        for (int i = 0; i < numVertices; i++) {
+            if (coresVertices[i] == cores::BRANCO) {
+                buscaEmProfundidade(i, coresVertices, temposVertices);
+            }
+        }
+
+        tempo = 0;
+
+        return temposVertices;
+    }
+
+    vector<vector<int>> buscaEmProfundidade(int i, vector<cores> &coresVertices,
+                                            vector<vector<int>> &temposVertices) const {
+        coresVertices[i] = cores::VERMELHO;
+        temposVertices[i][0] = ++tempo;
+        for (int j = 0; j < numVertices; j++) {
+            if (matrizAdjacencias[i][j] != 0 && coresVertices[j] == cores::BRANCO) {
+                buscaEmProfundidade(j, coresVertices, temposVertices);
+            }
+        }
+
+        coresVertices[i] = cores::PRETO;
+        temposVertices[i][1] = ++tempo;
+        return temposVertices;
+    }
+
+    void imprimir() const override {
+        imprimirMatriz();
+        imprimirRotulosVertice();
+        imprimirRotulosArestas();
+        cout << endl;  // Adiciona uma linha extra no final para espaçamento
+    }
+
+    void imprimirMatriz() const {
+        // Calcular a largura dinâmica das colunas
+        int max_valor = 0;
+        for (int i = 0; i < numVertices; ++i) {
+            for (int j = 0; j < numVertices; ++j) {
+                if (matrizAdjacencias[i][j] > max_valor) {
+                    max_valor = matrizAdjacencias[i][j];
                 }
             }
-            return sucessores;
         }
 
-        // Fecho transitivo inverso (Todos que poderiam alcançar o vértice 'v', incluindo ele) - DFS (Busca em Profundidade)
-        vector<int> fechoTransitivoInverso(int v) const override {
-            vector<int> predecessores;
-            vector<bool> visitados(numVertices, false);
+        // A largura deve acomodar o maior peso ou o maior índice de vértice
+        int largura_num = max(to_string(max_valor).length(), to_string(numVertices).length());
+        int largura_coluna = largura_num + 2;  // Adiciona 2 para um espaço de cada lado
 
-            return fechoTransitivoInverso(v, visitados);
+        int largura_primeira_coluna = 9;  // tamanho de " Vértice "
+
+        // Linha superior da borda
+        cout << "+-" << string(largura_primeira_coluna, '-') << "-+";
+        for (int i = 0; i < numVertices; ++i) {
+            cout << string(largura_coluna, '-') << "+";
         }
-        
-        vector<int> fechoTransitivoInverso(int v, vector<bool> &visitados) const {
-            vector<int> predecessores;
+        cout << endl;
 
-            // Marca o vértice como visitado
-            visitados[v] = true;
-
-            predecessores.push_back(v);
-
-            for (int i = 0; i < numVertices; i++) {
-                if (matrizAdjacencias[i][v] != 0 && !visitados[i]) {
-                    predecessores.push_back(v);
-
-                    // Chama recursivamente para explorar os sucessores do sucessor - DFS
-                    vector<int> subPredecessores = fechoTransitivoInverso(i, visitados);
-
-                    /* Junta os resultado
-                        for (int x : subSucessores)
-                        sucessores.push_back(x);
-                    */
-                    predecessores.insert(predecessores.end(), subPredecessores.begin(), subPredecessores.end());
-                }
-            }
-            return predecessores;
+        // Cabeçalho da tabela
+        cout << "|  ";
+        imprimirCentralizado("Vértice", largura_primeira_coluna);
+        cout << " |";
+        for (int i = 0; i < numVertices; ++i) {
+            imprimirCentralizado(i, largura_coluna);
+            cout << "|";
         }
+        cout << endl;
 
-        /**
-         * Busca em profundidade (DFS) do grafo.
-         *
-         * O vetor de cores é utilizado para marcar os vértices como branco (não visitado),
-         * vermelho (visitado) ou preto (visitado e finalizado).O vetor de tempos é utilizado para armazenar 
-         * os tempos de início e fim de cada vértice.
-         *
-         * @return Vetor com os tempos de início e fim de cada vértice.
-         */
-
-        vector<vector<int>> buscaEmProfundidade(int v) const {
-
-            // Definir vector com todos os vizinhos do grafo como branco
-            vector<cores> coresVertices(numVertices, cores::BRANCO);
-            vector<vector<int>> temposVertices(numVertices, vector<int>(2, 0));
-
-            for(int i = 0; i < numVertices; i++){
-                if(coresVertices[i] == cores::BRANCO){
-                    buscaEmProfundidade(i, coresVertices, temposVertices);
-                }
-            }
-
-            tempo = 0;
-
-            return temposVertices;
+        // Linha separadora do cabeçalho
+        cout << "+-" << string(largura_primeira_coluna, '-') << "-+";
+        for (int i = 0; i < numVertices; ++i) {
+            cout << string(largura_coluna, '-') << "+";
         }
+        cout << endl;
 
-        vector<vector<int>> buscaEmProfundidade(int i, vector<cores> &coresVertices, vector<vector<int>> &temposVertices) const {
-            coresVertices[i] = cores::VERMELHO;
-            temposVertices[i][0] = ++tempo;
-            for(int j = 0; j < numVertices; j++){
-                if(matrizAdjacencias[i][j] != 0 && coresVertices[j] == cores::BRANCO){
-                    buscaEmProfundidade(j, coresVertices, temposVertices);
-                }
-            }
-
-            coresVertices[i] = cores::PRETO;
-            temposVertices[i][1] = ++tempo;
-            return temposVertices;
-        }   
-
-        void imprimir() const override {
-            imprimirMatriz();
-            imprimirRotulosVertice();
-            imprimirRotulosArestas();
-            cout << endl; // Adiciona uma linha extra no final para espaçamento
-        }
-        
-        void imprimirMatriz() const {
-            // Calcular a largura dinâmica das colunas
-            int max_valor = 0;
-            for (int i = 0; i < numVertices; ++i) {
-                for (int j = 0; j < numVertices; ++j) {
-                    if (matrizAdjacencias[i][j] > max_valor) {
-                        max_valor = matrizAdjacencias[i][j];
-                    }
-                }
-            }
-
-            // A largura deve acomodar o maior peso ou o maior índice de vértice
-            int largura_num = max(to_string(max_valor).length(), to_string(numVertices).length());
-            int largura_coluna = largura_num + 2; // Adiciona 2 para um espaço de cada lado
-            
-            int largura_primeira_coluna = 9; // tamanho de " Vértice "
-
-            // Linha superior da borda
-            cout << "+-" << string(largura_primeira_coluna, '-') << "-+";
-            for (int i = 0; i < numVertices; ++i) {
-                cout << string(largura_coluna, '-') << "+";
-            }
-            cout << endl;
-
-            // Cabeçalho da tabela
-            cout << "|  ";
-            imprimirCentralizado("Vértice", largura_primeira_coluna);
+        // Corpo da Matriz
+        for (int i = 0; i < numVertices; ++i) {
+            cout << "| ";
+            imprimirCentralizado(i, largura_primeira_coluna);
             cout << " |";
-            for (int i = 0; i < numVertices; ++i) {
-                imprimirCentralizado(i, largura_coluna);
+            for (int j = 0; j < numVertices; ++j) {
+                imprimirCentralizado(matrizAdjacencias[i][j], largura_coluna);
                 cout << "|";
             }
             cout << endl;
-
-            // Linha separadora do cabeçalho
-            cout << "+-" << string(largura_primeira_coluna, '-') << "-+";
-            for (int i = 0; i < numVertices; ++i) {
-                cout << string(largura_coluna, '-') << "+";
-            }
-            cout << endl;
-
-            // Corpo da Matriz
-            for (int i = 0; i < numVertices; ++i) {
-                cout << "| ";
-                imprimirCentralizado(i, largura_primeira_coluna);
-                cout << " |";
-                for (int j = 0; j < numVertices; ++j) {
-                    imprimirCentralizado(matrizAdjacencias[i][j], largura_coluna);
-                    cout << "|";
-                }
-                cout << endl;
-            }
-
-            // Linha inferior da borda
-            cout << "+-" << string(largura_primeira_coluna, '-') << "-+";
-            for (int i = 0; i < numVertices; ++i) {
-                cout << string(largura_coluna, '-') << "+";
-            }
-            cout << endl;
         }
 
-        void imprimirRotulosVertice() const {
-            // Só imprime a tabela se o grafo for rotulado e tiver vértices
-            if (!this->verticeRotulado || numVertices == 0) {
-                return;
-            }
-            
-            // Largura da coluna "Vértice"
-            size_t largura_col_vertice = max(string("Vértice").length(), to_string(numVertices).length());
-            largura_col_vertice += 2; // Adiciona espaços para preenchimento
+        // Linha inferior da borda
+        cout << "+-" << string(largura_primeira_coluna, '-') << "-+";
+        for (int i = 0; i < numVertices; ++i) {
+            cout << string(largura_coluna, '-') << "+";
+        }
+        cout << endl;
+    }
 
-            // Largura da coluna "Rótulo" (encontra o rótulo mais longo)
-            size_t largura_col_rotulo = string("Rótulo").length();
-            for (int i = 0; i < numVertices; ++i) {
-                if (verticesRotulos.at(i).length() > largura_col_rotulo) {
-                    largura_col_rotulo = verticesRotulos.at(i).length();
-                }
-            }
-            largura_col_rotulo += 2; // Adiciona espaços para preenchimento
-
-            cout << "\n------- Rótulos dos Vértices -------" << endl;
-            
-            // Borda superior
-            cout << "+-" << string(largura_col_vertice, '-') << "-+-" << string(largura_col_rotulo, '-') << "-+" << endl;
-
-            // Cabeçalho
-            cout << "| ";
-            imprimirCentralizado("Vértice", largura_col_vertice);
-            cout << "  | ";
-            imprimirCentralizado("Rótulo", largura_col_rotulo);
-            cout << "  |" << endl;
-
-            // Linha separadora do cabeçalho
-            cout << "+-" << string(largura_col_vertice, '-') << "-+-" << string(largura_col_rotulo, '-') << "-+" << endl;
-
-            // Corpo da tabela
-            for (int i = 0; i < numVertices; ++i) {
-                cout << "| ";
-                imprimirCentralizado(i, largura_col_vertice);
-                cout << " | ";
-                imprimirCentralizado(verticesRotulos.at(i), largura_col_rotulo);
-                cout << " |" << endl;
-            }
-
-            // Borda inferior
-            cout << "+-" << string(largura_col_vertice, '-') << "-+-" << string(largura_col_rotulo, '-') << "-+" << endl;
+    void imprimirRotulosVertice() const {
+        // Só imprime a tabela se o grafo for rotulado e tiver vértices
+        if (!this->verticeRotulado || numVertices == 0) {
+            return;
         }
 
-        void imprimirRotulosArestas() const {
-            // Só imprime a tabela se o grafo for rotulado e tiver arestas
-            if (!this->arestaRotulada || numArestas == 0) {
-                return;
+        // Largura da coluna "Vértice"
+        size_t largura_col_vertice =
+            max(string("Vértice").length(), to_string(numVertices).length());
+        largura_col_vertice += 2;  // Adiciona espaços para preenchimento
+
+        // Largura da coluna "Rótulo" (encontra o rótulo mais longo)
+        size_t largura_col_rotulo = string("Rótulo").length();
+        for (int i = 0; i < numVertices; ++i) {
+            if (verticesRotulos.at(i).length() > largura_col_rotulo) {
+                largura_col_rotulo = verticesRotulos.at(i).length();
             }
+        }
+        largura_col_rotulo += 2;  // Adiciona espaços para preenchimento
 
-            // Verifica se existe pelo menos um rótulo para ser impresso
-            bool temRotulo = false;
-            for (int i = 0; i < numVertices; ++i) {
-                for (int j = 0; j < numVertices; ++j) {
-                    if (!arestasRotulos[i][j].empty()) {
-                        temRotulo = true;
-                        break;
-                    }
-                }
-                if(temRotulo) break;
-            }
+        cout << "\n------- Rótulos dos Vértices -------" << endl;
 
-            if (!temRotulo) return; // Se nenhuma aresta tiver rótulo, não imprime a tabela
+        // Borda superior
+        cout << "+-" << string(largura_col_vertice, '-') << "-+-" << string(largura_col_rotulo, '-')
+             << "-+" << endl;
 
-            // Largura da coluna "Aresta"
-            string exemplo_aresta = to_string(numVertices) + " -> " + to_string(numVertices);
-            size_t largura_col_aresta = max(string("Aresta").length(), exemplo_aresta.length());
-            largura_col_aresta += 2;
+        // Cabeçalho
+        cout << "| ";
+        imprimirCentralizado("Vértice", largura_col_vertice);
+        cout << "  | ";
+        imprimirCentralizado("Rótulo", largura_col_rotulo);
+        cout << "  |" << endl;
 
-            // Largura da coluna "Rótulo"
-            size_t largura_col_rotulo = string("Rótulo").length();
-            for (int i = 0; i < numVertices; ++i) {
-                for (int j = 0; j < numVertices; ++j) {
-                    if (arestasRotulos[i][j].length() > largura_col_rotulo) {
-                        largura_col_rotulo = arestasRotulos[i][j].length();
-                    }
-                }
-            }
-            largura_col_rotulo += 2;
+        // Linha separadora do cabeçalho
+        cout << "+-" << string(largura_col_vertice, '-') << "-+-" << string(largura_col_rotulo, '-')
+             << "-+" << endl;
 
-            // Desenhar a Tabela
-
-            cout << "\n-------- Rótulos das Arestas --------" << endl;
-
-            // Borda superior
-            cout << "+-" << string(largura_col_aresta, '-') << "-+-" << string(largura_col_rotulo, '-') << "-+" << endl;
-
-            // Cabeçalho
+        // Corpo da tabela
+        for (int i = 0; i < numVertices; ++i) {
             cout << "| ";
-            imprimirCentralizado("Aresta", largura_col_aresta);
-            cout << " |  ";
-            imprimirCentralizado("Rótulo", largura_col_rotulo);
+            imprimirCentralizado(i, largura_col_vertice);
+            cout << " | ";
+            imprimirCentralizado(verticesRotulos.at(i), largura_col_rotulo);
             cout << " |" << endl;
+        }
 
-            // Linha separadora do cabeçalho
-            cout << "+-" << string(largura_col_aresta, '-') << "-+-" << string(largura_col_rotulo, '-') << "-+" << endl;
+        // Borda inferior
+        cout << "+-" << string(largura_col_vertice, '-') << "-+-" << string(largura_col_rotulo, '-')
+             << "-+" << endl;
+    }
 
-            // Corpo da tabela
-            for (int i = 0; i < numVertices; ++i) {
-                for (int j = (direcionado ? 0 : i); j < numVertices; ++j) {
-                    if (matrizAdjacencias[i][j] != 0 && !arestasRotulos[i][j].empty()) {
-                        string aresta_str = to_string(i) + (direcionado ? " -> " : " - ") + to_string(j);
-                        cout << "| ";
-                        imprimirCentralizado(aresta_str, largura_col_aresta);
-                        cout << " | ";
-                        imprimirCentralizado(arestasRotulos[i][j], largura_col_rotulo);
-                        cout << " |" << endl;
-                    }
+    void imprimirRotulosArestas() const {
+        // Só imprime a tabela se o grafo for rotulado e tiver arestas
+        if (!this->arestaRotulada || numArestas == 0) {
+            return;
+        }
+
+        // Verifica se existe pelo menos um rótulo para ser impresso
+        bool temRotulo = false;
+        for (int i = 0; i < numVertices; ++i) {
+            for (int j = 0; j < numVertices; ++j) {
+                if (!arestasRotulos[i][j].empty()) {
+                    temRotulo = true;
+                    break;
                 }
             }
-
-            // Borda inferior
-            cout << "+-" << string(largura_col_aresta, '-') << "-+-" << string(largura_col_rotulo, '-') << "-+" << endl;
+            if (temRotulo) break;
         }
+
+        if (!temRotulo) return;  // Se nenhuma aresta tiver rótulo, não imprime a tabela
+
+        // Largura da coluna "Aresta"
+        string exemplo_aresta = to_string(numVertices) + " -> " + to_string(numVertices);
+        size_t largura_col_aresta = max(string("Aresta").length(), exemplo_aresta.length());
+        largura_col_aresta += 2;
+
+        // Largura da coluna "Rótulo"
+        size_t largura_col_rotulo = string("Rótulo").length();
+        for (int i = 0; i < numVertices; ++i) {
+            for (int j = 0; j < numVertices; ++j) {
+                if (arestasRotulos[i][j].length() > largura_col_rotulo) {
+                    largura_col_rotulo = arestasRotulos[i][j].length();
+                }
+            }
+        }
+        largura_col_rotulo += 2;
+
+        // Desenhar a Tabela
+
+        cout << "\n-------- Rótulos das Arestas --------" << endl;
+
+        // Borda superior
+        cout << "+-" << string(largura_col_aresta, '-') << "-+-" << string(largura_col_rotulo, '-')
+             << "-+" << endl;
+
+        // Cabeçalho
+        cout << "| ";
+        imprimirCentralizado("Aresta", largura_col_aresta);
+        cout << " |  ";
+        imprimirCentralizado("Rótulo", largura_col_rotulo);
+        cout << " |" << endl;
+
+        // Linha separadora do cabeçalho
+        cout << "+-" << string(largura_col_aresta, '-') << "-+-" << string(largura_col_rotulo, '-')
+             << "-+" << endl;
+
+        // Corpo da tabela
+        for (int i = 0; i < numVertices; ++i) {
+            for (int j = (direcionado ? 0 : i); j < numVertices; ++j) {
+                if (matrizAdjacencias[i][j] != 0 && !arestasRotulos[i][j].empty()) {
+                    string aresta_str =
+                        to_string(i) + (direcionado ? " -> " : " - ") + to_string(j);
+                    cout << "| ";
+                    imprimirCentralizado(aresta_str, largura_col_aresta);
+                    cout << " | ";
+                    imprimirCentralizado(arestasRotulos[i][j], largura_col_rotulo);
+                    cout << " |" << endl;
+                }
+            }
+        }
+
+        // Borda inferior
+        cout << "+-" << string(largura_col_aresta, '-') << "-+-" << string(largura_col_rotulo, '-')
+             << "-+" << endl;
+    }
 };

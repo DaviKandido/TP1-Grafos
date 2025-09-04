@@ -7,7 +7,6 @@ int lerInteiro(const string& mensagem, const int limiteInferior, const int limit
     bool controle = true;
     int numero;
 
-    
     while (controle) {
         // Ler a entrada padrão
         cout << mensagem;
@@ -16,17 +15,19 @@ int lerInteiro(const string& mensagem, const int limiteInferior, const int limit
         // Verificar se a extração falhou (ex: o usuário digitou "banana")
         if (cin.fail()) {
             cout << "[ERRO]: Entrada inválida. Por favor, digite um número inteiro.\n";
-            
+
             // Limpar o estado de erro do cin
-            cin.clear(); 
-        } 
+            cin.clear();
+        }
         // Se a extração funcionou, verificar se o número está no intervalo desejado
         else if (numero < limiteInferior) {
-            cout << "[ERRO]: O número deve ser maior ou igual a " << limiteInferior << ". Tente novamente.\n";
+            cout << "[ERRO]: O número deve ser maior ou igual a " << limiteInferior
+                 << ". Tente novamente.\n";
         }
         // Se a extração funcionou, verificar se o número está abaixo do limite desejado
         else if (numero > limiteSuperior) {
-            cout << "[ERRO]: O número deve ser menor ou igual a " << limiteSuperior << ". Tente novamente.\n";
+            cout << "[ERRO]: O número deve ser menor ou igual a " << limiteSuperior
+                 << ". Tente novamente.\n";
         }
         // Se tudo deu certo
         else {
@@ -34,7 +35,7 @@ int lerInteiro(const string& mensagem, const int limiteInferior, const int limit
         }
 
         // Descartar o restante da linha de entrada inválida do buffer
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');         
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
 
     return numero;
@@ -47,8 +48,8 @@ bool lerBoolean(const string& mensagem) {
 
     while (true) {
         // Ler a entrada padrão
-        cout << mensagem; 
-        getline(cin, entrada); 
+        cout << mensagem;
+        getline(cin, entrada);
 
         // Verifica se a entrada tem o tamanho de exatamente 1 caractere
         if (entrada.length() == 1) {
@@ -61,15 +62,15 @@ bool lerBoolean(const string& mensagem) {
                 case 'Y':
                 case 'y':
                     // controle = false;
-                    return true; // Retorna verdadeiro para as opções afirmativas
+                    return true;  // Retorna verdadeiro para as opções afirmativas
 
                 case 'N':
                 case 'n':
                     // controle = false;
-                    return false; // Retorna falso para as opções negativas
+                    return false;  // Retorna falso para as opções negativas
             }
         }
-        
+
         // Se o código chegou até aqui, a entrada era inválida
         cout << "[ERRO]: Resposta inválida. Por favor, digite S/N ou Y/N.\n";
     }
@@ -84,15 +85,13 @@ string lerRotulo(const string& mensagem) {
         getline(cin, rotulo);
 
         // Verificar se o rótulo não está vazio ou contém apenas espaços
-            // rotulo.find_first_not_of(" \t\n\v\f\r") procura o primeiro caractere que não é um espaço em branco. 
-            // Se não encontrar nada (retorna npos), a string está vazia ou só tem espaços.
+        // rotulo.find_first_not_of(" \t\n\v\f\r") procura o primeiro caractere que não é um espaço
+        // em branco. Se não encontrar nada (retorna npos), a string está vazia ou só tem espaços.
         if (rotulo.empty() || rotulo.find_first_not_of(" \t\n\v\f\r") == string::npos)
             cout << "[ERRO]: O rótulo não pode ser vazio. Tente novamente." << endl;
         else
-            controle = false;        
+            controle = false;
     }
 
     return rotulo;
 }
-
-

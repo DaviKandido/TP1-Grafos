@@ -21,24 +21,28 @@ int main(int argc, char* argv[]) {
              << "------------- João Pedro Torres -------------" << endl;
         cout << "---------------------------------------------" << endl;
 
-        cout <<   "\n> Menu " << endl << endl;
-        cout <<   "Escolha uma implementação:" << endl << endl;
-        cout <<   "1) Matriz de Adjacências" << endl;
-        cout <<   "2) Lista de Adjacências" << endl;
-        cout <<   "0) Sair" << endl << endl;
+        cout << "\n> Menu " << endl << endl;
+        cout << "Escolha uma implementação:" << endl << endl;
+        cout << "1) Matriz de Adjacências" << endl;
+        cout << "2) Lista de Adjacências" << endl;
+        cout << "0) Sair" << endl << endl;
 
-        do {       
+        do {
             opcao = lerInteiro("Opção: ", 0, 2);
 
             switch (opcao) {
                 case 1:
-                    (new MenuMatriz())->menu(); break;
+                    (new MenuMatriz())->menu();
+                    break;
                 case 2:
-                    cout << "\nInstancia Lista de Adjacências" << endl; break;
+                    cout << "\nInstancia Lista de Adjacências" << endl;
+                    break;
                 case 0:
-                    cout << "\nSaindo..." << endl; break;
+                    cout << "\nSaindo..." << endl;
+                    break;
                 default:
-                    cout << "\nOpção inválida. Tente novamente." << endl; break;
+                    cout << "\nOpção inválida. Tente novamente." << endl;
+                    break;
             }
         } while (opcao != 0);
     } catch (exception& e) {
