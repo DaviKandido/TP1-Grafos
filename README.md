@@ -1,14 +1,18 @@
 # TP1 — Grafos 🧮
 
-<div align="center" style="">
-  <img src="assets/GarfoImg.png">
-</div>
 
 ## 🎯 Objetivo
 
 Implementação de **estruturas e algoritmos de Grafos** para o Trabalho Prático 1 de **Teoria dos Grafos e Computabilidade**. O sistema permite criar grafos e operar sobre eles em **duas representações** — **Matriz de Adjacências** e **Lista de Adjacências** — oferecendo operações essenciais de construção, consulta e busca.
 
+<div align="center" style="">
+  <img src="assets/ImgGrafo.png">
+</div>
+
+
 > **Escopo:** criação/remoção de vértices e arestas, consulta de vizinhos, **fecho transitivo direto e inverso**, **busca em profundidade (DFS)**, **busca em Largura (BFS)** e impressão do grafo.
+
+
 
 ## 👨‍🎓 Integrantes da equipe
 
