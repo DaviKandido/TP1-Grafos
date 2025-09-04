@@ -226,6 +226,27 @@ class MenuLista {
 
     void consultaVizinhosVertice() {
         cout << "\n> Menu > Lista > Consultar Vizinhos de Vértice" << endl << endl;
+
+        // Variavel para indicar a posição do vertice no array
+        int verticei;
+
+        grafo->imprimir();
+
+        //pegando a posição dos vertices na Lista
+        verticei = lerInteiro("Digite o número do vértice que deseja remover", 0,grafo->getQuantidadeVertices());
+
+        //O vertice esta dentro da listaPrincipal que é feita de NoVertice e dentro do Novertice que esta o vertice
+        Vertice inicioV = grafo->listaPrincipal[verticei].vertice;
+        
+        vector<Vertice> vizinho = grafo->getVizinhos(inicioV);
+        if (vizinho.empty()) {
+            cout << "Sem vizinhos\n";
+        } else {
+            for (const Vertice& v : vizinho) {
+                cout << "ID=" << v.getId() << " | Peso=" << v.getPeso() << " | Rotulo=" << v.getRotulo() << '\n';
+    }
+}
+
     }
 
     void consultarSucessoresVertice() {
