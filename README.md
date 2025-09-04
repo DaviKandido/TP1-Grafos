@@ -11,9 +11,7 @@ Implementação de **estruturas e algoritmos de Grafos** para o Trabalho Prátic
   <img src="Assets/ImgGrafo.png">
 </div>
 
-
-
-
+---
 
 ## 👨‍🎓 Integrantes da equipe
 
@@ -24,9 +22,13 @@ Implementação de **estruturas e algoritmos de Grafos** para o Trabalho Prátic
 * [**João Pedro Torres**](https://github.com/Towers444)
 * [**Vitor Leite Setragni**](https://github.com/VitorSetragni)
 
-## 👩‍🏫 Professores responsáveis
+---
+
+## 👩‍🏫 Professor responsáveis
 
 * *Silvio Jamil Ferzoli Guimaraes*
+
+---
 
 ## 🗂 Estrutura do Projeto
 
@@ -50,6 +52,8 @@ Codigos/
  └─ libs
     └─ /io.hpp                    # utilitários de I/O
 ```
+
+---
 
 ## 🚀 Como Executar
 
@@ -88,12 +92,16 @@ mkdir bin; g++ Main.cpp -o bin\\Main.exe -std=c++17 -Wall -g; .\\bin\\Main.exe
 
 > Caso esteja usando **VS Code**, há tarefas em `.vscode/tasks.json` para compilar/executar.
 
+---
+
 ## 🛠️ Tecnologias Utilizadas
 
 * **C/C++ (C++17)**
 * **g++** para compilação
 * **VS Code** (configurações em `.vscode/`)
 * **Node + npm** (scripts utilitários via `package.json` usando `shx`)
+
+---
 
 ## 📋 Funcionalidades Principais
 
@@ -113,6 +121,8 @@ mkdir bin; g++ Main.cpp -o bin\\Main.exe -std=c++17 -Wall -g; .\\bin\\Main.exe
   * **Busca em Largura (BFS)**
   * **Imprimir** a estrutura do grafo
 * **Dados de teste**: opção no menu para **criar um grafo de exemplo** rapidamente.
+
+---
 
 ## 🧭 Como usar (fluxo sugerido)
 
@@ -137,11 +147,15 @@ mkdir bin; g++ Main.cpp -o bin\\Main.exe -std=c++17 -Wall -g; .\\bin\\Main.exe
 * `12) Imprimir Grafo`
 * `13) Remove Grafo`
 
+---
+
 ## ✅ Requisitos
 
 * **g++** com suporte a **C++17**
 * **Windows/Linux/macOS**
 * (Opcional) **Node.js** para usar os *scripts* de build (`npm run`)
+
+--- 
 
 ## 🧪 Testes rápidos
 
