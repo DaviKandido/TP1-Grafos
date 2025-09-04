@@ -522,7 +522,7 @@ class GrafoLista : public IGrafo<Vertice> {
 
             status = true;
             numArestas--;
-        }
+        }else{cout<< "A aresta não existe"<< endl;}
         return status;
     }
 
