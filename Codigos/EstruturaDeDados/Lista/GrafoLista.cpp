@@ -415,6 +415,68 @@ class GrafoLista : public IGrafo<Vertice> {
     }
 
     /**
+     *   Adiciona mais um vértice no Grafo
+     *
+     *   @param v Vertice a ser adicionado
+     *   @param rotulo String a ser definida como rotulo do vértice
+     *   @return se ação foi concluida ou não
+     */
+    bool adicionarVertice(Vertice v, string rotulo) {
+        bool status = false;
+        NoVertice vertice =
+            NoVertice(this->verticePonderado, this->arestaPonderada, this->verticeRotulado,
+                      this->arestaRotulada, ++ultimoId, 0, rotulo);
+        if(this->verticeRotulado){
+            listaPrincipal.push_back(vertice);
+            numVertices++;
+            status = true;
+        }
+        return status;
+    }
+
+     /**
+     *   Adiciona mais um vértice no Grafo
+     *
+     *   @param v Vertice a ser adicionado
+     *   @param peso Inteiro a ser adicionado como peso do vértice
+     *   @return se ação foi concluida ou não
+     */
+    bool adicionarVertice(Vertice v, int peso) {
+        bool status = false;
+        NoVertice vertice =
+            NoVertice(this->verticePonderado, this->arestaPonderada, this->verticeRotulado,
+                      this->arestaRotulada, ++ultimoId, peso, "");
+        if(this->verticeRotulado){
+            listaPrincipal.push_back(vertice);
+            numVertices++;
+            status = true;
+        }
+        return status;
+    }
+
+    /**
+     *   Adiciona mais um vértice no Grafo
+     *
+     *   @param v Vertice a ser adicionado
+     *   @param peso Inteiro a ser adicionado como peso do vértice
+     *   @param rotulo String a ser definida como rotulo do vértice
+     *   @return se ação foi concluida ou não
+     */
+    bool adicionarVertice(Vertice v, int peso,string rotulo) {
+        bool status = false;
+        NoVertice vertice =
+            NoVertice(this->verticePonderado, this->arestaPonderada, this->verticeRotulado,
+                      this->arestaRotulada, ++ultimoId, peso, "");
+        if(this->verticeRotulado){
+            listaPrincipal.push_back(vertice);
+            numVertices++;
+            status = true;
+        }
+        return status;
+    }
+
+
+    /**
      *   Remove um vértice no Grafo, caso o vértice esteja presente, assim como as arestas
      * conectadas
      *
@@ -426,18 +488,18 @@ class GrafoLista : public IGrafo<Vertice> {
         int pos = procurarVertice(v);
         bool status = true;
         if (pos != -1) {
-            // Remover NoVertice da Lista Principal
-            listaPrincipal.erase(listaPrincipal.begin() + pos);
-
             // Remover todas as arestas que conectavam com v
             vector<Vertice> arestasRemover = procurarAresta(v);
             for (int i = 0; i < arestasRemover.size(); i++) {
                 removerAresta(arestasRemover.at(i), v);
             }
+
+            // Remover NoVertice da Lista Principal
+            listaPrincipal.erase(listaPrincipal.begin() + pos);
             numVertices -= 1;
         } else {
             status = false;
-            cout << "Vertice " << v.getId() << "não está no grafo";
+            cout << "Vértice " << v.toString() << " não está no grafo";
         }
         return status;
     }
@@ -532,7 +594,7 @@ class GrafoLista : public IGrafo<Vertice> {
     bool removerAresta(Vertice origem, Vertice destino) override {
         bool status = false;
         if (existeAresta(origem, destino)) {
-            NoVertice procura = listaPrincipal.at(origem.getId());
+            NoVertice &procura = listaPrincipal.at(origem.getId());
             procura.removerAresta(destino);
 
             if (!direcionado) {
@@ -662,11 +724,11 @@ class GrafoLista : public IGrafo<Vertice> {
      *   @return Inteiro de sua posição no grafo, caso não exista retorna -1
      */
     int procurarVertice(Vertice v) {
-        Vertice verticeProcurar = Vertice();
         int i = 0;
         int achou = -1;
-        while (i != listaPrincipal.size() && !achou) {
-            verticeProcurar = listaPrincipal.at(i).vertice;
+        while (i != listaPrincipal.size() && achou == -1) {
+            Vertice verticeProcurar = listaPrincipal.at(i).vertice;
+            // cout << verticeProcurar.toString();
             if (verticeProcurar == v) {
                 achou = i;
             }
@@ -683,12 +745,12 @@ class GrafoLista : public IGrafo<Vertice> {
      */
     vector<Vertice> procurarAresta(Vertice v) {
         vector<Vertice> listaVerticesComAresta;
-        NoVertice noVerticeProcurar = NoVertice();
         int i = 0;
         int achou = -1;
         if (existeVertice(v)) {
             while (i != listaPrincipal.size()) {
-                noVerticeProcurar = listaPrincipal.at(i);
+                
+                NoVertice &noVerticeProcurar = listaPrincipal.at(i);
                 for (std::list<Vertice>::iterator it = noVerticeProcurar.arestas.begin();
                      it != noVerticeProcurar.arestas.end(); ++it) {
                     if (*it == v) {  // Caso há aresta com v
@@ -760,8 +822,8 @@ class GrafoLista : public IGrafo<Vertice> {
             cout << str;
         }
 
-
-        cout << "Características: " << endl;
+        cout << "-------------------------------------";
+        cout << endl << "Características: " << endl;
 
         cout << "Direcionado? ";
         this->direcionado ? (cout << "Sim") :
@@ -796,51 +858,91 @@ class GrafoLista : public IGrafo<Vertice> {
 };
 
 int main() {
-    GrafoLista g = GrafoLista(false, true, false, false, false, false);
-    g.imprimir();
-    Vertice v = Vertice(1, false, false);
-    for (int i = 0; i < 11; i++) {
-        v.setId(i + 1);
-        g.adicionarVertice(v);
-    }
+    // GrafoLista g = GrafoLista(false, true, false, false, false, false);
+    // g.imprimir();
+    // Vertice v = Vertice(1, false, false);
+    // for (int i = 0; i < 11; i++) {
+    //     v.setId(i + 1);
+    //     g.adicionarVertice(v);
+    // }
 
-    for (int i = 0; i < g.numVertices; i++) {
-        v.setId(i);
-        for (int x = 0; x < g.numVertices; x++) {
-            Vertice a = Vertice(v);
-            a.setId(x);
-            g.adicionarAresta(v, a);
-        }
-    }
-    g.imprimir();
+    // for (int i = 0; i < g.numVertices; i++) {
+    //     v.setId(i);
+    //     for (int x = 0; x < g.numVertices; x++) {
+    //         Vertice a = Vertice(v);
+    //         a.setId(x);
+    //         g.adicionarAresta(v, a);
+    //     }
+    // }
+    // g.imprimir();
 
-    cout << endl << "Grafo Ponderado" << endl << endl;
+    // cout << endl << "Grafo Ponderado" << endl << endl;
 
-    GrafoLista g1 = GrafoLista(false, true, true, true, false, false);
-    g1.imprimir();
+    // GrafoLista g1 = GrafoLista(false, true, true, true, false, false);
+    // g1.imprimir();
 
-    Vertice v1 = Vertice(1, false, true);
-    for (int i = 0; i < 11; i++) {
-        v1.setId(i + 1);
-        v1.setPeso(i*v1.getId());
-        g1.adicionarVertice(v1);
-    }
-    g1.imprimir();
+    // Vertice v1 = Vertice(1, false, true);
+    // for (int i = 0; i < 11; i++) {
+    //     v1.setId(i + 1);
+    //     v1.setPeso(i*v1.getId());
+    //     g1.adicionarVertice(v1);
+    // }
+    // g1.imprimir();
 
-    Vertice origem = g1.getListaPrincipal().at(0).vertice;
-    Vertice destino = g1.getListaPrincipal().at(5).vertice;
+    // Vertice origem = g1.getListaPrincipal().at(0).vertice;
+    // Vertice destino = g1.getListaPrincipal().at(5).vertice;
 
 
-    g1.adicionarAresta(origem,destino,10);
+    // g1.adicionarAresta(origem,destino,10);
     
-    for (const auto &origem: g1.getListaPrincipal()) {
-        for (int x = 5; x < g1.numVertices; x++) {
+    // for (const auto &origem: g1.getListaPrincipal()) {
+    //     for (int x = 5; x < g1.numVertices; x++) {
+    //         Vertice a = Vertice(origem.vertice);
+    //         a.setId(x);
+    //         g1.adicionarAresta(origem.vertice, a, rand()%1000);
+    //     }
+    // }
+
+    // g1.imprimir();
+
+    // g1.removerAresta(origem,destino);
+    // g1.imprimir();
+
+
+    cout << endl << "Grafo Rotulado" << endl << endl;
+
+    GrafoLista gr = GrafoLista(true,true,false,false,true,true);
+    Vertice vr1 = Vertice(1, true, false);
+    Vertice vr2 = Vertice(2, true, false);
+    Vertice vr3 = Vertice(3, true, false);
+    
+    vr1.setRotulo("Cor");
+    vr2.setRotulo("Fruta");
+    vr3.setRotulo("?");
+    
+    gr.adicionarVertice(vr1);
+    gr.adicionarVertice(vr2);
+    gr.adicionarVertice(vr3);
+
+
+
+    for (const auto &origem: gr.getListaPrincipal()) {
+        for (int x = 0; x < gr.numVertices; x++) {
             Vertice a = Vertice(origem.vertice);
             a.setId(x);
-            g1.adicionarAresta(origem.vertice, a, rand()%1000);
+            gr.adicionarAresta(origem.vertice, a, "Abacate");
         }
     }
 
-    g1.imprimir();
+    gr.imprimir();
+
+    cout << "Remover o aresta " << vr1.toString() << " : " << vr3.toString() << endl;
+    gr.removerAresta(vr1, vr3);
+    gr.imprimir();
+
+    cout << "Remover o vértice " << vr2.toString() << endl;
+    gr.removerVertice(vr2);
+    gr.imprimir();
+
     return 0;
 }
