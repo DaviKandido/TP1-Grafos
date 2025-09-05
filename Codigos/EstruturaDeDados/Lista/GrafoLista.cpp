@@ -524,6 +524,8 @@ class GrafoLista : public IGrafo<Vertice> {
 
             status = true;
             numArestas++;
+        } else {
+            cout << "Vértices não válidos" << endl;
         }
         return status;
     }
@@ -682,13 +684,13 @@ class GrafoLista : public IGrafo<Vertice> {
     // Metodos de validacao
 
     /**
-     *   Valida um novo vértice. <----- PRECISA DE ALTERAÇÕES
+     *   Valida um dado vértice.
      *
      *   @param v Vertice a ser validado
      *   @return Verdadeiro caso vértice seja válido
      */
     bool validarVertice(Vertice v) const {
-        return (0 <= v.getId() && v.getId() < numVertices);
+        return (0 <= v.getId() && v.getId() <= ultimoId);
     }
 
     /**
@@ -700,13 +702,19 @@ class GrafoLista : public IGrafo<Vertice> {
     bool existeVertice(Vertice v) const override {
         Vertice verticeProcurar = Vertice();
         int i = 0;
-        bool achou = false;
-        while (i != listaPrincipal.size() && !achou) {
+
+        // testar se vértice está nos limites de vértices já criados
+        bool achou = validarVertice(v);
+        if(achou){
+            // Se estiver no limite, ter certeza se está dentre os atuais
+            achou = false;
+            while (i != listaPrincipal.size() && !achou) {
             verticeProcurar = listaPrincipal.at(i).vertice;
             if (verticeProcurar == v) {
                 achou = true;
             }
             i++;
+            }
         }
         return achou;
     }
@@ -880,23 +888,29 @@ class GrafoLista : public IGrafo<Vertice> {
 
 
 void TesteNaoDirecionado(){
-    cout << endl << "Grafo Não direcionado" << endl << endl;
+    cout << endl << ">>>> Grafo Não direcionado" << endl << endl;
 
     GrafoLista g = GrafoLista(false, false, false, false, false, false);
     Vertice v1 = Vertice(1, false, false);
     Vertice v2 = Vertice(2, false, false);
-    Vertice v3 = Vertice(3, false, false);
-    
+    Vertice v3 = Vertice(3, false, false);    
+    Vertice v4 = Vertice(4, false, false);
+
     g.adicionarVertice(v1);
     g.adicionarVertice(v2);
     g.adicionarVertice(v3);
+    g.adicionarVertice(v4);
 
     g.adicionarAresta(v1,v2);
-
+    g.adicionarAresta(v3,v4);
     g.imprimir();
 
-    cout << "Removendo aresta " << v1.toString() << " : " << v2.toString()<< endl;
+    cout << "Removendo aresta" << v1.toString() << " :" << v2.toString() << endl;
     g.removerAresta(v1,v2);
+    g.imprimir();
+
+    cout << "Removendo vértice" << v4.toString() << endl;
+    g.removerVertice(v4);
     g.imprimir();
 }
 
