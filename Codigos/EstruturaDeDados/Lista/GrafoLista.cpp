@@ -82,12 +82,10 @@ class Vertice {
 
     void setPeso(int p) {
         this->peso = p;
-        this->ponderado = true;
     }
 
     void setRotulo(string r) {
         this->rotulo = r;
-        this->rotulado = true;
     }
 
     void setId(int id) {
@@ -112,6 +110,21 @@ class Vertice {
 
     bool operator<(const Vertice &other) const {
         return this->id < other.id;
+    }
+
+    string toString() const {
+        std::ostringstream oss;
+        if (ponderado && rotulado) {
+                oss << " [" << getId() << ", " << getPeso() << ", "
+                    << getRotulo() << "]";
+            } else if (ponderado) {
+                oss << " [" << getId() << ", " << getPeso() << "]";
+            } else if (rotulado) {
+                oss << " [" << getId() << ", " << getRotulo() << "]";
+            } else {
+                oss << " [" << getId() << "]";
+            }
+        return oss.str();
     }
 };
 
@@ -288,8 +301,9 @@ class NoVertice {
     string toString() {
         string lista = to_string(vertice.getId());
         lista += " |";
-        for (std::list<Vertice>::iterator it = arestas.begin(); it != arestas.end(); ++it)
-            lista += ' ' + it->getId();
+        for (auto const &aresta : this->arestas){
+            lista += ' '+ aresta.toString();
+        }
         lista += '\n';
         return lista;
     }
@@ -488,7 +502,13 @@ class GrafoLista : public IGrafo<Vertice> {
     bool adicionarAresta(Vertice origem, Vertice destino, int peso, string rotulo) {
         bool status = false;
         if (validarVertice(destino) && validarVertice(origem)) {
-            NoVertice procura = listaPrincipal.at(origem.getId());
+            NoVertice &procura = listaPrincipal.at(origem.getId());
+
+            destino.ponderado = arestaPonderada;
+            destino.rotulado = arestaRotulada;
+
+            // cout << "(Grafo Lista) Inserindo:" << origem.toString() << " : " <<destino.toString() << endl;
+
             procura.adicionarAresta(destino, peso, rotulo);
 
             if (!direcionado) {
@@ -692,6 +712,10 @@ class GrafoLista : public IGrafo<Vertice> {
         return numArestas;
     }
 
+    vector<NoVertice> getListaPrincipal() const{
+        return this->listaPrincipal;
+    }
+
     // Outros metodos
 
     /**
@@ -725,18 +749,9 @@ class GrafoLista : public IGrafo<Vertice> {
             str = "";
             oss.str("");
             oss.clear();
-            for (const auto &aresta : v.arestas) {
-                if (arestaPonderada && arestaRotulada) {
-                    oss << " [" << aresta.getId() << ", " << aresta.getPeso() << ", "
-                        << aresta.getRotulo() << "]";
-                } else if (arestaPonderada) {
-                    oss << " [" << aresta.getId() << ", " << aresta.getPeso() << "]";
-                } else if (arestaRotulada) {
-                    oss << " [" << aresta.getId() << ", " << aresta.getRotulo() << "]";
-                } else {
-                    oss << " [" << aresta.getId() << "]";
-                }
-
+            
+            for (const auto &aresta: v.arestas) {
+                oss << ' ' << aresta.toString();
                 str += oss.str();
                 oss.str("");
                 oss.clear();
@@ -744,6 +759,38 @@ class GrafoLista : public IGrafo<Vertice> {
             str += '\n';
             cout << str;
         }
+
+
+        cout << "Características: " << endl;
+
+        cout << "Direcionado? ";
+        this->direcionado ? (cout << "Sim") :
+              (cout << "Não");
+        cout << endl;
+
+        cout << "Ponderado? ";
+        if(verticePonderado && arestaPonderada){
+            cout << "Vértices e Arestas";
+        } else if (verticePonderado){
+            cout << "Vértices";
+        } else if (arestaPonderada){
+            cout << "Arestas";
+        } else {
+            cout << "Não";
+        }
+        cout << endl;
+
+        cout << "Rotulado? ";
+        if(verticeRotulado && arestaRotulada){
+            cout << "Vértices e Arestas";
+        } else if (verticeRotulado){
+            cout << "Vértices";
+        } else if (arestaRotulada){
+            cout << "Arestas";
+        } else {
+            cout << "Não";
+        }
+        cout << endl;
         cout << "-------------------------------------" << endl << endl;
     }
 };
@@ -767,24 +814,33 @@ int main() {
     }
     g.imprimir();
 
-    cout << endl << "Grafo Ponderado" << endl;
-    GrafoLista g1 = GrafoLista(false, true, false, true, false, false);
+    cout << endl << "Grafo Ponderado" << endl << endl;
+
+    GrafoLista g1 = GrafoLista(false, true, true, true, false, false);
     g1.imprimir();
-    Vertice v1 = Vertice(1, false, false);
+
+    Vertice v1 = Vertice(1, false, true);
     for (int i = 0; i < 11; i++) {
         v1.setId(i + 1);
+        v1.setPeso(i*v1.getId());
         g1.adicionarVertice(v1);
     }
+    g1.imprimir();
 
-    for (int i = 0; i < g1.numVertices; i++) {
-        v.setId(i);
-        for (int x = 0; x < g1.numVertices; x++) {
-            Vertice a = Vertice(v1);
+    Vertice origem = g1.getListaPrincipal().at(0).vertice;
+    Vertice destino = g1.getListaPrincipal().at(5).vertice;
+
+
+    g1.adicionarAresta(origem,destino,10);
+    
+    for (const auto &origem: g1.getListaPrincipal()) {
+        for (int x = 5; x < g1.numVertices; x++) {
+            Vertice a = Vertice(origem.vertice);
             a.setId(x);
-            g1.adicionarAresta(v, a, rand());
+            g1.adicionarAresta(origem.vertice, a, rand()%1000);
         }
     }
 
-    g.imprimir();
+    g1.imprimir();
     return 0;
 }
