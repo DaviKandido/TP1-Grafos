@@ -598,7 +598,7 @@ class GrafoLista : public IGrafo<Vertice> {
             procura.removerAresta(destino);
 
             if (!direcionado) {
-                procura = listaPrincipal.at(destino.getId());
+                NoVertice& procura = listaPrincipal.at(destino.getId());
                 procura.removerAresta(origem);
             }
 
@@ -615,7 +615,7 @@ class GrafoLista : public IGrafo<Vertice> {
      *   @return Vector<Vertice> dos vizinhos
      */
     vector<Vertice> getVizinhos(Vertice v) const override {
-        if (!direcionado) {
+        if (direcionado) {
             vector<Vertice> v1 = fechoTransitivoInverso(v);
             vector<Vertice> v2 = fechoTransitivoDireto(v);
             vector<Vertice> resultado;
@@ -640,9 +640,19 @@ class GrafoLista : public IGrafo<Vertice> {
     vector<Vertice> fechoTransitivoDireto(Vertice v) const override {
         NoVertice procura = listaPrincipal.at(v.getId());
         list<Vertice> descendentes_list = procura.getArestas();
+        vector<Vertice> descendentes;
 
-        // Conversao de list para vector
-        vector<Vertice> descendentes{std::begin(descendentes_list), std::end(descendentes_list)};
+        // Caso tenha algum calor extra, pegar o valor do vértice e não da aresta
+        if(arestaPonderada || arestaRotulada){
+            for(auto const &aresta : descendentes_list){
+                int pos = procurarVertice(aresta);
+                descendentes.push_back(listaPrincipal.at(pos).vertice);
+            }
+        } else {
+            // Conversao de list para vector
+            vector<Vertice> descendentes{std::begin(descendentes_list), std::end(descendentes_list)};
+        
+        }
         return descendentes;
     }
 
@@ -661,7 +671,7 @@ class GrafoLista : public IGrafo<Vertice> {
             for (std::list<Vertice>::iterator it = arestas_list.begin(); it != arestas_list.end();
                  ++it) {
                 if (*it == v) {
-                    ancestrais.push_back(*it);
+                    ancestrais.push_back(procura.vertice);
                 }
             }
         }
@@ -723,7 +733,7 @@ class GrafoLista : public IGrafo<Vertice> {
      *   @param v Vertice a ser procurado
      *   @return Inteiro de sua posição no grafo, caso não exista retorna -1
      */
-    int procurarVertice(Vertice v) {
+    int procurarVertice(Vertice v) const {
         int i = 0;
         int achou = -1;
         while (i != listaPrincipal.size() && achou == -1) {
@@ -855,84 +865,122 @@ class GrafoLista : public IGrafo<Vertice> {
         cout << endl;
         cout << "-------------------------------------" << endl << endl;
     }
+    /**
+     *   Imprime o lista de vertices
+     *   @param vertices Vector de vertices a ser mostrada
+     */
+    void imprimir(vector<Vertice> vertices) const{
+        for(auto const &i : vertices){
+            cout << i.toString() << " ";
+        }
+        cout << endl << endl;
+    }
 };
 
-int main() {
-    // GrafoLista g = GrafoLista(false, true, false, false, false, false);
-    // g.imprimir();
-    // Vertice v = Vertice(1, false, false);
-    // for (int i = 0; i < 11; i++) {
-    //     v.setId(i + 1);
-    //     g.adicionarVertice(v);
-    // }
-
-    // for (int i = 0; i < g.numVertices; i++) {
-    //     v.setId(i);
-    //     for (int x = 0; x < g.numVertices; x++) {
-    //         Vertice a = Vertice(v);
-    //         a.setId(x);
-    //         g.adicionarAresta(v, a);
-    //     }
-    // }
-    // g.imprimir();
-
-    // cout << endl << "Grafo Ponderado" << endl << endl;
-
-    // GrafoLista g1 = GrafoLista(false, true, true, true, false, false);
-    // g1.imprimir();
-
-    // Vertice v1 = Vertice(1, false, true);
-    // for (int i = 0; i < 11; i++) {
-    //     v1.setId(i + 1);
-    //     v1.setPeso(i*v1.getId());
-    //     g1.adicionarVertice(v1);
-    // }
-    // g1.imprimir();
-
-    // Vertice origem = g1.getListaPrincipal().at(0).vertice;
-    // Vertice destino = g1.getListaPrincipal().at(5).vertice;
 
 
-    // g1.adicionarAresta(origem,destino,10);
+void TesteNaoDirecionado(){
+    cout << endl << "Grafo Não direcionado" << endl << endl;
+
+    GrafoLista g = GrafoLista(false, false, false, false, false, false);
+    Vertice v1 = Vertice(1, false, false);
+    Vertice v2 = Vertice(2, false, false);
+    Vertice v3 = Vertice(3, false, false);
     
-    // for (const auto &origem: g1.getListaPrincipal()) {
-    //     for (int x = 5; x < g1.numVertices; x++) {
-    //         Vertice a = Vertice(origem.vertice);
-    //         a.setId(x);
-    //         g1.adicionarAresta(origem.vertice, a, rand()%1000);
-    //     }
-    // }
+    g.adicionarVertice(v1);
+    g.adicionarVertice(v2);
+    g.adicionarVertice(v3);
 
-    // g1.imprimir();
+    g.adicionarAresta(v1,v2);
 
-    // g1.removerAresta(origem,destino);
-    // g1.imprimir();
+    g.imprimir();
+
+    cout << "Removendo aresta " << v1.toString() << " : " << v2.toString()<< endl;
+    g.removerAresta(v1,v2);
+    g.imprimir();
+}
+
+void TesteDirecionado(){
+    cout << endl << "Grafo Direcionado" << endl << endl;
+    GrafoLista g = GrafoLista(false, true, false, false, false, false);
+    g.imprimir();
+    Vertice v = Vertice(1, false, false);
+    for (int i = 0; i < 11; i++) {
+        v.setId(i + 1);
+        g.adicionarVertice(v);
+    }
+
+    for (int i = 0; i < g.numVertices; i++) {
+        v.setId(i);
+        for (int x = 0; x < g.numVertices; x++) {
+            Vertice a = Vertice(v);
+            a.setId(x);
+            g.adicionarAresta(v, a);
+        }
+    }
+    g.imprimir();
+}
+void TestePonderado(){
+    cout << endl << "Grafo Ponderado" << endl << endl;
+    GrafoLista g1 = GrafoLista(false, true, true, true, false, false);
+    g1.imprimir();
+
+    Vertice v1 = Vertice(1, false, true);
+    for (int i = 0; i < 11; i++) {
+        v1.setId(i + 1);
+        v1.setPeso(i*v1.getId());
+        g1.adicionarVertice(v1);
+    }
+    g1.imprimir();
+
+    Vertice origem = g1.getListaPrincipal().at(0).vertice;
+    Vertice destino = g1.getListaPrincipal().at(5).vertice;
 
 
+    g1.adicionarAresta(origem,destino,10);
+    
+    for (const auto &origem: g1.getListaPrincipal()) {
+        for (int x = 5; x < g1.numVertices; x++) {
+            Vertice a = Vertice(origem.vertice);
+             a.setId(x);
+            g1.adicionarAresta(origem.vertice, a, rand()%1000);
+        }
+    }
+
+    g1.imprimir();
+
+    g1.removerAresta(origem,destino);
+    g1.imprimir();
+}
+
+void TesteRotulado(){
     cout << endl << "Grafo Rotulado" << endl << endl;
 
     GrafoLista gr = GrafoLista(true,true,false,false,true,true);
     Vertice vr1 = Vertice(1, true, false);
     Vertice vr2 = Vertice(2, true, false);
     Vertice vr3 = Vertice(3, true, false);
+    Vertice vr4 = Vertice(4, true, false);
     
     vr1.setRotulo("Cor");
     vr2.setRotulo("Fruta");
     vr3.setRotulo("?");
+    vr4.setRotulo("Sei la mano");
     
     gr.adicionarVertice(vr1);
     gr.adicionarVertice(vr2);
     gr.adicionarVertice(vr3);
 
 
-
     for (const auto &origem: gr.getListaPrincipal()) {
         for (int x = 0; x < gr.numVertices; x++) {
             Vertice a = Vertice(origem.vertice);
-            a.setId(x);
+            a.setId(x);  
             gr.adicionarAresta(origem.vertice, a, "Abacate");
         }
+        cout << endl;
     }
+
 
     gr.imprimir();
 
@@ -940,9 +988,31 @@ int main() {
     gr.removerAresta(vr1, vr3);
     gr.imprimir();
 
-    cout << "Remover o vértice " << vr2.toString() << endl;
-    gr.removerVertice(vr2);
-    gr.imprimir();
+    gr.removerAresta(vr1, vr1);
+    gr.removerAresta(vr3, vr3);
 
+    vector<Vertice> fti = gr.fechoTransitivoInverso(vr1);
+    cout << "Fecho Transitivo Inverso do " << vr1.toString() << endl;
+    gr.imprimir(fti);
+
+
+    vector<Vertice> ftd = gr.fechoTransitivoDireto(vr1);
+    cout << "Fecho Transitivo Direto do " << vr1.toString() << endl;
+    gr.imprimir(ftd);
+
+    gr.adicionarVertice(vr4);
+    gr.imprimir();
+    vector<Vertice> vizinhos = gr.getVizinhos(vr1);
+    cout << "Vizinhos de" << vr1.toString() << endl;
+    gr.imprimir(vizinhos);
+
+}
+
+
+int main() {
+    // TesteDirecionado();
+    TesteNaoDirecionado();
+    // TestePonderado();
+    // TesteRotulado();
     return 0;
 }
