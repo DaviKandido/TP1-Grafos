@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
+#include <queue>
 
 #include "../IGrafo.cpp"
 
@@ -213,13 +214,23 @@ class NoVertice {
                     v.getPeso(), v.getRotulo()) {
     }
 
+    void appendAresta(const Vertice &v) {
+        if (arestas.empty()) {
+        arestas.push_front(v);
+        } else {
+        auto prev = arestas.before_begin();
+        for (auto it = arestas.begin(); it != arestas.end(); ++it) ++prev;
+        arestas.insert_after(prev, v);
+        }
+    }
+
     /**
      *   Adiciona uma Aresta conectando o vértice desse Nó com o v
      *
      *   @param v Vertice destino da aresta
      */
     void adicionarAresta(Vertice v) {
-        this->arestas.push_front(v);
+        appendAresta(v);
     }
 
     /**
@@ -230,7 +241,7 @@ class NoVertice {
      */
     void adicionarAresta(Vertice v, int peso) {
         v.setPeso(peso);
-        this->arestas.push_front(v);
+        appendAresta(v);
     }
 
     /**
@@ -241,7 +252,7 @@ class NoVertice {
      */
     void adicionarAresta(Vertice v, string rotulo) {
         v.setRotulo(rotulo);
-        this->arestas.push_front(v);
+        appendAresta(v);
     }
 
     /**
@@ -255,7 +266,7 @@ class NoVertice {
     void adicionarAresta(Vertice v, int peso, string rotulo) {
         v.setPeso(peso);
         v.setRotulo(rotulo);
-        this->arestas.push_front(v);
+        appendAresta(v);
     }
 
     /**
@@ -335,6 +346,27 @@ Representação gráfica:
 
 class GrafoLista : public IGrafo<Vertice> {
    private:
+    // --- Busca em Profundidade (helper recursivo) ---
+    void dfsRec_(int uId, std::vector<char>& visitado, std::vector<Vertice>& ordem) const {
+        // Segurança: ignorar IDs fora do range atual
+        if (uId < 0 || uId > ultimoId) return;
+        if (visitado[uId]) return;
+
+        visitado[uId] = 1;
+        ordem.push_back(listaPrincipal.at(uId).vertice); // vértice canônico
+
+        // Percorre vizinhos pelo id armazenado nas arestas
+        const auto& adj = listaPrincipal.at(uId).arestas;
+        for (const auto& aresta : adj) {
+            int v = aresta.getId();
+            // Só segue se o id é válido e o vértice realmente existe hoje
+            if (validarVertice(aresta) && !visitado[v] && existeVertice(aresta)) {
+                dfsRec_(v, visitado, ordem);
+            }
+        }
+    }
+
+
    public:
     vector<NoVertice> listaPrincipal;
     int numVertices;
@@ -881,6 +913,149 @@ class GrafoLista : public IGrafo<Vertice> {
         }
         cout << endl << endl;
     }
+
+    /**
+     *   Busca em largura (Breadth-First Search)
+     *
+     *   Retorna a ordem de visita dos vértices a partir de 'origem'.
+     *   Explora primeiro todos os vértices do mesmo nível antes de ir para o próximo.
+     *
+     *   @param origem Vértice inicial da busca
+     *   @return Vector<Vertice> na ordem de visita
+     *   @throws std::invalid_argument Se o vértice de origem não existir
+     */
+    std::vector<Vertice> buscaEmLargura(const Vertice& origem) const {
+        if (!existeVertice(origem)) {
+            throw std::invalid_argument("Origem inexistente no grafo.");
+        }
+
+        std::vector<Vertice> ordem;
+        std::vector<char> visitado(ultimoId + 1, 0);
+        std::queue<int> q;
+
+        int s = origem.getId();
+        visitado[s] = 1;
+        q.push(s);
+
+        while (!q.empty()) {
+            int u = q.front(); q.pop();
+            ordem.push_back(listaPrincipal.at(u).vertice);
+
+            const auto& adj = listaPrincipal.at(u).arestas;
+            for (const auto& aresta : adj) {
+                int v = aresta.getId();
+                if (validarVertice(aresta) && !visitado[v] && existeVertice(aresta)) {
+                    visitado[v] = 1;
+                    q.push(v);
+                }
+            }
+        }
+        return ordem;
+    }
+
+    /**
+     *   Busca em largura para encontrar o menor caminho em número de arestas
+     *
+     *   Retorna vetor vazio se não houver caminho entre 'origem' e 'destino'.
+     *
+     *   @param origem Vértice inicial
+     *   @param destino Vértice final
+     *   @return Vector<Vertice> representando o menor caminho, ou vazio se não houver caminho
+     *   @throws std::invalid_argument Se origem ou destino não existirem
+     */
+    std::vector<Vertice> caminhoEmLargura(const Vertice& origem, const Vertice& destino) const {
+        if (!existeVertice(origem) || !existeVertice(destino)) {
+            throw std::invalid_argument("Origem e/ou destino inexistente(s) no grafo.");
+        }
+
+        std::vector<char> visitado(ultimoId + 1, 0);
+        std::vector<int> pai(ultimoId + 1, -1);
+        std::queue<int> q;
+
+        int s = origem.getId();
+        int t = destino.getId();
+
+        visitado[s] = 1; 
+        q.push(s);
+
+        bool achou = false;
+
+        while (!q.empty() && !achou) {
+            int u = q.front(); q.pop();
+            const auto& adj = listaPrincipal.at(u).arestas;
+            for (const auto& aresta : adj) {
+                int v = aresta.getId();
+                if (validarVertice(aresta) && !visitado[v] && existeVertice(aresta)) {
+                    visitado[v] = 1;
+                    pai[v] = u;
+                    if (v == t) {
+                        achou = true;
+                        break;
+                    }
+                    q.push(v);
+                }
+            }
+        }
+
+        if (!achou) return {};
+
+        std::vector<Vertice> caminho;
+        for (int atual = t; atual != -1; atual = pai[atual]) {
+            caminho.push_back(listaPrincipal.at(atual).vertice);
+        }
+        std::reverse(caminho.begin(), caminho.end());
+        return caminho;
+    }
+
+    /**
+     *   Busca em profundidade recursiva (Depth-First Search)
+     *
+     *   Explora o mais profundamente possível antes de voltar.
+     *
+     *   @param origem Vértice inicial da busca
+     *   @return Vector<Vertice> na ordem de visita
+     *   @throws std::invalid_argument Se o vértice de origem não existir
+     */
+    std::vector<Vertice> buscaEmProfundidade(const Vertice& origem) const {
+        if (!existeVertice(origem)) {
+            throw std::invalid_argument("Origem inexistente no grafo.");
+        }
+
+        std::vector<Vertice> ordem;
+        std::vector<char> visitado(ultimoId + 1, 0);
+        dfsRec_(origem.getId(), visitado, ordem);
+        return ordem;
+    }
+
+    /**
+     *   Busca em profundidade cobrindo todos os componentes do grafo
+     *
+     *   Garante que todos os vértices do grafo sejam visitados,
+     *   inclusive os desconexos do vértice de origem.
+     *
+     *   @param origem Vértice inicial
+     *   @return Vector<Vertice> com todos os vértices visitados
+     */
+    std::vector<Vertice> buscaEmProfundidadeCompleta(const Vertice& origem) const {
+        std::vector<Vertice> ordem;
+        std::vector<char> visitado(ultimoId + 1, 0);
+
+        if (existeVertice(origem)) {
+            dfsRec_(origem.getId(), visitado, ordem);
+        }
+
+        for (const auto& no : listaPrincipal) {
+            int id = no.getId();
+            if (id >= 0 && id <= ultimoId && !visitado[id] && existeVertice(no.vertice)) {
+                dfsRec_(id, visitado, ordem);
+            }
+        }
+        return ordem;
+    }
+
+    int getUltimoId() const {
+        return ultimoId;
+    }
 };
 
 void TesteNaoDirecionado() {
@@ -1011,10 +1186,176 @@ void TesteRotulado() {
     gr.imprimir(vizinhos);
 }
 
+// Extrai IDs de um vetor de Vertice
+static vector<int> idsOf(const vector<Vertice>& vs) {
+    vector<int> ids;
+    ids.reserve(vs.size());
+    for (const auto& v : vs) ids.push_back(v.getId());
+    return ids;
+}
+
+// Compara vetores de ids; imprime detalhe se falhar
+static bool expectEqualIds(const string& testName, const vector<int>& got, const vector<int>& expected) {
+    if (got == expected) {
+        cout << "[PASS] " << testName << "\n";
+        return true;
+    } else {
+        cout << " [FAIL] " << testName << "\n";
+        cout << "  Esperado: ";
+        for (int x : expected) cout << x << ' ';
+        cout << "\n  Obtido : ";
+        for (int x : got) cout << x << ' ';
+        cout << "\n";
+        return false;
+    }
+}
+
+static int failures = 0;
+static void check(const string& name, const vector<int>& got, const vector<int>& expected) {
+    if (!expectEqualIds(name, got, expected)) ++failures;
+}
+
+// Helper que cria n vértices no grafo e retorna os objetos Vertice corretos (com os ids reais)
+static vector<Vertice> criarVertices(GrafoLista& g, int n) {
+    Vertice dummy(0,false,false);
+    vector<Vertice> res;
+    for (int i = 0; i < n; ++i) {
+        g.adicionarVertice(dummy);
+        int id = g.getUltimoId(); // usa id real atribuído pelo grafo
+        res.emplace_back(id, false, false);
+    }
+    return res;
+}
+
+void testeBfsOrdemCaminho() {
+    GrafoLista g(false,false,false,false,false,false);
+    auto vs = criarVertices(g, 4); // cria 4 vértices, ids reais consecutivos
+
+    g.adicionarAresta(vs[0], vs[1]);
+    g.adicionarAresta(vs[1], vs[2]);
+    g.adicionarAresta(vs[2], vs[3]);
+
+    auto ordemBFS = g.buscaEmLargura(vs[0]);
+    check("BFS - ordem linear", idsOf(ordemBFS),
+          {vs[0].getId(), vs[1].getId(), vs[2].getId(), vs[3].getId()});
+
+    auto caminho = g.caminhoEmLargura(vs[0], vs[3]);
+    check("BFS - caminho mínimo", idsOf(caminho),
+          {vs[0].getId(), vs[1].getId(), vs[2].getId(), vs[3].getId()});
+}
+
+void testeDfsOrdemRecursiva() {
+    GrafoLista g(false,false,false,false,false,false);
+    auto vs = criarVertices(g, 5); // ids consecutivos
+
+    g.adicionarAresta(vs[0], vs[1]); // 0 -> 1
+    g.adicionarAresta(vs[0], vs[2]); // 0 -> 2
+    g.adicionarAresta(vs[1], vs[3]); // 1 -> 3
+    g.adicionarAresta(vs[1], vs[4]); // 1 -> 4
+
+    auto ordemDFS = g.buscaEmProfundidade(vs[0]);
+    // Esperado: 0,1,3,4,2 (seguindo ordem de inserção)
+    check("DFS recursiva - ordem esperada", idsOf(ordemDFS),
+          {vs[0].getId(), vs[1].getId(), vs[3].getId(), vs[4].getId(), vs[2].getId()});
+}
+
+void testeComponentesDesconexosDfsCompleta() {
+    GrafoLista g(false,false,false,false,false,false);
+    auto vs = criarVertices(g, 5); // ids consecutivos
+
+    // componente 1-2-3
+    g.adicionarAresta(vs[0], vs[1]);
+    g.adicionarAresta(vs[1], vs[2]);
+    // componente 4-5
+    g.adicionarAresta(vs[3], vs[4]);
+
+    auto ordemCompleta = g.buscaEmProfundidadeCompleta(vs[0]);
+    // Esperado: todos os vértices, incluindo componentes desconexos
+    check("DFS completa (componentes desconexos)", idsOf(ordemCompleta),
+     {vs[0].getId(), vs[1].getId(), vs[2].getId(), 0, vs[3].getId(), vs[4].getId()});
+}
+
+void testeCiclo() {
+    GrafoLista g(false,false,false,false,false,false);
+    auto vs = criarVertices(g, 3);
+
+    g.adicionarAresta(vs[0], vs[1]);
+    g.adicionarAresta(vs[1], vs[2]);
+    g.adicionarAresta(vs[2], vs[0]);
+
+    auto ordemBFS = g.buscaEmLargura(vs[0]);
+    check("BFS em ciclo", idsOf(ordemBFS),
+          {vs[0].getId(), vs[1].getId(), vs[2].getId()});
+
+    auto ordemDFS = g.buscaEmProfundidade(vs[0]);
+    check("DFS em ciclo", idsOf(ordemDFS),
+          {vs[0].getId(), vs[1].getId(), vs[2].getId()});
+}
+
+void testeSelfLoop() {
+    GrafoLista g(false,false,false,false,false,false);
+    auto vs = criarVertices(g, 2);
+
+    g.adicionarAresta(vs[0], vs[0]); // self-loop
+    g.adicionarAresta(vs[0], vs[1]);
+
+    auto ordemBFS = g.buscaEmLargura(vs[0]);
+    check("BFS com self-loop", idsOf(ordemBFS),
+          {vs[0].getId(), vs[1].getId()});
+
+    auto ordemDFS = g.buscaEmProfundidade(vs[0]);
+    check("DFS com self-loop", idsOf(ordemDFS),
+          {vs[0].getId(), vs[1].getId()});
+}
+
+void testeVerticeIsolado() {
+    GrafoLista g(false,false,false,false,false,false);
+    auto vs = criarVertices(g, 1);
+
+    auto ordemBFS = g.buscaEmLargura(vs[0]);
+    check("BFS - vértice isolado", idsOf(ordemBFS),
+          {vs[0].getId()});
+
+    auto ordemDFS = g.buscaEmProfundidade(vs[0]);
+    check("DFS - vértice isolado", idsOf(ordemDFS),
+          {vs[0].getId()});
+}
+
+void testeExcecaoVerticeInexistente() {
+    GrafoLista g(false,false,false,false,false,false);
+    Vertice v999(999,false,false);
+    bool lancou = false;
+    try {
+        auto r = g.buscaEmLargura(v999);
+    } catch (const std::invalid_argument&) {
+        lancou = true;
+    }
+    if (lancou) cout << "[PASS] Exceção para vértice inexistente\n";
+    else { cout << "[FAIL] Esperava exceção para vértice inexistente\n"; ++failures; }
+}
+
 int main() {
-    // TesteDirecionado();
+    TesteDirecionado();
     TesteNaoDirecionado();
-    // TestePonderado();
-    // TesteRotulado();
+    TestePonderado();
+    TesteRotulado();
+
+     cout << "=== Iniciando testes BFS/DFS ===\n";
+
+    testeBfsOrdemCaminho();
+    testeDfsOrdemRecursiva();
+    testeComponentesDesconexosDfsCompleta();
+    testeCiclo();
+    testeSelfLoop();
+    testeVerticeIsolado();
+    testeExcecaoVerticeInexistente();
+
+    if (failures == 0) {
+        cout << "\n== TODOS OS TESTES PASSARAM ==\n";
+        return 0;
+    } else {
+        cout << "\n== FALHARAM " << failures << " TESTE(S) ==\n";
+        return 2;
+    }
     return 0;
 }
