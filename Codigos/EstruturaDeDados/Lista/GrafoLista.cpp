@@ -1,6 +1,6 @@
 #include <algorithm>
 #include <iostream>
-#include <list>
+#include <forward_list>
 #include <sstream>
 #include <stdexcept>
 #include <string>
@@ -127,15 +127,15 @@ class Vertice {
     }
 };
 
-/* A classe NoVertice representa o Vertice da lista principal,
-na qual cada posição possui um vertice e a lista de vizinhos (suas arestas)
+/* A classe NoVertice representa o Vertice da forward_lista principal,
+na qual cada posição possui um vertice e a forward_lista de vizinhos (suas arestas)
 
 Representação gráfica:
 
                         Nó Vértice
 +-----------------------------------------------------------+
 |          |                                                |
-|  Vertice | list<Vertice> arestas -> V1 -> V2 -> ... -> Vn |
+|  Vertice | forward_list<Vertice> arestas -> V1 -> V2 -> ... -> Vn |
 |     |    |  |                                             |
 +-----|----|--|---------------------------------------------+
       |       +-> Cada Vertice u em aresta tem os atributos da aresta (Vertice - u)
@@ -146,7 +146,7 @@ Representação gráfica:
 class NoVertice {
    public:
     Vertice vertice;
-    list<Vertice> arestas;
+    forward_list<Vertice> arestas;
 
     // Variavéis de controle
     bool direcionado;
@@ -177,7 +177,7 @@ class NoVertice {
         this->verticeRotulado = verticeRotulado;
         this->arestaRotulada = arestaRotulada;
         this->vertice = Vertice(id, verticePonderado, verticeRotulado);
-        list<Vertice> arestas = {};
+        forward_list<Vertice> arestas = {};
     }
 
     /**
@@ -198,7 +198,7 @@ class NoVertice {
         this->verticeRotulado = verticeRotulado;
         this->arestaRotulada = arestaRotulada;
         this->vertice = Vertice(id, verticePonderado, verticeRotulado, peso, rotulo);
-        list<Vertice> arestas = {};
+        forward_list<Vertice> arestas = {};
     }
 
     /**
@@ -219,7 +219,7 @@ class NoVertice {
      *   @param v Vertice destino da aresta
      */
     void adicionarAresta(Vertice v) {
-        this->arestas.push_back(v);
+        this->arestas.push_front(v);
     }
 
     /**
@@ -230,7 +230,7 @@ class NoVertice {
      */
     void adicionarAresta(Vertice v, int peso) {
         v.setPeso(peso);
-        this->arestas.push_back(v);
+        this->arestas.push_front(v);
     }
 
     /**
@@ -241,7 +241,7 @@ class NoVertice {
      */
     void adicionarAresta(Vertice v, string rotulo) {
         v.setRotulo(rotulo);
-        this->arestas.push_back(v);
+        this->arestas.push_front(v);
     }
 
     /**
@@ -255,7 +255,7 @@ class NoVertice {
     void adicionarAresta(Vertice v, int peso, string rotulo) {
         v.setPeso(peso);
         v.setRotulo(rotulo);
-        this->arestas.push_back(v);
+        this->arestas.push_front(v);
     }
 
     /**
@@ -276,14 +276,14 @@ class NoVertice {
      */
     bool existeAresta(Vertice v) {
         bool existe = false;
-        for (std::list<Vertice>::iterator it = arestas.begin(); it != arestas.end(); ++it)
+        for (std::forward_list<Vertice>::iterator it = arestas.begin(); it != arestas.end(); ++it)
             if (*it == v) {
                 existe = true;
             }
         return existe;
     }
 
-    list<Vertice> getArestas() {
+    forward_list<Vertice> getArestas() {
         return this->arestas;
     }
 
@@ -298,18 +298,18 @@ class NoVertice {
      *   @return Verdadeiro caso exista
      */
     string toString() {
-        string lista = to_string(vertice.getId());
-        lista += " |";
+        string forward_lista = to_string(vertice.getId());
+        forward_lista += " |";
         for (auto const &aresta : this->arestas) {
-            lista += ' ' + aresta.toString();
+            forward_lista += ' ' + aresta.toString();
         }
-        lista += '\n';
-        return lista;
+        forward_lista += '\n';
+        return forward_lista;
     }
 };
 
 /*
-O grafo lista é formado por um vector (array contínuo) de Nós vértices.
+O grafo forward_lista é formado por um vector (array contínuo) de Nós vértices.
 Esse grafo pode conter as seguintes características:
     + Simples ou Não simples
     + Direcionado ou não direcionado
@@ -318,15 +318,15 @@ Esse grafo pode conter as seguintes características:
 
 Representação gráfica:
 
-     +-> ListaPrincipal<NoVertice>
+     +-> listaPrincipal<NoVertice>
      |
 +----|------------------------------------------------------+
 |    |     |                                                |
-|    0     | list<Vertice> arestas -> 1 -> 2 -> ...         |
+|    0     | forward_list<Vertice> arestas -> 1 -> 2 -> ...         |
 |          |                                                |
-|    1     | list<Vertice> arestas -> 4 -> 0 -> ...         |
+|    1     | forward_list<Vertice> arestas -> 4 -> 0 -> ...         |
 |          |                                                |
-|    2     | list<Vertice> arestas -> 3 -> 2 -> ...         |
+|    2     | forward_list<Vertice> arestas -> 3 -> 2 -> ...         |
 |          |                                                |
 |   ...    |                    ...                         |
 +----------|------------------------------------------------+
@@ -491,7 +491,7 @@ class GrafoLista : public IGrafo<Vertice> {
                 removerAresta(arestasRemover.at(i), v);
             }
 
-            // Remover NoVertice da Lista Principal
+            // Remover NoVertice da forward_lista Principal
             listaPrincipal.erase(listaPrincipal.begin() + pos);
             numVertices -= 1;
         } else {
@@ -568,7 +568,7 @@ class GrafoLista : public IGrafo<Vertice> {
             destino.ponderado = arestaPonderada;
             destino.rotulado = arestaRotulada;
 
-            // cout << "(Grafo Lista) Inserindo:" << origem.toString() << " : " <<destino.toString()
+            // cout << "(Grafo forward_lista) Inserindo:" << origem.toString() << " : " <<destino.toString()
             // << endl;
 
             procura.adicionarAresta(destino, peso, rotulo);
@@ -641,19 +641,19 @@ class GrafoLista : public IGrafo<Vertice> {
      */
     vector<Vertice> fechoTransitivoDireto(Vertice v) const override {
         NoVertice procura = listaPrincipal.at(v.getId());
-        list<Vertice> descendentes_list = procura.getArestas();
+        forward_list<Vertice> descendentes_forward_list = procura.getArestas();
         vector<Vertice> descendentes;
 
         // Caso tenha algum calor extra, pegar o valor do vértice e não da aresta
         if (arestaPonderada || arestaRotulada) {
-            for (auto const &aresta : descendentes_list) {
+            for (auto const &aresta : descendentes_forward_list) {
                 int pos = procurarVertice(aresta);
                 descendentes.push_back(listaPrincipal.at(pos).vertice);
             }
         } else {
-            // Conversao de list para vector
-            vector<Vertice> descendentes{std::begin(descendentes_list),
-                                         std::end(descendentes_list)};
+            // Conversao de forward_list para vector
+            vector<Vertice> descendentes{std::begin(descendentes_forward_list),
+                                         std::end(descendentes_forward_list)};
         }
         return descendentes;
     }
@@ -669,8 +669,8 @@ class GrafoLista : public IGrafo<Vertice> {
         NoVertice procura;
         for (int i = 0; i < listaPrincipal.size(); i++) {
             procura = listaPrincipal.at(i);
-            list<Vertice> arestas_list = procura.getArestas();
-            for (std::list<Vertice>::iterator it = arestas_list.begin(); it != arestas_list.end();
+            forward_list<Vertice> arestas_forward_list = procura.getArestas();
+            for (std::forward_list<Vertice>::iterator it = arestas_forward_list.begin(); it != arestas_forward_list.end();
                  ++it) {
                 if (*it == v) {
                     ancestrais.push_back(procura.vertice);
@@ -768,7 +768,7 @@ class GrafoLista : public IGrafo<Vertice> {
         if (existeVertice(v)) {
             while (i != listaPrincipal.size()) {
                 NoVertice &noVerticeProcurar = listaPrincipal.at(i);
-                for (std::list<Vertice>::iterator it = noVerticeProcurar.arestas.begin();
+                for (std::forward_list<Vertice>::iterator it = noVerticeProcurar.arestas.begin();
                      it != noVerticeProcurar.arestas.end(); ++it) {
                     if (*it == v) {  // Caso há aresta com v
                         listaVerticesComAresta.push_back(noVerticeProcurar.vertice);
@@ -791,7 +791,7 @@ class GrafoLista : public IGrafo<Vertice> {
         return numArestas;
     }
 
-    vector<NoVertice> getListaPrincipal() const {
+    vector<NoVertice> getlistaPrincipal() const {
         return this->listaPrincipal;
     }
 
@@ -805,7 +805,7 @@ class GrafoLista : public IGrafo<Vertice> {
         int tam_max = to_string(abs(ultimoId)).size();
         std::ostringstream oss;
 
-        cout << "------- Lista de Adjacências --------" << endl;
+        cout << "------- forward_lista de Adjacências --------" << endl;
         for (int i = 0; i < listaPrincipal.size(); i++) {
             const NoVertice &v = listaPrincipal.at(i);
             if (verticePonderado && verticeRotulado) {
@@ -872,7 +872,7 @@ class GrafoLista : public IGrafo<Vertice> {
         cout << "-------------------------------------" << endl << endl;
     }
     /**
-     *   Imprime o lista de vertices
+     *   Imprime o forward_lista de vertices
      *   @param vertices Vector de vertices a ser mostrada
      */
     void imprimir(vector<Vertice> vertices) const {
@@ -909,7 +909,6 @@ void TesteNaoDirecionado() {
     g.removerVertice(v4);
     g.imprimir();
 }
-
 void TesteDirecionado() {
     cout << endl << "Grafo Direcionado" << endl << endl;
     GrafoLista g = GrafoLista(false, true, false, false, false, false);
@@ -943,12 +942,12 @@ void TestePonderado() {
     }
     g1.imprimir();
 
-    Vertice origem = g1.getListaPrincipal().at(0).vertice;
-    Vertice destino = g1.getListaPrincipal().at(5).vertice;
+    Vertice origem = g1.getlistaPrincipal().at(0).vertice;
+    Vertice destino = g1.getlistaPrincipal().at(5).vertice;
 
     g1.adicionarAresta(origem, destino, 10);
 
-    for (const auto &origem : g1.getListaPrincipal()) {
+    for (const auto &origem : g1.getlistaPrincipal()) {
         for (int x = 5; x < g1.numVertices; x++) {
             Vertice a = Vertice(origem.vertice);
             a.setId(x);
@@ -961,7 +960,6 @@ void TestePonderado() {
     g1.removerAresta(origem, destino);
     g1.imprimir();
 }
-
 void TesteRotulado() {
     cout << endl << "Grafo Rotulado" << endl << endl;
 
@@ -980,7 +978,7 @@ void TesteRotulado() {
     gr.adicionarVertice(vr2);
     gr.adicionarVertice(vr3);
 
-    for (const auto &origem : gr.getListaPrincipal()) {
+    for (const auto &origem : gr.getlistaPrincipal()) {
         for (int x = 0; x < gr.numVertices; x++) {
             Vertice a = Vertice(origem.vertice);
             a.setId(x);
