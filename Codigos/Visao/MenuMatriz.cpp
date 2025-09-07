@@ -363,13 +363,12 @@ class MenuMatriz {
     void buscaLargura() {
         cout << "\n> Menu > Matriz > Busca em Largura" << endl << endl;
 
-        int vertice_inicial = lerInteiro("Você deseja a busca a partir de qual vertice? ",
-                                     0, (grafo->getQuantidadeVertices() - 1));
+        int vertice_inicial = lerInteiro("Você deseja a busca a partir de qual vertice? ", 0,
+                                         (grafo->getQuantidadeVertices() - 1));
 
         // Chama a nova função "inteligente" que implementamos na classe GrafoMatriz
         // O nome da função no grafo era "buscas", conforme sua última implementação.
         vector<int> distancias = grafo->buscas(vertice_inicial);
-
 
         // Imprime o resultado como uma lista de distâncias
         for (int i = 0; i < distancias.size(); ++i) {
