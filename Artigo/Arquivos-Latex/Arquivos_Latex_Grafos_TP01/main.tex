@@ -1,0 +1,436 @@
+\documentclass{sbc2023}%
+
+\usepackage{graphicx}
+%\usepackage[utf8]{inputenc}
+\usepackage[misc,geometry]{ifsym} 
+\usepackage{fontspec}
+\usepackage{fontawesome}
+\usepackage{academicons}
+\usepackage{color}
+\usepackage{hyperref} 
+\usepackage{aas_macros}
+\usepackage[bottom]{footmisc}
+\usepackage{supertabular}
+\usepackage{afterpage}
+\usepackage{url}
+\usepackage{pifont}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+  language=C++,
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{blue},
+  stringstyle=\color{red},
+  commentstyle=\color{green!50!black},
+  numbers=left,
+  numberstyle=\tiny,
+  stepnumber=1,
+  numbersep=10pt,
+  frame=single,
+  breaklines=true,
+  tabsize=2,
+  showspaces=false,
+  showstringspaces=false,
+  captionpos=b
+}
+
+\setcitestyle{square}
+
+\definecolor{orcidlogo}{rgb}{0.37,0.48,0.13}
+\definecolor{unilogo}{rgb}{0.16, 0.26, 0.58}
+\definecolor{maillogo}{rgb}{0.58, 0.16, 0.26}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.0}
+\hypersetup{colorlinks,breaklinks,
+            linkcolor=darkblue,urlcolor=darkblue,
+            anchorcolor=darkblue,citecolor=darkblue}
+%\hypersetup{colorlinks,citecolor=blue,linkcolor=blue,urlcolor=blue}
+
+%%%%%%% IMPORTANT: We disable hyperlinks by default with this line, to avoid the error "\pdfendlink ended up in different nesting level" while writing.
+%\hypersetup{draft}
+
+\jid{JBCS}
+\jtitle{Journal of the Brazilian Computer Society, 2025 }
+%\doi{10.5753/jbcs.202X.XXXXXX}
+%\copyrightstatement{This work is licensed under a Creative Commons Attribution 4.0 International License}
+\jyear{2025}
+
+
+\title[Trabalho Pratico 1 de Grafos - Implementação de Grafos]{Trabalho Pratico 1 de Grafos - Implementação de Grafos}
+
+%THE ORCID IS MANDATORY FOR EACH AUTHOR IN JBCS
+\author[Duarte et al. 2025]{
+\affil{\textbf{Augusto Stambassi Duarte}~\href{https://pucminas.instructure.com/courses/249283/users/280506}{\textcolor{orcidlogo}{\aiOrcid}}~~[~\textbf{Pontifícia Universidade Católica de Minas Gerais (PUC Minas)}~|\href{mailto:asduarte@sga.pucminas.br}{~\textbf{\textit{asduarte@sga.pucminas.br}}}~]}
+
+\affil{\textbf{Davi Cândido de Almeida}~\href{https://pucminas.instructure.com/courses/249283/users/283300}{\textcolor{orcidlogo}{\aiOrcid}}~~[~\textbf{Pontifícia Universidade Católica de Minas Gerais (PUC Minas)}~|\href{mailto:davi.almeida@sga.pucminas.br}{~\textbf{\textit{davi.almeida@sga.pucminas.br}}}~]}
+
+\affil{\textbf{Gabriela de Assis dos Reis}~\href{https://pucminas.instructure.com/courses/249283/users/257771}{\textcolor{orcidlogo}{\aiOrcid}}~~[~\textbf{Pontifícia Universidade Católica de Minas Gerais (PUC Minas)}~|\href{mailto:gabriela.reis@sga.pucminas.br}{~\textbf{\textit{gabriela.reis@sga.pucminas.br}}}~]}
+
+\affil{\textbf{Lucas Carneiro Nassau Malta}~\href{https://pucminas.instructure.com/courses/249283/users/279625}{\textcolor{orcidlogo}{\aiOrcid}}~~[~\textbf{Pontifícia Universidade Católica de Minas Gerais (PUC Minas)~}|\href{mailto:lcnmalta@sga.pucminas.br}{~\textbf{\textit{lcnmalta@sga.pucminas.br}}}~]}
+
+
+\affil{\textbf{João Pedro Torres}~\href{https://pucminas.instructure.com/courses/249283/users/280474}{\textcolor{orcidlogo}{\aiOrcid}}~~[~\textbf{Pontifícia Universidade Católica de Minas Gerais (PUC Minas)~}|\href{mailto:joao.torres.1060863@sga.pucminas.br}{~\textbf{\textit{joao.torres.1060863@sga.pucminas.br}}}~]}
+
+
+\affil{\textbf{Vitor Leite Setragni}~\href{https://pucminas.instructure.com/courses/249283/users/280360}{\textcolor{orcidlogo}{\aiOrcid}}~~[~\textbf{Pontifícia Universidade Católica de Minas Gerais (PUC Minas)~}|\href{mailto:1526536@sga.pucminas.br}{~\textbf{\textit{1526536@sga.pucminas.br}}}~]}
+
+}
+
+\begin{document}
+
+\begin{frontmatter}
+\maketitle
+
+\begin{mail}
+Instituto de Ciências Exatas e Informática, Pontifícia Universidade Católica de Minas Gerais (PUC Minas), Av. Dom José Gaspar, 500, Coração Eucarístico, Belo Horizonte, MG 30535-901, Brasil. 
+\end{mail}
+
+
+%\begin{dates}
+% This information will be provided by the editor befeore publishing the paper
+%\small{\textbf{Received:} DD Month YYYY~~~$\bullet$~~~\textbf{Accepted:} DD Month YYYY~~~$\bullet$~~~\textbf{Published:} DD Month YYYY}
+
+%\end{dates}
+
+
+\begin{abstract}
+\textbf{Resumo.~}
+\noindent Este artigo detalha o processo de desenvolvimento e implementação de uma biblioteca para a manipulação de grafos, uma estrutura de dados fundamental na ciência da computação. Utilizando a linguagem C++, foi desenvolvida uma estrutura flexível que suporta grafos direcionados e não-direcionados, ponderados e não ponderados. A arquitetura do projeto baseia-se em uma interface \textit{IGrafo}, garantindo um contrato comum para duas implementações concretas: uma utilizando matriz de adjacências (\textit{GrafoMatriz}) e outra com lista de adjacências (\textit{GrafoLista}). Enquanto a implementação por matriz de adjacências foi focada em grafos simples, a abordagem com lista de adjacências oferece um escopo mais amplo, permitindo a representação de loops e arestas paralelas. Para validar e interagir com as estruturas implementadas, foi criado um menu de usuário que permite a manipulação dinâmica dos grafos. As funcionalidades incluem operações essenciais como a criação e remoção de grafos, vértices e arestas, bem como algoritmos clássicos para análise de conectividade e percurso, tais como a busca em largura (BFS), a busca em profundidade (DFS) e a determinação dos fechos transitivos direto e inverso de um vértice. O resultado é uma ferramenta robusta e extensível para a modelagem e análise de problemas computacionais baseados em grafos, demonstrando a aplicação prática de diferentes técnicas de representação e algoritmos fundamentais da área.
+\end{abstract}
+
+\begin{keywords}
+Grafos, Matriz de Adjacências, Lista de Adjacências, Algoritmos em Grafos, C++.
+\end{keywords}
+
+%\begin{license}
+%Published under the Creative Commons Attribution 4.0 International Public License (CC BY 4.0)
+%\end{license}
+
+\end{frontmatter}
+
+
+\section{Introdução}
+\label{introducao}
+A Teoria dos Grafos é um ramo fundamental da matemática e da ciência da computação que se dedica ao estudo das relações entre objetos. Um grafo, em sua essência, é uma estrutura composta por um conjunto de vértices (ou nós) e um conjunto de arestas (ou arcos) que conectam pares desses vértices. Essa abstração simples é extremamente poderosa, permitindo modelar uma vasta gama de problemas do mundo real, como redes sociais (onde usuários são vértices e amizades são arestas), mapas de cidades (cruzamentos como vértices e ruas como arestas) e a própria estrutura da internet. ~\citep{sedgewick2002algorithms}
+
+Para que um computador possa processar e analisar um grafo, é necessário traduzir sua estrutura abstrata para uma representação de dados concreta. A escolha de como armazenar as informações de vértices e arestas na memória é uma decisão crucial de projeto. As duas abordagens mais clássicas para esta tarefa são a Matriz de Adjacências, que utiliza uma matriz bidimensional para registrar a existência de uma aresta entre cada par de vértices, e a Lista de Adjacências, que para cada vértice mantém uma lista de todos os seus vizinhos. A escolha entre elas não é trivial e impacta diretamente a eficiência, em termos de tempo de execução e uso de memória, dos algoritmos que operam sobre o grafo.
+
+O objetivo deste trabalho é, portanto, trazer uma solução para a  implementação de uma biblioteca de software em C++ que oferece ambas as representações. A biblioteca foi desenvolvida para ser flexível, suportando a criação e manipulação de grafos direcionados e não-direcionados, que podem ou não ter pesos associados às suas arestas. Adicionalmente, foram implementados algoritmos fundamentais de percurso, como a Busca em Largura (BFS) e a Busca em Profundidade (DFS), permitindo a validação e a exploração das estruturas de dados criadas.
+
+Este artigo está organizado da seguinte forma: a Seção \ref{implementacao} detalha a arquitetura do software e as decisões de implementação por trás das classes \textit{GrafoMatriz} e \textit{GrafoLista}. A Seção \ref{experimentos} apresenta os experimentos conduzidos para validar as funcionalidades e os resultados obtidos. Por fim, a Seção \ref{conclusao} sumariza as conclusões do trabalho e aponta direções para futuras expansões. 
+
+\section{Implementação}
+\label{implementacao}
+
+    A solução foi desenvolvida na linguagem C++, aproveitando seus recursos de orientação a objetos, templates para programação genérica e a robusta Biblioteca Padrão (STL). A arquitetura do projeto foi desenhada para ser extensível e modular, separando a interface abstrata das implementações concretas, o que facilita a manutenção e a adição de novas formas de representação de grafos no futuro.
+
+    \subsection{A Interface}
+    
+    O pilar da arquitetura é a classe abstrata \textit{IGrafo}, que funciona como um contrato para todas as implementações de grafos. Conforme o código, ela foi definida como um template (\textit{template <typename TVertice>}), garantindo que a biblioteca possa ser utilizada com diferentes tipos de dados para identificar os vértices (e.g., \textit{int}, \textit{std::string}).
+    
+    A interface estabelece um conjunto de métodos virtuais puros que toda classe de grafo deve implementar, incluindo:
+    
+    \begin{itemize}
+        \item \textbf{Operações de Tamanho:} \textit{getQuantidadeVertices()} e \textit{getQuantidadeArestas()}.
+        \item \textbf{Manipulação:} Métodos para adicionar e remover vértices e arestas. Foram incluídas sobrecargas para a adição de arestas ponderadas e não ponderadas. Exemplo dos métodos: \textit{adicionarVertice(TVertice v), adicionarAresta(TVertice origem, TVertice destino, int peso), removerVertice(TVertice v), removerAresta(TVertice origem, TVertice destino)}
+        \item \textbf{Consulta:} Funções para verificar a existência de vértices e arestas, obter a lista de vizinhos de um vértice e calcular os fechos transitivos direto e inverso. Como os métodos:  \textit{getVizinhos(TVertice v), fechoTransitivoDireto(TVertice v) e fechoTransitivoInverso(TVertice v) }
+        \item \textbf{Visualização:} Um método \textit{imprimir()} para exibir o estado atual do grafo.
+    \end{itemize}
+    
+    %Veja abaixo um demonstrativo da contrato IGrafo:
+
+% \begin{lstlisting}[caption={Inteface IGrafo em C++}, label={lst:grafo}]
+% #include <vector>
+
+% using namespace std;
+
+% template <typename TVertice>
+% class IGrafo {
+%    public:
+%     virtual ~IGrafo() = default;
+
+%     // Métodos para obter o tamanho do grafo
+%     virtual int getQuantidadeVertices() const = 0;
+%     virtual int getQuantidadeArestas() const = 0;
+
+%     // Métodos para manipulação
+%     virtual bool adicionarVertice(TVertice v) = 0;
+%     virtual bool adicionarAresta(TVertice origem, TVertice destino, int peso) = 0;
+%     virtual bool adicionarAresta(TVertice origem, TVertice destino) = 0;
+
+%     // Métodos para remoção
+%     virtual bool removerVertice(TVertice v) = 0;
+%     virtual bool removerAresta(TVertice origem, TVertice destino) = 0;
+
+%     // Métodos de checagem
+%     virtual bool existeVertice(TVertice v) const = 0;
+%     virtual bool existeAresta(TVertice origem, TVertice destino) const = 0;
+
+%     // Métodos para obter adjacências
+%     virtual vector<TVertice> getVizinhos(TVertice v) const = 0;
+%     virtual vector<TVertice> fechoTransitivoDireto(TVertice v) const = 0;
+%     virtual vector<TVertice> fechoTransitivoInverso(TVertice v) const = 0;
+
+%     // Método para visualização
+%     virtual void imprimir() const = 0;
+% };
+% \end{lstlisting}
+    
+    Essa abordagem assegura que qualquer implementação de grafo seja polimórfica e ofereça um conjunto consistente de funcionalidades.
+    
+    \subsection{Representação por Matriz de Adjacências}
+    
+    A primeira implementação concreta do contrato \textit{IGrafo} é a classe \textit{GrafoMatriz}, que utiliza a representação por matriz de adjacências. Esta classe especializa a interface para vértices do tipo \textit{int}, em que cada vértice é identificado por um índice inteiro de 0 a N-1, sendo N o número total de vértices. 
+    % Abaixo se encontra uma pequena demosntração da estrutura da classe GrafoMatriz:
+
+% \begin{lstlisting}[caption={Classe GrafoMatriz em C++}, label={lst:grafo}]
+% class GrafoMatriz : public IGrafo<int> {
+%    private:
+%     // Estruturas de dados
+%     vector<vector<int>> matrizAdjacencias;
+%     vector<int> verticesPesos;
+%     unordered_map<int, string> verticesRotulos;
+%     vector<vector<string>> arestasRotulos;
+
+%     // Atributos do grafo
+%     int numVertices;
+%     int numArestas;
+
+%     // Validar se um vértice está dentro dos limites
+%     bool verticeValido(int v) const { ... }
+
+%    public:
+%     // Variáveis de controle
+%     bool direcionado;
+%     bool verticePonderado;
+%     bool arestaPonderada;
+%     bool verticeRotulado;
+%     bool arestaRotulada;
+
+%     // Construtor: cria um grafo com um número fixo de vértices
+%     GrafoMatriz() { ... }
+
+%     // Destrutor: padrão
+%     ~GrafoMatriz() override { ... }
+
+%     // Restante dos metodos
+%     [...]
+% }
+
+% \end{lstlisting}
+
+        \subsubsection{Estrutura de Dados}
+    
+        O núcleo da classe é a \textit{matrizAdjacencias}, que representa uma matriz da forma \textit{std::vector<std::vector<int>>}, na qual a posição \textit{matrizAdjacencias[i][j]} armazena o peso da aresta entre o vértice \textit{i} e o vértice \textit{j}. Por convenção, o valor 0 indica a ausência de uma aresta. Além disso, estruturas de dados paralelas são utilizadas para armazenar metadados adicionais, como o \textit{hash map} com os rótulos de vértices (\textit{std::unordered\_map<int, string>}) e a matriz auxiliar com os rótulos de arestas (\textit{std::vector<std::vector<string>>}).
+    
+        \subsubsection{Construção e Configuração}
+    
+        Uma característica central desta implementação é que o número de vértices do grafo é fixo e definido em seu construtor. Além do tamanho, o construtor recebe um conjunto de \textit{flags} booleanas (\textit{direcionado}, \textit{arestaPonderada}, etc.) que configuram o comportamento do grafo em tempo de execução. Essa alta configurabilidade permite que uma única classe modele diferentes tipos de grafos, mas impõe uma natureza estática à estrutura.
+    
+        \subsubsection{Análise das Operações}
+    
+        A representação por matriz oferece vantagens e desvantagens claras:
+    
+        \begin{itemize}
+            \item \textbf{Eficiência em Consultas de Arestas:} A verificação de existência (\textit{existeAresta}) e a obtenção do peso de uma aresta são operações de alta performance, com complexidade de tempo constante, \textit{O(1)}.
+            \item \textbf{Custo de Memória:} O espaço de armazenamento é de \textit{O(V²)}, onde \textit{V} é o número de vértices. Isso torna a implementação inadequada para grafos grandes e esparsos (com poucas arestas).
+            \item \textbf{Operações em Vértices:} A natureza estática da matriz torna a adição ou remoção de vértices uma operação computacionalmente cara, exigindo a reconstrução da estrutura e resultando em uma complexidade de \textit{O(V²)}.
+            \item \textbf{Algoritmos:} A classe implementa algoritmos de busca de forma inteligente. O método \textit{buscas()}, por exemplo, aplica uma Busca em Largura (BFS) para grafos não ponderados e o algoritmo de Dijkstra para grafos ponderados.
+        \end{itemize}
+    
+        Em suma, a GrafoMatriz é uma implementação robusta e ideal para grafos densos e de tamanho predefinido, onde a consulta rápida por arestas é a principal prioridade.
+
+    \subsection{Representação por Lista de Adjacências}
+    
+    A segunda implementação, \textit{GrafoLista}, adota a abordagem de lista de adjacências com um design fortemente orientado a objetos e uma natureza dinâmica. Ela implementa a interface \textit{IGrafo<Vertice>}, utilizando uma classe \textit{Vertice} para encapsular as propriedades de cada nó.
+
+        \subsubsection{Estrutura de Dados}
+    
+        A estrutura é composta por três classes principais:
+    
+        \begin{enumerate}
+            \item \textbf{Vertice:} Um objeto que representa um vértice, contendo não apenas seu identificador (para diferenciar vértices com pesos e rótulos iguais), mas também, opcionalmente, um peso e um rotulo.
+            \item \textbf{NoVertice:} O bloco de construção da lista. Cada \textit{NoVertice} contém um \textit{Vertice} principal e uma lista simplesmente encadeada (\textit{std::forward\_list<Vertice>}) de todas as arestas que partem dele. Uma decisão de projeto notável é que as propriedades da aresta (peso e rótulo) são armazenadas no objeto \textit{Vertice} de destino dentro dessa lista. Além disso, a decisão de utilizar uma lista encadeada deve-se à facilidade de inserção de novas arestas.
+            \item \textbf{GrafoLista:} A classe principal, que gerencia um \textit{std::vector<NoVertice>} como a estrutura central. O vetor permite acesso em tempo constante, ou seja, em complexidade \textit{O(1)}, a qualquer \textit{NoVertice} a partir do identificador de seu vértice principal.
+        \end{enumerate}
+    
+        \subsubsection{Natureza Dinâmica e Flexível}
+    
+        Diferente da matriz, o \textit{GrafoLista} não requer um número de vértices predefinido. Vértices podem ser adicionados dinamicamente através do método \textit{adicionarVertice}, que anexa um novo \textit{NoVertice} ao final do vetor principal (\textit{listaPrincipal}). Além disso, a estrutura suporta nativamente arestas paralelas e loops, bastando adicionar o mesmo vértice múltiplas vezes na lista de adjacências.
+    
+        \subsubsection{Análise das Operações}
+    
+        As trocas de eficiência são quase o oposto da \textit{GrafoMatriz}:
+    
+        \begin{itemize}
+            \item \textbf{Eficiência de Memória e Adição:} O uso de espaço é de \textit{O(V+E)}, ideal para grafos esparsos. Ademais, adicionar um vértice ou uma aresta são operações muito eficientes, com complexidade de tempo amortizada de \textit{O(1)}.
+            \item \textbf{Busca de Vizinhos:} A operação \textit{getVizinhos} é ótima, com complexidade proporcional ao número de vizinhos do vértice, \textit{O(grau(v))}.
+            \item \textbf{Custo em Consultas:} Verificar a existência de uma aresta (\textit{existeAresta}) requer uma busca linear na lista de adjacências do vértice de origem, custando \textit{O(grau(v))}. A operação mais custosa é a busca por predecessores (\textit{fechoTransitivoInverso}), que, na ausência de uma lista de adjacências invertida, exige uma varredura completa por todas as arestas do grafo, com complexidade \textit{O(V+E)}.
+        \end{itemize}
+    
+        O \textit{GrafoLista} se destaca pela sua eficiência de memória e flexibilidade para modelar grafos dinâmicos e esparsos, onde a estrutura se altera com frequência e as operações de travessia são mais comuns que as de verificação de arestas isoladas.
+
+    \subsection{Visualização das Estruturas e Funcionalidades Principais}
+    
+    O projeto em questão permite uma serie de operações sobre as estruturas definidas, sendo estas operações controladas por um menu de controle de visão. O ponto de entrada do programa se encontra na função \textit{main}, onde o usuário pode escolher entre as implementações via \textbf{Matriz de Adjacências} ou \textbf{Lista de Adjacências}.
+
+% \begin{lstlisting}[language=C++, caption={Função main com controle inicial do menu}]
+% int main(int argc, char* argv[]) {
+%     try {
+%         int opcao = 0;
+%         cout << "--- Bem vindo ao TP1 de Teoria dos Grafos ---" << endl;
+
+%         cout << "\n> Menu " << endl << endl;
+%         cout << "1) Matriz de Adjacências" << endl;
+%         cout << "2) Lista de Adjacências" << endl;
+%         cout << "0) Sair" << endl << endl;
+
+%         do {
+%             opcao = lerInteiro("Opção: ", 0, 2);
+
+%             switch (opcao) {
+%                 case 1:
+%                     (new MenuMatriz())->menu();
+%                     break;
+%                 case 2:
+%                     cout << "\nInstancia Lista de Adjacências" << endl;
+%                     break;
+%                 case 0:
+%                     cout << "\nSaindo..." << endl;
+%                     break;
+%                 default:
+%                     cout << "\nOpção inválida. Tente novamente." << endl;
+%                     break;
+%             }
+%         } while (opcao != 0);
+%     } catch (exception& e) {
+%         cout << e.what() << endl;
+%     }
+%     return 0;
+% }
+% \end{lstlisting}
+
+    A implementação \textit{MenuMatriz}, por exemplo, fornece ao usuário a possibilidade de criar um grafo, adicionar ou remover vértices e arestas, consultar vizinhos, percorrer fechos transitivos diretos e inversos, bem como realizar buscas em profundidade (DFS) e em Largura (BFS), sendo cada uma dessas operações é organizada em um submenu específico.
+
+% \begin{lstlisting}[language=C++, caption={Trecho do MenuMatriz com operações de grafo}]
+% void menu() {
+%     int opcao = 0;
+%     do {
+%         cout << "\n> Menu > Matriz" << endl << endl;
+%         cout << "1) Instanciar Grafo" << endl;
+%         cout << "2) Criar grafo de teste" << endl;
+%         cout << "3) Adicionar Vértice" << endl;
+%         cout << "4) Adicionar Aresta" << endl;
+%         cout << "5) Remover Vértice" << endl;
+%         cout << "6) Remover Aresta" << endl;
+%         cout << "7) Consultar Vizinhos de um Vértice" << endl;
+%         cout << "8) Fecho Transitivo Direto de um Vértice" << endl;
+%         cout << "9) Fecho Transitivo Inverso de um Vértice" << endl;
+%         cout << "10) Busca em Profundidade - DFS" << endl;
+%         cout << "11) Busca em Largura - BFS" << endl;
+%         cout << "12) Imprimir Grafo" << endl;
+%         cout << "13) Remover Grafo" << endl;
+%         cout << "0) Sair" << endl << endl;
+
+%         opcao = lerInteiro("Opção: ", 0, 12);
+%         ...
+%     } while (opcao != 0);
+% }
+% \end{lstlisting}
+
+%\noindent
+
+    De maneira similar, a classe \textit{MenuLista} organiza operações equivalentes para a implementação via lista de adjacências, respeitando as diferenças estruturais dessa abordagem
+
+% \section{Organização do Projeto e Distribuição das Tarefas}
+
+%     Para a execução do projeto, primeiramente dividiu-se o grupo em dois subgrupos com três integrantes cada, com o objetivo de otimizar o desenvolvimento e permitir maior especialização em cada parte do código produzido.
+
+%     O primeiro subgrupo ficou responsável pela \textbf{implementação do grafo utilizando Matriz de Adjacências}, o qual incluiu operações como básicas como adição e remoção de vértices e arestas, consultas e percursos. Tal subgrupo foi formado por Davi Cândido de Almeida, Lucas Carneiro Nassau Malta e Gabriela de Assis dos Reis.
+
+%     Já o segundo subgrupo ficou responsável pela \textbf{implementação do grafo utilizando Lista de Adjacências}. Trabalhou-se em semelhantes operações, no entanto respeitando as peculiaridades exigidas pela estrutura em questão. Tal grupo possuiu os integrantes: Augusto Stambassi Duarte, João Pedro Torres e Vitor Leite Setragni.
+
+%     Além dessas divisões centrais, alguns integrantes dedicaram-se ao desenvolvimento de \textbf{métodos de visão}, como a estruturação dos menus interativos para o usuário, bem como à criação de \textbf{bibliotecas e utilitários} de suporte, que foram fundamentais para unificar as duas implementações e garantir o bom funcionamento do sistema como um todo.
+
+%     Destacando algumas das responsabilidades distribuídas entre o grupo, os membros Davi Cândido e Lucas Carneiro se responsabilizaram pela definição da interface e das operações da classe visão Matriz, bem como todos os métodos e operações os quais as duas abordagens de implementação respeitariam. Lucas se ocupou com os métodos de instanciação, operações básicas e mudanças estruturais da classe Matriz, Davi por métodos de Busca em profundidade e fechos transitivos diretos e Indiretos, Gabriela pelas demais operações de busca, como busca por largura aplicando a logica dos algorítimos de \textit{Dijkstra}. Já quanto as operações e métodos relacionados a lista, Augusto junto de Vitor se ocupou pelas definição das classes auxiliares como \textit{Vertice} e \textit{NoVertice}, além de Augusto se especializar nas logicas que envolviam mudança estruturais da classe \textit{Grafolista}, como instanciação e operações básicas, e Vitor em operações como na busca de vizinhos e controle na classe \textit{MenuLista}, João Pedro pelos métodos de percurso, como busca em largura, profundidade. No entanto, vale ressaltar que a maioria das implementações discutidas envolviam a revisão por pares dos códigos produzidos, a fim de garantir consistência e eficácia.
+
+
+%     A divisão do projeto em dois subgrupos permitiu a especialização de cada um em diferentes métodos de implementação, promovendo a comparação das vantagens e desvantagens entre cada abordagem, ao mesmo tempo em que possibilitou que todos os membros ampliassem seus conhecimentos.
+
+%     Essa subdivisão também contribuiu para que cada integrante tivesse contato com uma maior variedade de métodos e operações, o que favoreceu o aprendizado prático ao lidar com diferentes tipos de conteúdos envolvendo grafos. Além disso, a necessidade criar comportamentos semelhantes entre as duas abordagens estimulou discussões mais detalhadas sobre aspectos de implementação, o que resultou em uma compreensão mais profunda dos conceitos estudados em sala de aula e em uma fixação mais consistente dos conteúdos.
+
+\section{Experimentos e Análise de Resultados}
+\label{experimentos}
+
+    Para validar as implementações e demonstrar a funcionalidade das classes \textit{GrafoMatriz} e \textit{GrafoLista}, foi desenvolvida uma plataforma de testes interativa. Esta seção descreve o ambiente experimental, apresenta um estudo de caso detalhado e analisa os resultados obtidos.
+    
+    \subsection{Ambiente Experimental}
+    
+        A validação das estruturas de dados foi conduzida por meio de duas interfaces de linha de comando: \textit{MenuMatriz} e \textit{MenuLista}. Cada uma atua como um programa para sua respectiva classe de grafo, permitindo ao usuário interagir com a biblioteca em tempo real.
+        
+        A metodologia adotada foi a seguinte:
+        
+        \begin{enumerate}
+            \item \textbf{Instanciação Dinâmica:} O usuário pode criar uma instância de um grafo, especificando em tempo de execução todas as suas propriedades (direcionado, ponderado, rotulado, etc.), conforme a flexibilidade oferecida pelos construtores das classes.
+            \item \textbf{Manipulação Interativa:} Após a criação, o menu oferece opções para executar todas as operações fundamentais de manipulação, como adicionar e remover arestas.
+            \item \textbf{Execução de Algoritmos:} O usuário pode invocar os algoritmos implementados (Busca em Largura, Busca em Profundidade, Fechos Transitivos) a partir de um vértice de sua escolha e observar os resultados diretamente no console.
+        \end{enumerate}
+        
+        Esse ambiente permitiu uma verificação sistemática e funcional de cada método exposto pela interface \textit{IGrafo}, garantindo que ambas as implementações se comportassem conforme o esperado.
+    
+    \subsection{Estudo de Caso: Matriz de Adjacências com Grafo Direcionado e Rotulado}
+
+        Para ilustrar o processo de validação, foi utilizado um grafo padrão gerado pela função \textit{criarGrafoPadrao()} da classe \textit{MenuMatriz}. A estrutura deste grafo de teste é definida da seguinte forma:
+        
+        \begin{itemize}
+            \item \textbf{Tipo:} Grafo Direcionado.
+            \item \textbf{Vértices:} 4 vértices, identificados pelos inteiros \textit{\{0, 1, 2, 3\}} e rotulados como \textit{\{"A", "B", "C", "D"\}}, respectivamente.
+            \item \textbf{Arestas:} 4 arestas, todas com rótulos específicos: \begin{itemize}
+                \item 0 -> 1 ("Rua 1")
+                \item 0 -> 2 ("Rua 2")
+                \item 1 -> 2 ("Avenida Principal")
+                \item 2 -> 3 ("Ponte")
+            \end{itemize}
+        \end{itemize}
+        
+        Após a instanciação, a estrutura do grafo foi primeiramente confirmada através da função de impressão.
+        
+        A validação funcional prosseguiu com a execução de algoritmos-chave. Ao consultar os vizinhos do vértice \textit{0 ("A")}, o sistema corretamente retornou o conjunto \textit{\{1, 2\}}, correspondendo às suas duas arestas de saída. O teste do fecho transitivo direto, também a partir do vértice \textit{0}, demonstrou a capacidade do algoritmo de percorrer o grafo, identificando todos os nós alcançáveis e resultando no conjunto completo \textit{\{0, 1, 2, 3\}}. 
+        
+        Finalmente, a lógica de busca por predecessores foi confirmada com o cálculo do fecho transitivo inverso para o vértice \textit{2 ("C")}, que produziu o resultado esperado \textit{\{0, 1, 2\}}, consolidando a verificação das principais funcionalidades da biblioteca.
+
+    \subsection{Análise dos Resultados}
+
+        Os experimentos conduzidos por meio dos menus interativos foram cruciais para a validação da biblioteca. A execução sistemática das operações de criação, manipulação e consulta em diversos cenários de teste permitiu verificar a corretude funcional de ambas as implementações, GrafoMatriz e GrafoLista.
+        
+        Para cada operação testada, o resultado observado no console foi comparado com o resultado teórico esperado. Em todos os casos, a saída do programa correspondeu precisamente ao que a teoria dos grafos dita, desde a listagem de vizinhos até o cálculo de fechos transitivos. Desta forma, os experimentos cumpriram seu objetivo primário de certificar que a biblioteca implementa de maneira fiel e confiável os conceitos teóricos e os algoritmos propostos.       
+
+\section{Conclusão}
+\label{conclusao}
+
+    Este trabalho apresentou o projeto e a implementação de uma biblioteca de software em C++ para a criação e manipulação de grafos. O objetivo principal, de suportar múltiplas representações de dados, foi alcançado através de uma arquitetura flexível, fundamentada em uma interface abstrata (\textit{IGrafo}) e duas implementações concretas: uma baseada em matriz de adjacências (\textit{GrafoMatriz}) e outra em lista de adjacências (\textit{GrafoLista}). A solução desenvolvida demonstrou-se robusta, suportando grafos direcionados e não-direcionados, com ou sem pesos e rótulos em seus vértices e arestas.
+    
+    Os experimentos realizados, por meio de uma interface de testes interativa, validaram a correção funcional de ambas as implementações. Todas as operações de manipulação e os algoritmos de percurso, como BFS, DFS e a determinação de fechos transitivos, apresentaram resultados consistentes com a teoria. O projeto, portanto, não apenas resultou em uma ferramenta funcional, mas também serviu como uma demonstração prática das vantagens e desvantagens inerentes a cada forma de representação, consolidando o aprendizado teórico.
+    
+    Como trabalhos futuros, a biblioteca pode ser expandida com a inclusão de novos algoritmos para resolver problemas clássicos, como a busca por caminhos de menor custo entre vértices ou a análise de outras propriedades de conectividade do grafo. Melhorias na interface do usuário e a implementação de funcionalidades para salvar e carregar grafos a partir de arquivos também representam evoluções naturais para o projeto, tornando-o uma ferramenta ainda mais completa para futuros estudos e aplicações.
+    
+\section*{Declarações}
+
+\begin{contributions}
+Davi Cândido de Almeida e Lucas Carneiro Nassau Malta contribuíram para a concepção e o design fundamental do estudo, definindo a arquitetura do software e a interface \textit{IGrafo}. A implementação do software foi dividida em dois subgrupos: a equipe da Matriz de Adjacências, composta por Davi Cândido de Almeida (caminhamentos e fechos transitivos), Lucas Carneiro Nassau Malta (operações estruturais) e Gabriela de Assis dos Reis (caminhamentos e lógica de Dijkstra); e a equipe da Lista de Adjacências, formada por Augusto Stambassi Duarte (classes auxiliares e operações estruturais), João Pedro Torres (métodos de percurso) e Vitor Leite Setragni (busca de vizinhos e menu de testes). O manuscrito foi escrito através de um esforço colaborativo. Todos os autores leram e aprovaram a versão final do manuscrito.
+\end{contributions}
+
+\begin{interests}
+Os autores declaram que não há conflito de interesse.
+\end{interests}
+
+\begin{materials}
+O código gerado e analisado durante o presente estudo estão disponíveis em: \url{https://github.com/DaviKandido/TP1-Grafos}.
+\end{materials}
+
+\bibliographystyle{apalike-sol}
+\bibliography{refs}
+
+\end{document}
