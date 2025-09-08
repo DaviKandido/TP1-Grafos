@@ -6,7 +6,7 @@
 #include <unordered_map>
 #include <vector>
 
-#include "../IGrafo.cpp"
+#include "../IGrafo.hpp"
 #include "../utils/utils.cpp"
 
 using namespace std;

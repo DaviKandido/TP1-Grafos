@@ -4,7 +4,7 @@
 
 #include "../EstruturaDeDados/Matriz/GrafoMatriz.cpp"
 #include "../libs/io.hpp"
-#include "MyIO.cpp"
+#include "MyIO.hpp"
 
 using namespace std;
 
@@ -371,7 +371,7 @@ class MenuMatriz {
         vector<int> distancias = grafo->buscas(vertice_inicial);
 
         // Imprime o resultado como uma lista de distâncias
-        for (int i = 0; i < distancias.size(); ++i) {
+        for (size_t i = 0; i < distancias.size(); ++i) {
             cout << "  - Distância para o vértice " << i << ": ";
             // Verifica se o vértice é inalcançável
             if (distancias[i] == numeric_limits<int>::max()) {

@@ -1,3 +1,6 @@
+#ifndef MYIO_HPP
+#define MYIO_HPP
+
 #include <iostream>
 #include <limits>
 
@@ -95,3 +98,6 @@ string lerRotulo(const string& mensagem) {
 
     return rotulo;
 }
+
+
+#endif

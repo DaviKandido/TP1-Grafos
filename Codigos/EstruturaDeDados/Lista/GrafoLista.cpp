@@ -519,7 +519,7 @@ class GrafoLista : public IGrafo<Vertice> {
         if (pos != -1) {
             // Remover todas as arestas que conectavam com v
             vector<Vertice> arestasRemover = procurarAresta(v);
-            for (int i = 0; i < arestasRemover.size(); i++) {
+            for (size_t i = 0; i < arestasRemover.size(); i++) {
                 removerAresta(arestasRemover.at(i), v);
             }
 
@@ -699,7 +699,7 @@ class GrafoLista : public IGrafo<Vertice> {
     vector<Vertice> fechoTransitivoInverso(Vertice v) const override {
         vector<Vertice> ancestrais;
         NoVertice procura;
-        for (int i = 0; i < listaPrincipal.size(); i++) {
+        for (size_t i = 0; i < listaPrincipal.size(); i++) {
             procura = listaPrincipal.at(i);
             forward_list<Vertice> arestas_forward_list = procura.getArestas();
             for (std::forward_list<Vertice>::iterator it = arestas_forward_list.begin(); it != arestas_forward_list.end();
@@ -733,7 +733,7 @@ class GrafoLista : public IGrafo<Vertice> {
      */
     bool existeVertice(Vertice v) const override {
         Vertice verticeProcurar = Vertice();
-        int i = 0;
+        size_t i = 0;
 
         // testar se vértice está nos limites de vértices já criados
         bool achou = validarVertice(v);
@@ -774,7 +774,7 @@ class GrafoLista : public IGrafo<Vertice> {
      *   @return Inteiro de sua posição no grafo, caso não exista retorna -1
      */
     int procurarVertice(Vertice v) const {
-        int i = 0;
+        size_t i = 0;
         int achou = -1;
         while (i != listaPrincipal.size() && achou == -1) {
             Vertice verticeProcurar = listaPrincipal.at(i).vertice;
@@ -795,8 +795,7 @@ class GrafoLista : public IGrafo<Vertice> {
      */
     vector<Vertice> procurarAresta(Vertice v) {
         vector<Vertice> listaVerticesComAresta;
-        int i = 0;
-        int achou = -1;
+        size_t i = 0;
         if (existeVertice(v)) {
             while (i != listaPrincipal.size()) {
                 NoVertice &noVerticeProcurar = listaPrincipal.at(i);
@@ -838,7 +837,7 @@ class GrafoLista : public IGrafo<Vertice> {
         std::ostringstream oss;
 
         cout << "------- forward_lista de Adjacências --------" << endl;
-        for (int i = 0; i < listaPrincipal.size(); i++) {
+        for (size_t i = 0; i < listaPrincipal.size(); i++) {
             const NoVertice &v = listaPrincipal.at(i);
             if (verticePonderado && verticeRotulado) {
                 oss << i << " [" << v.vertice.getId() << ", " << v.vertice.getPeso() << ", "
@@ -853,7 +852,7 @@ class GrafoLista : public IGrafo<Vertice> {
 
             str = oss.str();
             // alinhar valores
-            for (int i = 0; i < tam_max - to_string(abs(v.getId())).size(); i++) str += " ";
+            for (size_t i = 0; i < tam_max - to_string(abs(v.getId())).size(); i++) str += " ";
             str += " ->";
             cout << str;
 

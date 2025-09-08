@@ -1,3 +1,6 @@
+#ifndef IGRAFO_HPP
+#define IGRAFO_HPP
+
 #include <vector>
 
 using namespace std;
@@ -32,3 +35,5 @@ class IGrafo {
     // Método para visualização
     virtual void imprimir() const = 0;
 };
+
+#endif

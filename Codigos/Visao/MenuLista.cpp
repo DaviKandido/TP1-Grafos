@@ -2,7 +2,7 @@
 #include <string>
 
 #include "../EstruturaDeDados/Lista/GrafoLista.cpp"
-#include "MyIO.cpp"
+#include "MyIO.hpp"
 
 using namespace std;
 #define maxVertice 2147483647
