@@ -8,7 +8,7 @@ using namespace std;
 #define maxVertice 2147483647
 
 class MenuLista {
-   private:
+   public:
     GrafoLista* grafo;
 
     /**
