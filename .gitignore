@@ -24,6 +24,15 @@ package-lock.json
 # Diretórios de build
 bin/
 build/
+
+/bin
+/build
+
+/bin
+/build
+
+bin\
+build\
 out/
 dist/
 
@@ -32,6 +41,8 @@ dist/
 *.obj
 *.lo
 *.slo
+.vs
+.vscode
 
 # Executáveis
 *.exe
