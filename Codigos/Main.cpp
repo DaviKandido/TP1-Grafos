@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 
+#include "./Visao/MenuLista.cpp"
 #include "./Visao/MenuMatriz.cpp"
 #include "./libs/io.hpp"
 
@@ -35,7 +36,7 @@ int main(int argc, char* argv[]) {
                     (new MenuMatriz())->menu();
                     break;
                 case 2:
-                    cout << "\nInstancia Lista de Adjacências" << endl;
+                    (new MenuLista())->menu();
                     break;
                 case 0:
                     cout << "\nSaindo..." << endl;
