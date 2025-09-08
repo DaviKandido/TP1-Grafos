@@ -836,7 +836,7 @@ class GrafoLista : public IGrafo<Vertice> {
         int tam_max = to_string(abs(ultimoId)).size();
         std::ostringstream oss;
 
-        cout << "------- Lista de Adjacências --------" << endl;
+        cout << "\n------- Lista de Adjacências --------" << endl << endl;
         for (size_t i = 0; i < listaPrincipal.size(); i++) {
             const NoVertice &v = listaPrincipal.at(i);
             if (verticePonderado && verticeRotulado) {
@@ -870,7 +870,8 @@ class GrafoLista : public IGrafo<Vertice> {
             cout << str;
         }
 
-        cout << "-------------------------------------";
+        cout << "\n-------------------------------------" << endl;
+        /*
         cout << endl << "Características: " << endl;
 
         cout << "Direcionado? ";
@@ -901,7 +902,9 @@ class GrafoLista : public IGrafo<Vertice> {
         }
         cout << endl;
         cout << "-------------------------------------" << endl << endl;
+        */
     }
+
     /**
      *   Imprime o lista de vertices
      *   @param vertices Vector de vertices a ser mostrada

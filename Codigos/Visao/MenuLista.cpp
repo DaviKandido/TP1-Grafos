@@ -2,6 +2,7 @@
 #include <string>
 
 #include "../EstruturaDeDados/Lista/GrafoLista.cpp"
+#include "../libs/io.hpp"
 #include "MyIO.hpp"
 
 using namespace std;
@@ -32,7 +33,7 @@ class MenuLista {
     void menu() {
         int opcao = -1;
         while (opcao != 0) {
-            cout << "> Menu > Lista" << endl << endl;
+            cout << "\n> Menu > Lista" << endl << endl;
             cout << "1) Instanciar Grafo" << endl;
             cout << "2) Adicionar Vértice" << endl;
             cout << "3) Adicionar Aresta" << endl;
@@ -56,55 +57,70 @@ class MenuLista {
                     break;
 
                 case 2:
-                    adicionaVertice();
+                    if(grafoInstanciado()) adicionaVertice();
                     break;
 
                 case 3:
-                    adicionaAresta();
+                    if(grafoInstanciado()) adicionaAresta();
                     break;
 
                 case 4:
-                    removeVertice();
+                    if(grafoInstanciado()) removeVertice();
                     break;
 
                 case 5:
-                    removeAresta();
+                    if(grafoInstanciado()) removeAresta();
                     break;
 
                 case 6:
-                    consultaVizinhosVertice();
+                    if(grafoInstanciado()) consultaVizinhosVertice();
                     break;
 
                 case 7:
-                    consultarSucessoresVertice();
+                    if(grafoInstanciado()) consultarSucessoresVertice();
                     break;
 
                 case 8:
-                    consultarPredecessoresVertice();
+                    if(grafoInstanciado()) consultarPredecessoresVertice();
+                    break;
+                    
+                case 9:
+                    if(grafoInstanciado()) buscaEmProfundidade();
+                    break;
+                    
+                case 10:
+                    if(grafoInstanciado()) buscaEmLargura();
+                    break;                
+
+                case 11:
+                    if(grafoInstanciado()) imprimeGrafo();
                     break;
 
                 case 12:
-                    removeGrafo();
+                    if(grafoInstanciado()) removeGrafo();
                     break;
-
-                case 11:
-                    imprimeGrafo();
-                    break;
-                case 10:
-                    buscaEmLargura();
-                    break;
-                case 9:
-                    buscaEmProfundidade();
-                    break;
+                
                 case 0:
-                    cout << "Obrigado pela preferencia!";
+                    cout << "\nSaindo..." << endl;
                     break;
                 default:
-                    cout << "Opção inválida!" << endl;
-                    cout << "Porfavor escolha uma das opções a baixo" << endl;
+                    cout << "\nOpção inválida!" << endl;
                     break;
             }
         }
+    }
+
+    /**
+     * Verifica se o grafo está instanciado.
+     *
+     * @note Se o grafo não estiver instanciado, uma mensagem de erro é impressa na
+     *       saída padrão.
+     *
+     * @return true se o grafo estiver instanciado, false caso contrário.
+     */
+    bool grafoInstanciado() {
+        if (grafo == null) cout << "\n[ERRO]: O grafo não está instanciado." << endl;
+        return grafo != null;
     }
 
     /**
@@ -128,15 +144,14 @@ class MenuLista {
         // Ler as informações do usuário
         numVertices = lerInteiro("Número de vértices: ", 1, maxVertice);
 
-        simples = lerBoolean("O grafo é simples?      (S/N): ");
-        direcionado = lerBoolean("O grafo é direcionado?      (S/N): ");
+        simples          = lerBoolean("O grafo é simples?          (S/N): ");
+        direcionado      = lerBoolean("O grafo é direcionado?      (S/N): ");
         verticePonderado = lerBoolean("Os vértices são ponderados? (S/N): ");
-        arestaPonderada = lerBoolean("As arestas são ponderadas?  (S/N): ");
-        verticeRotulado = lerBoolean("Os vértices são rotulados?  (S/N): ");
-        arestaRotulada = lerBoolean("As arestas são rotuladas?   (S/N): ");
-        // Aqui ainda ta faltando implementar o GrafoLista
-        this->grafo = new GrafoLista(simples, direcionado, verticePonderado, arestaPonderada,
-                                     verticeRotulado, arestaRotulada, numVertices);
+        arestaPonderada  = lerBoolean("As arestas são ponderadas?  (S/N): ");
+        verticeRotulado  = lerBoolean("Os vértices são rotulados?  (S/N): ");
+        arestaRotulada   = lerBoolean("As arestas são rotuladas?   (S/N): ");
+
+        this->grafo = new GrafoLista(simples, direcionado, verticePonderado, arestaPonderada,                          verticeRotulado, arestaRotulada, numVertices);
     }
 
     void adicionaVertice() {
@@ -157,7 +172,7 @@ class MenuLista {
 
         Vertice novo(grafo->numVertices, peso, rotulo);
         if (grafo->adicionarVertice(novo)) {
-            cout << "Vértice adicionado com sucesso" << endl;
+            cout << "Vértice adicionado com sucesso!" << endl;
         } else
             cout << "Houve um erro" << endl;
     }
@@ -193,12 +208,12 @@ class MenuLista {
         // if (grafo->adicionarAresta(inicioV, fimV, peso, rotulo)) {
         if(grafo->arestaPonderada || grafo->arestaRotulada){
             if(grafo->adicionarAresta(inicioV,fimV,peso,rotulo)) {
-                cout << "Aresta adicionada com sucesso" << endl << endl;
+                cout << "Aresta adicionada com sucesso!" << endl << endl;
             } else
-                cout << "Houve um erro" << endl;
+                cout << "Houve um erro." << endl;
         } else {
             if(grafo->adicionarAresta(inicioV,fimV)){
-                cout << "Aresta adicionada com sucesso" << endl << endl;
+                cout << "Aresta adicionada com sucesso!" << endl << endl;
             } else {
                 cout << "Houve um erro" << endl;
             }
