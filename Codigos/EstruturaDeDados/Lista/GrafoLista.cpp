@@ -7,7 +7,7 @@
 #include <vector>
 #include <queue>
 
-#include "../IGrafo.cpp"
+#include "../IGrafo.hpp"
 
 using namespace std;
 
@@ -1334,28 +1334,28 @@ void testeExcecaoVerticeInexistente() {
     else { cout << "[FAIL] Esperava exceção para vértice inexistente\n"; ++failures; }
 }
 
-int main() {
-    TesteDirecionado();
-    TesteNaoDirecionado();
-    TestePonderado();
-    TesteRotulado();
+// int main() {
+//     TesteDirecionado();
+//     TesteNaoDirecionado();
+//     TestePonderado();
+//     TesteRotulado();
 
-     cout << "=== Iniciando testes BFS/DFS ===\n";
+//      cout << "=== Iniciando testes BFS/DFS ===\n";
 
-    testeBfsOrdemCaminho();
-    testeDfsOrdemRecursiva();
-    testeComponentesDesconexosDfsCompleta();
-    testeCiclo();
-    testeSelfLoop();
-    testeVerticeIsolado();
-    testeExcecaoVerticeInexistente();
+//     testeBfsOrdemCaminho();
+//     testeDfsOrdemRecursiva();
+//     testeComponentesDesconexosDfsCompleta();
+//     testeCiclo();
+//     testeSelfLoop();
+//     testeVerticeIsolado();
+//     testeExcecaoVerticeInexistente();
 
-    if (failures == 0) {
-        cout << "\n== TODOS OS TESTES PASSARAM ==\n";
-        return 0;
-    } else {
-        cout << "\n== FALHARAM " << failures << " TESTE(S) ==\n";
-        return 2;
-    }
-    return 0;
-}
+//     if (failures == 0) {
+//         cout << "\n== TODOS OS TESTES PASSARAM ==\n";
+//         return 0;
+//     } else {
+//         cout << "\n== FALHARAM " << failures << " TESTE(S) ==\n";
+//         return 2;
+//     }
+//     return 0;
+// }
