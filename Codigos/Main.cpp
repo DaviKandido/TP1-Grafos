@@ -19,8 +19,8 @@ int main(int argc, char* argv[]) {
              << "---------- Davi Cândido de Almeida ----------" << endl;
         cout << "-------  Gabriela de Assis dos Reis ---------" << endl
              << "-------- Lucas Carneiro Nassau Malta --------" << endl
-             << "------------- João Pedro Torres -------------" << endl;
-            << "------------- Vitor Leite Setragni -------------" << endl;
+             << "------------- João Pedro Torres -------------" << endl
+             << "------------- Vitor Leite Setragni -------------" << endl;
         cout << "---------------------------------------------" << endl;
 
         cout << "\n> Menu " << endl << endl;
