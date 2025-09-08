@@ -9,7 +9,6 @@ AllowShortFunctionsOnASingleLine: false
 PointerAlignment: Left # Alinhamento de ponteiros
 SortIncludes: true # Ordena #include automaticamente
 
-
 # -- Configurando o clang-format -
 
 # 0 - Instale o clang-format: sudo apt install clang-format

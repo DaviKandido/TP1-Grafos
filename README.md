@@ -23,7 +23,7 @@ Implementação de **estruturas e algoritmos de Grafos** para o Trabalho Prátic
 * [**Vitor Leite Setragni**](https://github.com/VitorSetragni)
 
 
-## 👩‍🏫 Professor responsáveis
+## 👩‍🏫 Professor responsável
 
 * *Silvio Jamil Ferzoli Guimaraes*
 

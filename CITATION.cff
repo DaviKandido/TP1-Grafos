@@ -1,31 +1,30 @@
-cff-version: 1.0.1
-message: Please cite this software using these metadata.
-title: 
+cff-version: 1.0.2
+message: Implementação de Grafos em C/C++ para o Trabalho Prático 1 de Grafos
+title: Trabalho Pratico 1 de Grafos - Implementação de Grafos
 authors:
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names:
+  - family-names: Stambassi Duarte
+    given-names: Augusto
+  - family-names: Cândido de Almeida
+    given-names: Davi
+  - family-names: de Assis dos Reis
+    given-names: Gabriela
+  - family-names: Carneiro Nassau Malta
+    given-names: Lucas
+  - family-names: Pedro Torres
+    given-names: João
+  - family-names: Leite Setragni
+    given-names: Vitor
   - name-suffix: Professor
     affiliation: PUC Minas
-    family-names: 
-    given-names: 
-  - name-suffix: Professor
-    affiliation: PUC Minas
-    family-names: 
-    given-names: 
+    family-names: Jamil Ferzoli Guimaraes
+    given-names: Silvio
 keywords:
-  - 
-  - 
-repository-code: 
+  - Grafos
+  - Matriz de Adjacências
+  - Lista de Adjacências
+  - Algoritmos em Grafos
+  - C++
+repository-code: https://github.com/DaviKandido/TP1-Grafos.git
 license: CC-BY-4.0
-version: 1.0.0
-date-released: 2022-07-14
+version: 2.0.0
+date-released: 2025-09-07
