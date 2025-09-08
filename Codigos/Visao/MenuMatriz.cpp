@@ -448,7 +448,6 @@ class MenuMatriz {
     }
 
     /**
-    /*
      * Cria um grafo padrão para facilitar os testes.
      *
      * O grafo tem 4 vértices e 4 arestas, todas com rótulos.
