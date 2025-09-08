@@ -109,6 +109,14 @@ class MenuMatriz {
         } while (opcao != 0);
     }
 
+    /**
+     * Verifica se o grafo está instanciado.
+     *
+     * @note Se o grafo não estiver instanciado, uma mensagem de erro é impressa na
+     *       saída padrão.
+     *
+     * @return true se o grafo estiver instanciado, false caso contrário.
+     */
     bool grafoInstanciado() {
         if (grafo == null) cout << "\n[ERRO]: O grafo não está instanciado." << endl;
         return grafo != null;
@@ -342,6 +350,11 @@ class MenuMatriz {
         cout << "}" << endl;
     }
 
+    /**
+     * Faz uma busca em profundidade a partir de um vértice escolhido pelo usuário.
+     *
+     * @note O vértice é considerado válido se estiver no intervalo [0, numVertices).
+     */
     void buscaProfundidade() {
         cout << "\n> Menu > Matriz > Busca em Profundidade" << endl << endl;
 
@@ -359,6 +372,15 @@ class MenuMatriz {
 
         cout << "\n}" << endl;
     }
+
+    /**
+     * Realiza uma busca em largura a partir de um vértice escolhido pelo usuário.
+     *
+     * Imprime a distância do vértice inicial para cada um dos demais vértices.
+     * Caso o vértice seja inalcançável, imprime "Inalcançável".
+     *
+     * @note O vértice é considerado válido se estiver no intervalo [0, numVertices).
+     */
 
     void buscaLargura() {
         cout << "\n> Menu > Matriz > Busca em Largura" << endl << endl;
@@ -412,8 +434,11 @@ class MenuMatriz {
         }
     }
 
+    /**
     /*
      * Cria um grafo padrão para facilitar os testes.
+     *
+     * O grafo tem 4 vértices e 4 arestas, todas com rótulos.
      */
     void criarGrafoPadrao() {
         // Testar se já existe um grafo instanciado
