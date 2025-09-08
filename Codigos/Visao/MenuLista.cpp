@@ -38,12 +38,14 @@ class MenuLista {
             cout << "3) Adicionar Aresta" << endl;
             cout << "4) Remover Vértice" << endl;
             cout << "5) Remover Aresta" << endl;
-            cout << "6) Consultar Vasinhos de um Vértice" << endl;
-            cout << "7) Consultar Sucessores de um Vértice - DFS" << endl;
-            cout << "8) Consultar Predecessores de um Vértice - DFS" << endl;
-            cout << "9) Remover Grafo" << endl;
-            cout << "10) Imprimir Grafo" << endl;
-            cout << "0) - Sair" << endl << endl;
+            cout << "6) Consultar Vizinhos de um Vértice" << endl;
+            cout << "7) Consultar Fecho Transitivo Direto de um Vértice" << endl;
+            cout << "8) Consultar Fecho Transitivo Inverso de um Vértice" << endl;
+            cout << "9) Busca em Profundidade - DFS" << endl;
+            cout << "10) Busca em Largura - BFS" << endl;
+            cout << "11) Imprimir Grafo" << endl;
+            cout << "12) Remover Grafo" << endl;
+            cout << "0) Sair" << endl << endl;
 
             cout << "Opção: ";
             cin >> opcao;
@@ -81,12 +83,18 @@ class MenuLista {
                     consultarPredecessoresVertice();
                     break;
 
-                case 9:
+                case 12:
                     removeGrafo();
                     break;
 
-                case 10:
+                case 11:
                     imprimeGrafo();
+                    break;
+                case 10:
+                    buscaEmLargura();
+                    break;
+                case 9:
+                    buscaEmProfundidade();
                     break;
                 case 0:
                     cout << "Obrigado pela preferencia!";
@@ -138,17 +146,18 @@ class MenuLista {
         string rotulo = "";
         int peso = 1;
         // teste de ponderado e de rotulo
+
+        if (grafo->verticePonderado == 1) {
+            peso = lerInteiro("Peso do vértice: ", (0 - maxVertice), maxVertice);
+        }
+
         if (grafo->verticeRotulado == 1) {
             rotulo = lerRotulo("Rótulo do vértice: ");
         }
 
-        if (grafo->verticePonderado == 1) {
-            rotulo = lerInteiro("Peso do vértice: ", (0 - maxVertice), maxVertice);
-        }
-
         Vertice novo(grafo->numVertices, peso, rotulo);
         if (grafo->adicionarVertice(novo)) {
-            cout << "vertice removido com sucesso" << endl;
+            cout << "Vértice adicionado com sucesso" << endl;
         } else
             cout << "Houve um erro" << endl;
     }
@@ -164,9 +173,8 @@ class MenuLista {
         int fim;
         grafo->imprimir();
         // pegando a posição dos vertices na Lista
-        cout << "Digite o numero que aparece na frente da linha";
-        inicio =
-            lerInteiro("Digite o número do vértice de saida: ", 0, grafo->getQuantidadeVertices());
+        inicio = lerInteiro("Digite o número do vértice de saida: ", 0,
+             grafo->getQuantidadeVertices());
         fim = lerInteiro("Digite o número do vértice de chegada: ", 0,
                          grafo->getQuantidadeVertices());
 
@@ -182,10 +190,20 @@ class MenuLista {
         // que esta o vertice
         Vertice inicioV = grafo->listaPrincipal[inicio].vertice;
         Vertice fimV = grafo->listaPrincipal[fim].vertice;
-        if (grafo->adicionarAresta(inicioV, fimV, peso, rotulo)) {
-            cout << "aresta adicionada com sucesso" << endl;
-        } else
-            cout << "Houve um erro" << endl;
+        // if (grafo->adicionarAresta(inicioV, fimV, peso, rotulo)) {
+        if(grafo->arestaPonderada || grafo->arestaRotulada){
+            if(grafo->adicionarAresta(inicioV,fimV,peso,rotulo)) {
+                cout << "Aresta adicionada com sucesso" << endl << endl;
+            } else
+                cout << "Houve um erro" << endl;
+        } else {
+            if(grafo->adicionarAresta(inicioV,fimV)){
+                cout << "Aresta adicionada com sucesso" << endl << endl;
+            } else {
+                cout << "Houve um erro" << endl;
+            }
+        }
+        
     }
 
     void removeVertice() {
@@ -195,13 +213,13 @@ class MenuLista {
 
         grafo->imprimir();
         // pegando a posição dos vertices na Lista
-        vertice = lerInteiro("Digite o número do vértice que deseja remover", 0,
+        vertice = lerInteiro("Digite o número do vértice que deseja remover: ", 0,
                              grafo->getQuantidadeVertices());
         // O vertice esta dentro da listaPrincipal que é feita de NoVertice e dentro do Novertice
         // que esta o vertice
         Vertice inicioV = grafo->listaPrincipal[vertice].vertice;
         if (grafo->removerVertice(inicioV)) {
-            cout << "vertice removido com sucesso" << endl;
+            cout << "Vértice removido com sucesso" << endl;
         } else
             cout << "Houve um erro" << endl;
     }
@@ -213,7 +231,6 @@ class MenuLista {
         int fim;
         grafo->imprimir();
         // pegando a posição dos vertices na Lista
-        cout << "Digite o numero que aparece na frente da linha";
         inicio =
             lerInteiro("Digite o número do vértice de saida: ", 0, grafo->getQuantidadeVertices());
         fim = lerInteiro("Digite o número do vértice de chegada: ", 0,
@@ -224,7 +241,7 @@ class MenuLista {
         Vertice inicioV = grafo->listaPrincipal[inicio].vertice;
         Vertice fimV = grafo->listaPrincipal[fim].vertice;
         if (grafo->removerAresta(inicioV, fimV)) {
-            cout << "aresta removida com sucesso" << endl;
+            cout << "Aresta removida com sucesso" << endl;
         } else
             cout << "Houve um erro" << endl;
     }
@@ -238,7 +255,7 @@ class MenuLista {
         grafo->imprimir();
 
         // pegando a posição dos vertices na Lista
-        verticei = lerInteiro("Digite o número do vértice que deseja remover", 0,
+        verticei = lerInteiro("Digite o número do vértice que deseja consultar os vizinhos: ", 0,
                               grafo->getQuantidadeVertices());
 
         // O vertice esta dentro da listaPrincipal que é feita de NoVertice e dentro do Novertice
@@ -249,10 +266,11 @@ class MenuLista {
         if (vizinho.empty()) {
             cout << "Sem vizinhos\n";
         } else {
+            cout << endl << "Vizinhos de " << inicioV.toString() <<": ";
             for (const Vertice& v : vizinho) {
-                cout << "ID=" << v.getId() << " | Peso=" << v.getPeso()
-                     << " | Rotulo=" << v.getRotulo() << '\n';
+                cout << v.toString() << " ";
             }
+            cout << endl << endl;
         }
     }
 
@@ -264,18 +282,20 @@ class MenuLista {
         grafo->imprimir();
 
         //pegando a posição dos vertices na Lista
-        verticei = lerInteiro("Digite o número do vértice que deseja remover", 0,grafo->getQuantidadeVertices());
+        verticei = lerInteiro("Digite o número do vértice que deseja consultar: ", 0,grafo->getQuantidadeVertices());
 
         //O vertice esta dentro da listaPrincipal que é feita de NoVertice e dentro do Novertice que esta o vertice
         Vertice inicioV = grafo->listaPrincipal[verticei].vertice;
         
         vector<Vertice> vizinho = grafo->fechoTransitivoDireto(inicioV);
         if (vizinho.empty()) {
-            cout << "Sem vizinhos\n";
+            cout << "Vazio\n";
         } else {
+            cout << endl << "Fecho Transito Direto de " << inicioV.toString() <<": ";
             for (const Vertice& v : vizinho) {
-                cout << "ID=" << v.getId() << " | Peso=" << v.getPeso() << " | Rotulo=" << v.getRotulo() << '\n';
+                cout << v.toString() << " ";
             }
+            cout << endl << endl;
         }
     }
 
@@ -287,19 +307,20 @@ class MenuLista {
         grafo->imprimir();
 
         //pegando a posição dos vertices na Lista
-        verticei = lerInteiro("Digite o número do vértice que deseja remover", 0,grafo->getQuantidadeVertices());
+        verticei = lerInteiro("Digite o número do vértice que deseja consultar: ", 0,grafo->getQuantidadeVertices());
 
         //O vertice esta dentro da listaPrincipal que é feita de NoVertice e dentro do Novertice que esta o vertice
         Vertice inicioV = grafo->listaPrincipal[verticei].vertice;
         
         vector<Vertice> vizinho = grafo->fechoTransitivoInverso(inicioV);
         if (vizinho.empty()) {
-            cout << "Sem vizinhos\n";
+            cout << "Vazio\n";
         } else {
+            cout << endl << "Fecho Transito Inverso de " << inicioV.toString() <<": ";
             for (const Vertice& v : vizinho) {
-                cout << "ID=" << v.getId() << " | Peso=" << v.getPeso() << " | Rotulo=" << v.getRotulo() << '\n';
-    
+                cout << v.toString() << " ";    
             }
+            cout << endl << endl;
         }
     }
 
@@ -312,6 +333,45 @@ class MenuLista {
             delete grafo;
             grafo = NULL;
             cout << "\nGrafo removido com sucesso." << endl;
+        }
+    }
+
+    void buscaEmLargura(){
+        cout << "\n> Menu > Lista > Busca em Largura - BFS" << endl << endl;
+        imprimeGrafo();
+        int verticei = lerInteiro("Digite o número do vértice para começar o caminho: ", 0,grafo->getQuantidadeVertices());
+        Vertice inicioV = grafo->listaPrincipal[verticei].vertice;
+
+        vector<Vertice> resposta = grafo->buscaEmLargura(inicioV);
+
+        if(resposta.empty()){
+            cout << "Caminho vazio" << endl << endl;
+        } else {
+            cout << endl << "BFS a partir de " << inicioV.toString() <<": ";
+            for (const Vertice& v : resposta) {
+                cout << v.toString() << " ";    
+            }
+            cout << endl << endl;
+        }
+    }
+
+    void buscaEmProfundidade(){
+        cout << "\n> Menu > Lista > Busca em profundidade - DFS" << endl << endl;
+        imprimeGrafo();
+
+        int verticei = lerInteiro("Digite o número do vértice para começar o caminho: ", 0,grafo->getQuantidadeVertices());
+        Vertice inicioV = grafo->listaPrincipal[verticei].vertice;
+
+        vector<Vertice> resposta = grafo->buscaEmProfundidade(inicioV);
+
+        if(resposta.empty()){
+            cout << "Caminho vazio" << endl << endl;
+        } else {
+            cout << endl << "DFS a partir de " << inicioV.toString() <<": ";
+            for (const Vertice& v : resposta) {
+                cout << v.toString() << " ";    
+            }
+            cout << endl << endl;
         }
     }
 

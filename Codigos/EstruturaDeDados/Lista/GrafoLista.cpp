@@ -128,8 +128,8 @@ class Vertice {
     }
 };
 
-/* A classe NoVertice representa o Vertice da forward_lista principal,
-na qual cada posição possui um vertice e a forward_lista de vizinhos (suas arestas)
+/* A classe NoVertice representa o Vertice da lista principal,
+na qual cada posição possui um vertice e a lista de vizinhos (suas arestas)
 
 Representação gráfica:
 
@@ -216,11 +216,11 @@ class NoVertice {
 
     void appendAresta(const Vertice &v) {
         if (arestas.empty()) {
-        arestas.push_front(v);
+            arestas.push_front(v);
         } else {
-        auto prev = arestas.before_begin();
-        for (auto it = arestas.begin(); it != arestas.end(); ++it) ++prev;
-        arestas.insert_after(prev, v);
+            auto prev = arestas.before_begin();
+            for (auto it = arestas.begin(); it != arestas.end(); ++it) ++prev;
+                arestas.insert_after(prev, v);
         }
     }
 
@@ -309,18 +309,18 @@ class NoVertice {
      *   @return Verdadeiro caso exista
      */
     string toString() {
-        string forward_lista = to_string(vertice.getId());
-        forward_lista += " |";
+        string lista = to_string(vertice.getId());
+        lista += " |";
         for (auto const &aresta : this->arestas) {
-            forward_lista += ' ' + aresta.toString();
+            lista += ' ' + aresta.toString();
         }
-        forward_lista += '\n';
-        return forward_lista;
+        lista += '\n';
+        return lista;
     }
 };
 
 /*
-O grafo forward_lista é formado por um vector (array contínuo) de Nós vértices.
+O grafo lista é formado por um vector (array contínuo) de Nós vértices.
 Esse grafo pode conter as seguintes características:
     + Simples ou Não simples
     + Direcionado ou não direcionado
@@ -333,11 +333,11 @@ Representação gráfica:
      |
 +----|------------------------------------------------------+
 |    |     |                                                |
-|    0     | forward_list<Vertice> arestas -> 1 -> 2 -> ...         |
+|    0     | forward_list<Vertice> arestas -> 1 -> 2 -> ... |
 |          |                                                |
-|    1     | forward_list<Vertice> arestas -> 4 -> 0 -> ...         |
+|    1     | forward_list<Vertice> arestas -> 4 -> 0 -> ... |
 |          |                                                |
-|    2     | forward_list<Vertice> arestas -> 3 -> 2 -> ...         |
+|    2     | forward_list<Vertice> arestas -> 3 -> 2 -> ... |
 |          |                                                |
 |   ...    |                    ...                         |
 +----------|------------------------------------------------+
@@ -523,7 +523,7 @@ class GrafoLista : public IGrafo<Vertice> {
                 removerAresta(arestasRemover.at(i), v);
             }
 
-            // Remover NoVertice da forward_lista Principal
+            // Remover NoVertice da lista Principal
             listaPrincipal.erase(listaPrincipal.begin() + pos);
             numVertices -= 1;
         } else {
@@ -600,7 +600,7 @@ class GrafoLista : public IGrafo<Vertice> {
             destino.ponderado = arestaPonderada;
             destino.rotulado = arestaRotulada;
 
-            // cout << "(Grafo forward_lista) Inserindo:" << origem.toString() << " : " <<destino.toString()
+            // cout << "(Grafo lista) Inserindo:" << origem.toString() << " : " <<destino.toString()
             // << endl;
 
             procura.adicionarAresta(destino, peso, rotulo);
@@ -836,7 +836,7 @@ class GrafoLista : public IGrafo<Vertice> {
         int tam_max = to_string(abs(ultimoId)).size();
         std::ostringstream oss;
 
-        cout << "------- forward_lista de Adjacências --------" << endl;
+        cout << "------- Lista de Adjacências --------" << endl;
         for (size_t i = 0; i < listaPrincipal.size(); i++) {
             const NoVertice &v = listaPrincipal.at(i);
             if (verticePonderado && verticeRotulado) {
@@ -903,7 +903,7 @@ class GrafoLista : public IGrafo<Vertice> {
         cout << "-------------------------------------" << endl << endl;
     }
     /**
-     *   Imprime o forward_lista de vertices
+     *   Imprime o lista de vertices
      *   @param vertices Vector de vertices a ser mostrada
      */
     void imprimir(vector<Vertice> vertices) const {
