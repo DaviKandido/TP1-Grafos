@@ -248,6 +248,21 @@ class MenuMatriz {
      */
     void removeVertice() {
         cout << "\n> Menu > Matriz > Remover Vértice" << endl << endl;
+
+        // Imprimir o grafo
+        grafo->imprimir();
+
+        // Informações do vértice
+        int vertice;
+
+        // Ler o vértice a ser removido
+        vertice = lerInteiro("Digite o número do vértice a ser removido: ", 0, grafo->getQuantidadeVertices());
+
+        // Remover o vértice
+        if (!grafo->removerVertice(vertice))
+            cout << "\n[ERRO]: Não foi possível remover o vértice. Tente novamente" << endl;
+        else
+            cout << "\no Vértice " << vertice << " foi removido com sucesso." << endl;
     }
 
     /**
@@ -265,17 +280,14 @@ class MenuMatriz {
         int origem, destino;
 
         // Ler os vértices de origem e de destino
-        origem =
-            lerInteiro("Digite o número do vértice de origem: ", 0, grafo->getQuantidadeVertices());
-        destino = lerInteiro("Digite o número do vértice de destino: ", 0,
-                             grafo->getQuantidadeVertices());
+        origem = lerInteiro("Digite o número do vértice de origem: ", 0, grafo->getQuantidadeVertices());
+        destino = lerInteiro("Digite o número do vértice de destino: ", 0, grafo->getQuantidadeVertices());
 
         // Remover a aresta
         if (!grafo->removerAresta(origem, destino))
             cout << "\n[ERRO]: Não foi possível remover a aresta. Tente novamente" << endl;
         else
-            cout << "\nA aresta entre " << origem << " e " << destino
-                 << " foi removida com sucesso." << endl;
+            cout << "\nA aresta entre " << origem << " e " << destino << " foi removida com sucesso." << endl;
     }
 
     /**
@@ -412,7 +424,8 @@ class MenuMatriz {
     void imprimeGrafo() {
         cout << "\n> Menu > Matriz > Imprimir Grafo" << endl << endl;
 
-        grafo->imprimir();
+        if (grafo != null)
+            grafo->imprimir();
     }
 
     /**
@@ -447,9 +460,6 @@ class MenuMatriz {
             return;
         }
 
-        // Atributos do grafo
-        int numVertices = 4;
-
         // Variáveis de controle
         bool direcionado = true;
         bool verticePonderado = false;
@@ -458,8 +468,9 @@ class MenuMatriz {
         bool arestaRotulada = true;
 
         // Criar o grafo
-        this->grafo = new GrafoMatriz(numVertices, direcionado, verticePonderado, arestaPonderada,
+        this->grafo = new GrafoMatriz(direcionado, verticePonderado, arestaPonderada,
                                       verticeRotulado, arestaRotulada);
+
 
         // Adiciona rótulos aos vértices
         this->grafo->adicionarVertice(0, "A");
@@ -468,10 +479,10 @@ class MenuMatriz {
         this->grafo->adicionarVertice(3, "D");
 
         // Adiciona arestas com rótulos
-        this->grafo->adicionarAresta(0, 1, 1, "Rua 1");
-        this->grafo->adicionarAresta(0, 2, 1, "Rua 2");
-        this->grafo->adicionarAresta(1, 2, 1, "Avenida Principal");
-        this->grafo->adicionarAresta(2, 3, 1, "Ponte");
+        this->grafo->adicionarAresta(0, 1, "Rua 1");
+        this->grafo->adicionarAresta(0, 2, "Rua 2");
+        this->grafo->adicionarAresta(1, 2, "Avenida Principal");
+        this->grafo->adicionarAresta(2, 3, "Ponte");
 
         cout << "\nGrafo padrão criado com sucesso!" << endl;
         this->imprimeGrafo();

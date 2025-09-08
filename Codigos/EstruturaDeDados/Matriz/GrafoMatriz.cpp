@@ -92,6 +92,21 @@ class GrafoMatriz : public IGrafo<int> {
         }
     }
 
+    // Construtor: cria um grafo sem um número fixo de vértices
+    GrafoMatriz(bool direcionado, bool verticePonderado, bool arestaPonderada,
+                bool verticeRotulado, bool arestaRotulada) {
+        // Atribuir valores iniciais
+        this->numVertices = 0;
+        this->numArestas = 0;
+
+        // Atribuir variáveis de controle
+        this->direcionado = direcionado;
+        this->verticePonderado = verticePonderado;
+        this->arestaPonderada = arestaPonderada;
+        this->verticeRotulado = verticeRotulado;
+        this->arestaRotulada = arestaRotulada;
+    }
+    
     // Destrutor: padrão
     ~GrafoMatriz() override {
         matrizAdjacencias.clear();
@@ -130,20 +145,38 @@ class GrafoMatriz : public IGrafo<int> {
     }
 
     bool adicionarVertice(int v, int peso, string label) {
-        // Aqui é preciso refazer toda a matriz
-        // Obs: alterar o peso e o rótulo apenas se o grafo for ponderado e rotulado
+        // O novo vértice terá o índice do tamanho atual da matriz.
+        int novoIndice = this->numVertices;
 
-        // Alterar o peso do vértice
+        // Incrementar o contador de vértices ANTES de redimensionar.
+        this->numVertices++;
+
+        // Aumenta o número de linhas para o novo tamanho (de N para N+1) - A nova linha é criada vazia
+        matrizAdjacencias.resize(this->numVertices);
+
+        // Para cada linha (as N antigas e a 1 nova), redimensiona o número de colunas para o novo tamanho, preenchendo com 0.
+        for (auto& linha : matrizAdjacencias) {
+            linha.resize(this->numVertices, 0);
+        }
+        
+        // Se as arestas forem rotuladas, reestruturas a matriz de rótulos também
+        if (this->arestaRotulada) {
+            arestasRotulos.resize(this->numVertices);
+            for (auto& linha : arestasRotulos) {
+                linha.resize(this->numVertices, "");
+            }
+        }
+
+        // Definir os atributos para o NOVO vértice usando o 'novoIndice'
         if (this->verticePonderado) {
-            verticesPesos[v] = peso;
+            verticesPesos.push_back(peso);
         }
 
-        // Alterar o rótulo do vértice
         if (this->verticeRotulado) {
-            verticesRotulos[v] = label;
+            verticesRotulos[novoIndice] = label;
         }
 
-        return verticeValido(v);
+        return true;
     }
 
     bool adicionarAresta(int origem, int destino) override {
@@ -198,24 +231,77 @@ class GrafoMatriz : public IGrafo<int> {
      */
 
     bool removerVertice(int v) override {
+        // Testar se a posição é válida
         if (!verticeValido(v)) {
             return false;
         }
-        int novoNum = numVertices - 1;
-        vector<vector<int>> novaMatriz(novoNum, vector<int>(novoNum, 0));
+
+        // Criar as novas estruturas de dados menores
+        int novoTamanho = numVertices - 1;
+
+        vector<vector<int>> novaMatrizAdjacencias(novoTamanho, vector<int>(novoTamanho, 0));        
+        vector<vector<string>> novosRostulosArestas;
+
+        if (arestaRotulada) {
+            novosRostulosArestas.resize(novoTamanho, vector<string>(novoTamanho, ""));
+        }
+
+        // Copiar os dados relevantes, pulando o vértice 'v'
+        int iNovo = 0; // Contador para as linhas da nova matriz
 
         for (int i = 0; i < numVertices; ++i) {
-            if (i == v) continue;  // pula a linha do vértice removido
-            int jNovo = 0;
-            for (int j = 0; j < numVertices; j++) {
-                if (j == v) continue;  // pula a coluna do vértice removido
-                novaMatriz[novoNum][jNovo] = matrizAdjacencias[i][j];
+            if (i == v) continue; // Pula a linha do vértice removido
+
+            int jNovo = 0; // Contador para as colunas da nova matriz
+            for (int j = 0; j < numVertices; ++j) {
+                if (j == v) continue; // Pula a coluna do vértice removido
+
+                // Copia o valor da matriz de adjacências e dos rótulos de aresta
+                novaMatrizAdjacencias[iNovo][jNovo] = matrizAdjacencias[i][j];
+                if (arestaRotulada) {
+                    novosRostulosArestas[iNovo][jNovo] = arestasRotulos[i][j];
+                }
                 jNovo++;
             }
-            novoNum++;
+            iNovo++;
         }
-        matrizAdjacencias = novaMatriz;
-        numVertices = novoNum;
+        
+        // Se os vértices forem ponderados, remover o elemento na posição 'v'
+        if (verticePonderado) {
+            verticesPesos.erase(verticesPesos.begin() + v);
+        }
+
+        // Se os vértices forem rotulados, remover 'v' do mapa e reindexar todas as chaves maiores que 'v'
+        if (verticeRotulado) {
+            verticesRotulos.erase(v); // Remove o rótulo do vértice v
+            unordered_map<int, string> novosRotulos;
+            for (auto const& [chave, valor] : verticesRotulos) {
+                int novaChave = (chave < v) ? chave : chave - 1; // Desloca os índices maiores que v
+                novosRotulos[novaChave] = valor;
+            }
+            verticesRotulos = novosRotulos; // Substitui o map antigo pelo reindexado
+        }
+
+        // Atribui a nova matriz de adjacências
+        matrizAdjacencias = novaMatrizAdjacencias;
+        if (arestaRotulada) {
+            arestasRotulos = novosRostulosArestas;
+        }
+
+        // Decrementa o número de vértices
+        numVertices--;
+
+        // Recalcula o número de arestas (a forma mais segura para evitar erros de contagem)
+        int contagemArestas = 0;
+        for (int i = 0; i < numVertices; ++i) {
+            for (int j = (direcionado ? 0 : i); j < numVertices; ++j) {
+                if (matrizAdjacencias[i][j] != 0) {
+                    contagemArestas++;
+                }
+            }
+        }
+        this->numArestas = contagemArestas;
+
         return true;
     }
 
@@ -480,10 +566,9 @@ class GrafoMatriz : public IGrafo<int> {
 
         // A largura deve acomodar o maior peso ou o maior índice de vértice
         int largura_num = max(to_string(max_valor).length(), to_string(numVertices).length());
-        int largura_coluna = largura_num + 2;  // Adiciona 2 para um espaço de cada lado
-
+        int largura_coluna = largura_num + 2;  // Adiciona 2 para um espaço de cada lado 
         int largura_primeira_coluna = 9;  // tamanho de " Vértice "
-
+        
         // Linha superior da borda
         cout << "+-" << string(largura_primeira_coluna, '-') << "-+";
         for (int i = 0; i < numVertices; ++i) {
