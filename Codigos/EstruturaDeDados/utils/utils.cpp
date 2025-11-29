@@ -1,4 +1,4 @@
-
+#pragma once
 /**
  * @file utils.cpp
  * @brief Conjunto de estruturas e definições utilitárias para o manejo dos algoritmos de busca em grafos.

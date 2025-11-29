@@ -12,7 +12,7 @@ int main(int argc, char* argv[]) {
         int opcao = 0;
 
         cout << "---------------------------------------------" << endl;
-        cout << "--- Bem vindo ao TP1 de Teoria dos Grafos ---" << endl;
+        cout << "--- Bem vindo ao TP2 de Teoria dos Grafos ---" << endl;
         cout << "---------------------------------------------" << endl;
         cout << "--------------- Integrantes: ----------------" << endl
              << "---------- Augusto Stambassi Duarte ---------" << endl

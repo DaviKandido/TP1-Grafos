@@ -1,3 +1,4 @@
+#pragma once
 #include <iomanip>
 #include <iostream>
 #include <queue>
@@ -5,7 +6,7 @@
 #include <stdexcept>
 #include <unordered_map>
 #include <vector>
-
+#include <string>
 #include "../IGrafo.hpp"
 #include "../utils/utils.cpp"
 
@@ -106,7 +107,7 @@ class GrafoMatriz : public IGrafo<int> {
         this->verticeRotulado = verticeRotulado;
         this->arestaRotulada = arestaRotulada;
     }
-    
+
     // Destrutor: padrão
     ~GrafoMatriz() override {
         matrizAdjacencias.clear();
@@ -158,7 +159,7 @@ class GrafoMatriz : public IGrafo<int> {
         for (auto& linha : matrizAdjacencias) {
             linha.resize(this->numVertices, 0);
         }
-        
+
         // Se as arestas forem rotuladas, reestruturas a matriz de rótulos também
         if (this->arestaRotulada) {
             arestasRotulos.resize(this->numVertices);
@@ -239,7 +240,7 @@ class GrafoMatriz : public IGrafo<int> {
         // Criar as novas estruturas de dados menores
         int novoTamanho = numVertices - 1;
 
-        vector<vector<int>> novaMatrizAdjacencias(novoTamanho, vector<int>(novoTamanho, 0));        
+        vector<vector<int>> novaMatrizAdjacencias(novoTamanho, vector<int>(novoTamanho, 0));
         vector<vector<string>> novosRostulosArestas;
 
         if (arestaRotulada) {
@@ -265,7 +266,7 @@ class GrafoMatriz : public IGrafo<int> {
             }
             iNovo++;
         }
-        
+
         // Se os vértices forem ponderados, remover o elemento na posição 'v'
         if (verticePonderado) {
             verticesPesos.erase(verticesPesos.begin() + v);
@@ -339,6 +340,13 @@ class GrafoMatriz : public IGrafo<int> {
             return false;
         }
         return matrizAdjacencias[origem][destino] != 0;
+    }
+   // Método auxiliar para o algoritmo de Edmonds ler os pesos
+    int getPeso(int origem, int destino) const {
+        if (!verticeValido(origem) || !verticeValido(destino)) {
+            return 0; // Ou lançar exceção
+        }
+        return matrizAdjacencias[origem][destino];
     }
 
     vector<int> getVizinhos(int v) const override {
@@ -566,9 +574,9 @@ class GrafoMatriz : public IGrafo<int> {
 
         // A largura deve acomodar o maior peso ou o maior índice de vértice
         int largura_num = max(to_string(max_valor).length(), to_string(numVertices).length());
-        int largura_coluna = largura_num + 2;  // Adiciona 2 para um espaço de cada lado 
+        int largura_coluna = largura_num + 2;  // Adiciona 2 para um espaço de cada lado
         int largura_primeira_coluna = 9;  // tamanho de " Vértice "
-        
+
         // Linha superior da borda
         cout << "+-" << string(largura_primeira_coluna, '-') << "-+";
         for (int i = 0; i < numVertices; ++i) {

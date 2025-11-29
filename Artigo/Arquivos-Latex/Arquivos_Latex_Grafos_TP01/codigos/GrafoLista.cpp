@@ -7,7 +7,7 @@
 #include <vector>
 #include <queue>
 
-#include "../IGrafo.cpp"
+#include "IGrafo.cpp"
 
 using namespace std;
 

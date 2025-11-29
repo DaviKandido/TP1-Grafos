@@ -4,7 +4,8 @@
 #include "../EstruturaDeDados/Lista/GrafoLista.cpp"
 #include "../libs/io.hpp"
 #include "MyIO.hpp"
-
+#include "../EstruturaDeDados/AlgoritmoEdmonds.cpp"
+#include "../EstruturaDeDados/SimuladorImagem.cpp"
 using namespace std;
 #define maxVertice 2147483647
 
@@ -29,7 +30,11 @@ class MenuLista {
      * @see removeGrafo()
      * @see imprimeGrafo()
      */
+    public:
 
+        MenuLista() {
+            this->grafo = nullptr; // Garante que começa limpo
+        }
     void menu() {
         int opcao = -1;
         while (opcao != 0) {
@@ -46,6 +51,8 @@ class MenuLista {
             cout << "10) Busca em Largura - BFS" << endl;
             cout << "11) Imprimir Grafo" << endl;
             cout << "12) Remover Grafo" << endl;
+            cout << "13) Edmond" << endl;
+            cout << "14) Teste com Imagem" << endl;
             cout << "0) Sair" << endl << endl;
 
             cout << "Opção: ";
@@ -83,14 +90,14 @@ class MenuLista {
                 case 8:
                     if(grafoInstanciado()) consultarPredecessoresVertice();
                     break;
-                    
+
                 case 9:
                     if(grafoInstanciado()) buscaEmProfundidade();
                     break;
-                    
+
                 case 10:
                     if(grafoInstanciado()) buscaEmLargura();
-                    break;                
+                    break;
 
                 case 11:
                     if(grafoInstanciado()) imprimeGrafo();
@@ -99,7 +106,21 @@ class MenuLista {
                 case 12:
                     if(grafoInstanciado()) removeGrafo();
                     break;
-                
+                 case 13:
+                    if (grafoInstanciado()) {
+                        resolverEdmondsNoSeuGrafo(*grafo, 0);
+                    }
+                    break;
+                 case 14:
+                    if (this->grafo != nullptr) delete this->grafo;
+
+                    this->grafo = gerarGrafoImagemRealLista("ImgGrafo.png");
+
+                    if (this->grafo != nullptr) {
+                        cout << "Grafo carregado na Lista! Escolha a opcao 14 para rodar o Edmonds.\n";
+    }
+                    break;
+
                 case 0:
                     cout << "\nSaindo..." << endl;
                     break;
@@ -218,7 +239,7 @@ class MenuLista {
                 cout << "Houve um erro" << endl;
             }
         }
-        
+
     }
 
     void removeVertice() {
@@ -301,7 +322,7 @@ class MenuLista {
 
         //O vertice esta dentro da listaPrincipal que é feita de NoVertice e dentro do Novertice que esta o vertice
         Vertice inicioV = grafo->listaPrincipal[verticei].vertice;
-        
+
         vector<Vertice> vizinho = grafo->fechoTransitivoDireto(inicioV);
         if (vizinho.empty()) {
             cout << "Vazio\n";
@@ -326,14 +347,14 @@ class MenuLista {
 
         //O vertice esta dentro da listaPrincipal que é feita de NoVertice e dentro do Novertice que esta o vertice
         Vertice inicioV = grafo->listaPrincipal[verticei].vertice;
-        
+
         vector<Vertice> vizinho = grafo->fechoTransitivoInverso(inicioV);
         if (vizinho.empty()) {
             cout << "Vazio\n";
         } else {
             cout << endl << "Fecho Transito Inverso de " << inicioV.toString() <<": ";
             for (const Vertice& v : vizinho) {
-                cout << v.toString() << " ";    
+                cout << v.toString() << " ";
             }
             cout << endl << endl;
         }
@@ -364,7 +385,7 @@ class MenuLista {
         } else {
             cout << endl << "BFS a partir de " << inicioV.toString() <<": ";
             for (const Vertice& v : resposta) {
-                cout << v.toString() << " ";    
+                cout << v.toString() << " ";
             }
             cout << endl << endl;
         }
@@ -384,7 +405,7 @@ class MenuLista {
         } else {
             cout << endl << "DFS a partir de " << inicioV.toString() <<": ";
             for (const Vertice& v : resposta) {
-                cout << v.toString() << " ";    
+                cout << v.toString() << " ";
             }
             cout << endl << endl;
         }

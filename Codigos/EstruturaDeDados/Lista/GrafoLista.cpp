@@ -1,3 +1,4 @@
+#pragma once
 #include <algorithm>
 #include <iostream>
 #include <forward_list>
@@ -977,7 +978,7 @@ class GrafoLista : public IGrafo<Vertice> {
         int s = origem.getId();
         int t = destino.getId();
 
-        visitado[s] = 1; 
+        visitado[s] = 1;
         q.push(s);
 
         bool achou = false;

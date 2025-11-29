@@ -1,0 +1,203 @@
+﻿C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.CppBuild.targets(1139,5): warning MSB8027: Dois ou mais arquivos com o nome GrafoLista.cpp produzirão saídas para o mesmo local. Isso pode levar a um resultado de compilação incorreto. Os arquivos envolvidos são artigo\arquivos-latex\arquivos_latex_grafos_tp01\codigos\GrafoLista.cpp, codigos\estruturadedados\lista\GrafoLista.cpp.
+C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.CppBuild.targets(1139,5): warning MSB8027: Dois ou mais arquivos com o nome GrafoMatriz.cpp produzirão saídas para o mesmo local. Isso pode levar a um resultado de compilação incorreto. Os arquivos envolvidos são artigo\arquivos-latex\arquivos_latex_grafos_tp01\codigos\GrafoMatriz.cpp, codigos\estruturadedados\matriz\GrafoMatriz.cpp.
+  GrafoLista.cpp
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\artigo\arquivos-latex\arquivos_latex_grafos_tp01\codigos\GrafoLista.cpp(10,10): error C1083: Não é possível abrir arquivo incluir: '../IGrafo.cpp': No such file or directory
+  GrafoMatriz.cpp
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\artigo\arquivos-latex\arquivos_latex_grafos_tp01\codigos\GrafoMatriz.cpp(9,10): error C1083: Não é possível abrir arquivo incluir: '../IGrafo.cpp': No such file or directory
+  IGrafo.cpp
+  GrafoLista.cpp
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\estruturadedados\lista\GrafoLista.cpp(783,25): warning C4267: '=': conversão de 'size_t' para 'int', possível perda de dados
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\estruturadedados\lista\GrafoLista.cpp(836,21): warning C4267: 'inicializando': conversão de 'size_t' para 'int', possível perda de dados
+  GrafoMatriz.cpp
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\estruturadedados\matriz\GrafoMatriz.cpp(16,17): warning C4267: 'inicializando': conversão de 'size_t' para 'int', possível perda de dados
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\estruturadedados\matriz\GrafoMatriz.cpp(568,25): warning C4267: 'inicializando': conversão de 'size_t' para 'int', possível perda de dados
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\estruturadedados\matriz\GrafoMatriz.cpp(644,44): warning C4267: 'argumento': conversão de 'size_t' para 'int', possível perda de dados
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\estruturadedados\matriz\GrafoMatriz.cpp(646,43): warning C4267: 'argumento': conversão de 'size_t' para 'int', possível perda de dados
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\estruturadedados\matriz\GrafoMatriz.cpp(656,37): warning C4267: 'argumento': conversão de 'size_t' para 'int', possível perda de dados
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\estruturadedados\matriz\GrafoMatriz.cpp(658,57): warning C4267: 'argumento': conversão de 'size_t' para 'int', possível perda de dados
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\estruturadedados\matriz\GrafoMatriz.cpp(713,40): warning C4267: 'argumento': conversão de 'size_t' para 'int', possível perda de dados
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\estruturadedados\matriz\GrafoMatriz.cpp(715,43): warning C4267: 'argumento': conversão de 'size_t' para 'int', possível perda de dados
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\estruturadedados\matriz\GrafoMatriz.cpp(729,54): warning C4267: 'argumento': conversão de 'size_t' para 'int', possível perda de dados
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\estruturadedados\matriz\GrafoMatriz.cpp(731,64): warning C4267: 'argumento': conversão de 'size_t' para 'int', possível perda de dados
+  utils.cpp
+  Main.cpp
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\EstruturaDeDados\Lista\GrafoLista.cpp(783,25): warning C4267: '=': conversão de 'size_t' para 'int', possível perda de dados
+  (compilando o arquivo fonte 'codigos/Main.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\EstruturaDeDados\Lista\GrafoLista.cpp(836,21): warning C4267: 'inicializando': conversão de 'size_t' para 'int', possível perda de dados
+  (compilando o arquivo fonte 'codigos/Main.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\libs\io.hpp(426,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  (compilando o arquivo fonte 'codigos/Main.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\libs\io.hpp(459,3): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  (compilando o arquivo fonte 'codigos/Main.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\libs\io.hpp(476,3): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  (compilando o arquivo fonte 'codigos/Main.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\libs\io.hpp(491,3): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  (compilando o arquivo fonte 'codigos/Main.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\libs\io.hpp(548,17): warning C4267: '=': conversão de 'size_t' para 'int', possível perda de dados
+  (compilando o arquivo fonte 'codigos/Main.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\EstruturaDeDados\Matriz\GrafoMatriz.cpp(16,17): warning C4267: 'inicializando': conversão de 'size_t' para 'int', possível perda de dados
+  (compilando o arquivo fonte 'codigos/Main.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\EstruturaDeDados\Matriz\GrafoMatriz.cpp(568,25): warning C4267: 'inicializando': conversão de 'size_t' para 'int', possível perda de dados
+  (compilando o arquivo fonte 'codigos/Main.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\EstruturaDeDados\Matriz\GrafoMatriz.cpp(644,44): warning C4267: 'argumento': conversão de 'size_t' para 'int', possível perda de dados
+  (compilando o arquivo fonte 'codigos/Main.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\EstruturaDeDados\Matriz\GrafoMatriz.cpp(646,43): warning C4267: 'argumento': conversão de 'size_t' para 'int', possível perda de dados
+  (compilando o arquivo fonte 'codigos/Main.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\EstruturaDeDados\Matriz\GrafoMatriz.cpp(656,37): warning C4267: 'argumento': conversão de 'size_t' para 'int', possível perda de dados
+  (compilando o arquivo fonte 'codigos/Main.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\EstruturaDeDados\Matriz\GrafoMatriz.cpp(658,57): warning C4267: 'argumento': conversão de 'size_t' para 'int', possível perda de dados
+  (compilando o arquivo fonte 'codigos/Main.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\EstruturaDeDados\Matriz\GrafoMatriz.cpp(713,40): warning C4267: 'argumento': conversão de 'size_t' para 'int', possível perda de dados
+  (compilando o arquivo fonte 'codigos/Main.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\EstruturaDeDados\Matriz\GrafoMatriz.cpp(715,43): warning C4267: 'argumento': conversão de 'size_t' para 'int', possível perda de dados
+  (compilando o arquivo fonte 'codigos/Main.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\EstruturaDeDados\Matriz\GrafoMatriz.cpp(729,54): warning C4267: 'argumento': conversão de 'size_t' para 'int', possível perda de dados
+  (compilando o arquivo fonte 'codigos/Main.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\EstruturaDeDados\Matriz\GrafoMatriz.cpp(731,64): warning C4267: 'argumento': conversão de 'size_t' para 'int', possível perda de dados
+  (compilando o arquivo fonte 'codigos/Main.cpp')
+  
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\utility(774,42): error C2440: '=': não é possível converter de '_Other' para '_Ty'
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\utility(774,42): error C2440:         with
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\utility(774,42): error C2440:         [
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\utility(774,42): error C2440:             _Other=int
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\utility(774,42): error C2440:         ]
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\utility(774,42): error C2440:         and
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\utility(774,42): error C2440:         [
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\utility(774,42): error C2440:             _Ty=std::_Container_proxy *
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\utility(774,42): error C2440:         ]
+  (compilando o arquivo fonte 'codigos/Main.cpp')
+      C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\utility(774,42):
+      Conversão de tipo integral para tipo de ponteiro requer reinterpret_cast, conversão C-style ou conversão function-style entre parênteses
+      C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\utility(774,42):
+      o contexto de instanciação do modelo (o mais antigo primeiro) é
+          C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\EstruturaDeDados\Matriz\GrafoMatriz.cpp(34,32):
+          consulte a referência à instanciação 'std::unordered_map<int,std::string,std::hash<int>,std::equal_to<int>,std::allocator<std::pair<const int,std::string>>>' do modelo da classe que está sendo compilada
+          C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\unordered_map(61,30):
+          consulte a referência à instanciação 'std::_Hash<std::_Umap_traits<_Kty,_Ty,std::_Uhash_compare<_Kty,_Hasher,_Keyeq>,_Alloc,false>>' do modelo da classe que está sendo compilada
+          with
+          [
+              _Kty=int,
+              _Ty=std::string,
+              _Hasher=std::hash<int>,
+              _Keyeq=std::equal_to<int>,
+              _Alloc=std::allocator<std::pair<const int,std::string>>
+          ]
+          C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\xhash(2013,24):
+          consulte a referência à instanciação 'std::_Hash_vec<std::allocator<std::_List_unchecked_iterator<std::_List_val<std::_List_simple_types<_Ty>>>>>' do modelo da classe que está sendo compilada
+          with
+          [
+              _Ty=std::pair<const int,std::string>
+          ]
+          C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\xhash(315,6):
+          ao compilar a função de membro 'std::_Hash_vec<std::allocator<std::_List_unchecked_iterator<std::_List_val<std::_List_simple_types<_Ty>>>>>::~_Hash_vec(void)' do modelo da classe
+          with
+          [
+              _Ty=std::pair<const int,std::string>
+          ]
+              C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\xhash(2018,1):
+              veja a primeira referência a 'std::_Hash_vec<std::allocator<std::_List_unchecked_iterator<std::_List_val<std::_List_simple_types<_Ty>>>>>::~_Hash_vec' em 'std::_Hash<std::_Umap_traits<_Kty,_Ty,std::_Uhash_compare<_Kty,_Hasher,_Keyeq>,_Alloc,false>>::~_Hash'
+          with
+          [
+              _Ty=std::pair<const int,std::string>
+          ]
+          and
+          [
+              _Kty=int,
+              _Ty=std::string,
+              _Hasher=std::hash<int>,
+              _Keyeq=std::equal_to<int>,
+              _Alloc=std::allocator<std::pair<const int,std::string>>
+          ]
+          C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\xhash(319,47):
+          consulte a referência à instanciação '_Ty *std::exchange<std::_Container_proxy*,int>(_Ty &,_Other &&) noexcept(false)' do modelo que está sendo compilada
+          with
+          [
+              _Ty=std::_Container_proxy *,
+              _Other=int
+          ]
+  
+  MenuLista.cpp
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\EstruturaDeDados\Lista\GrafoLista.cpp(783,25): warning C4267: '=': conversão de 'size_t' para 'int', possível perda de dados
+  (compilando o arquivo fonte 'codigos/visao/MenuLista.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\EstruturaDeDados\Lista\GrafoLista.cpp(836,21): warning C4267: 'inicializando': conversão de 'size_t' para 'int', possível perda de dados
+  (compilando o arquivo fonte 'codigos/visao/MenuLista.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\libs\io.hpp(426,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  (compilando o arquivo fonte 'codigos/visao/MenuLista.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\libs\io.hpp(459,3): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  (compilando o arquivo fonte 'codigos/visao/MenuLista.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\libs\io.hpp(476,3): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  (compilando o arquivo fonte 'codigos/visao/MenuLista.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\libs\io.hpp(491,3): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  (compilando o arquivo fonte 'codigos/visao/MenuLista.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\libs\io.hpp(548,17): warning C4267: '=': conversão de 'size_t' para 'int', possível perda de dados
+  (compilando o arquivo fonte 'codigos/visao/MenuLista.cpp')
+  
+  MenuMatriz.cpp
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\EstruturaDeDados\Matriz\GrafoMatriz.cpp(16,17): warning C4267: 'inicializando': conversão de 'size_t' para 'int', possível perda de dados
+  (compilando o arquivo fonte 'codigos/visao/MenuMatriz.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\EstruturaDeDados\Matriz\GrafoMatriz.cpp(568,25): warning C4267: 'inicializando': conversão de 'size_t' para 'int', possível perda de dados
+  (compilando o arquivo fonte 'codigos/visao/MenuMatriz.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\EstruturaDeDados\Matriz\GrafoMatriz.cpp(644,44): warning C4267: 'argumento': conversão de 'size_t' para 'int', possível perda de dados
+  (compilando o arquivo fonte 'codigos/visao/MenuMatriz.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\EstruturaDeDados\Matriz\GrafoMatriz.cpp(646,43): warning C4267: 'argumento': conversão de 'size_t' para 'int', possível perda de dados
+  (compilando o arquivo fonte 'codigos/visao/MenuMatriz.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\EstruturaDeDados\Matriz\GrafoMatriz.cpp(656,37): warning C4267: 'argumento': conversão de 'size_t' para 'int', possível perda de dados
+  (compilando o arquivo fonte 'codigos/visao/MenuMatriz.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\EstruturaDeDados\Matriz\GrafoMatriz.cpp(658,57): warning C4267: 'argumento': conversão de 'size_t' para 'int', possível perda de dados
+  (compilando o arquivo fonte 'codigos/visao/MenuMatriz.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\EstruturaDeDados\Matriz\GrafoMatriz.cpp(713,40): warning C4267: 'argumento': conversão de 'size_t' para 'int', possível perda de dados
+  (compilando o arquivo fonte 'codigos/visao/MenuMatriz.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\EstruturaDeDados\Matriz\GrafoMatriz.cpp(715,43): warning C4267: 'argumento': conversão de 'size_t' para 'int', possível perda de dados
+  (compilando o arquivo fonte 'codigos/visao/MenuMatriz.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\EstruturaDeDados\Matriz\GrafoMatriz.cpp(729,54): warning C4267: 'argumento': conversão de 'size_t' para 'int', possível perda de dados
+  (compilando o arquivo fonte 'codigos/visao/MenuMatriz.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\EstruturaDeDados\Matriz\GrafoMatriz.cpp(731,64): warning C4267: 'argumento': conversão de 'size_t' para 'int', possível perda de dados
+  (compilando o arquivo fonte 'codigos/visao/MenuMatriz.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\libs\io.hpp(426,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  (compilando o arquivo fonte 'codigos/visao/MenuMatriz.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\libs\io.hpp(459,3): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  (compilando o arquivo fonte 'codigos/visao/MenuMatriz.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\libs\io.hpp(476,3): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  (compilando o arquivo fonte 'codigos/visao/MenuMatriz.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\libs\io.hpp(491,3): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  (compilando o arquivo fonte 'codigos/visao/MenuMatriz.cpp')
+  
+C:\Users\areis\OneDrive\Área de Trabalho\Faculdade\quintoSemestre\Grafos\TP1-Grafos\codigos\libs\io.hpp(548,17): warning C4267: '=': conversão de 'size_t' para 'int', possível perda de dados
+  (compilando o arquivo fonte 'codigos/visao/MenuMatriz.cpp')
+  
+  Gerando Código...

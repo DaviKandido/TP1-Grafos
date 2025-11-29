@@ -1,10 +1,12 @@
 #include <iostream>
 #include <limits>
 #include <string>
-
+#include <filesystem>
 #include "../EstruturaDeDados/Matriz/GrafoMatriz.cpp"
 #include "../libs/io.hpp"
 #include "MyIO.hpp"
+#include "../EstruturaDeDados/AlgoritmoEdmonds.cpp"
+#include "../EstruturaDeDados/SimuladorImagem.cpp"
 
 using namespace std;
 
@@ -37,6 +39,7 @@ class MenuMatriz {
      * @see removeGrafo()
      * @see imprimeGrafo()
      */
+    MenuMatriz() { this->grafo = nullptr; }
     void menu() {
         int opcao = 0;
         do {
@@ -54,9 +57,11 @@ class MenuMatriz {
             cout << "11) Busca em Largura - BFS" << endl;
             cout << "12) Imprimir Grafo" << endl;
             cout << "13) Remover Grafo" << endl;
+            cout << "14) Algoritmo de Edmonds" << endl;
+            cout << "15) Teste com Imagens" << endl;
             cout << "0) Sair" << endl << endl;
 
-            opcao = lerInteiro("Opção: ", 0, 12);
+            opcao = lerInteiro("Opção: ", 0, 15);
 
             switch (opcao) {
                 case 1:
@@ -99,6 +104,21 @@ class MenuMatriz {
                 case 13:
                     if (grafoInstanciado()) removeGrafo();
                     break;
+                case 14:
+                    if (grafoInstanciado()) resolverEdmondsNoGrafoMatriz(*grafo, 0);
+                    break;
+                case 15:
+                    // Se já existir um grafo, deleta para não vazar memória
+                    if (this->grafo != nullptr) {
+                        delete this->grafo;
+                    }
+
+                    // Chama a função externa e guarda o grafo que ela criou
+                    this->grafo = gerarGrafoImagemReal("ImgGrafo.png");
+
+                    // Mostra o resultado
+                    //this->imprimeGrafo();
+                    break;
                 case 0:
                     cout << "\nSaindo..." << endl << endl;
                     break;
@@ -118,7 +138,7 @@ class MenuMatriz {
      * @return true se o grafo estiver instanciado, false caso contrário.
      */
     bool grafoInstanciado() {
-        if (grafo == null) cout << "\n[ERRO]: O grafo não está instanciado." << endl;
+        if (grafo == nullptr) cout << "\n[ERRO]: O grafo não está instanciado." << endl;
         return grafo != null;
     }
 
